@@ -1,0 +1,14 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "semi": true,
+    "singleQuote": true,
+    "singleAttributePerLine": false,
+    "htmlWhitespaceSensitivity": "css",
+    "printWidth": 80,
+    "experimentalTailwindcss": {
+        "stylesheet": "resources/css/app.css",
+        "functions": ["clsx", "cn"]
+    },
+    "tabWidth": 4,
+    "ignorePatterns": ["resources/js/components/ui/*", "resources/views/mail/*"]
+}
