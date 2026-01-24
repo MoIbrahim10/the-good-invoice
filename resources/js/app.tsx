@@ -21,6 +21,7 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
+
                 <App {...props} />
             </StrictMode>,
         );
