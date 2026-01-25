@@ -1,6 +1,9 @@
 @import 'tailwindcss';
+@import './colors.css';
 
 @import 'tw-animate-css';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -9,16 +12,38 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Text Color Utilities */
+    --color-text-weaker: var(--text-weaker);
+    --color-text-weak: var(--text-weak);
+    --color-text-default: var(--text-default);
+    --color-text-strong: var(--text-strong);
+
+    /* Background Color Utilities */
+    --color-bg-weak: var(--bg-weak);
+    --color-bg-default: var(--bg-default);
+    --color-bg-strong: var(--bg-strong);
+    --color-bg-stronger: var(--bg-stronger);
+
+    /* Icon Color Utilities */
+    --color-icon-weak: var(--icon-weak);
+    --color-icon-default: var(--icon-default);
+    --color-icon-strong: var(--icon-strong);
+
+    /* Stroke/Border Color Utilities */
+    --color-stroke-default: var(--stroke-default);
+    --color-stroke-strong: var(--stroke-strong);
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
+
+
+
+    --color-background: var(--bg-default);
+    --color-foreground: var(--text-strong);
 
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
@@ -62,77 +87,90 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
-}
+    /* Bind shadcn-style tokens to your semantic theme tokens so all 4 modes share them */
+    --background: var(--bg-default);
+    --foreground: var(--text-strong);
 
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --card: var(--bg-weak);
+    --card-foreground: var(--text-strong);
+
+    --popover: var(--bg-weak);
+    --popover-foreground: var(--text-strong);
+
+    --primary: var(--text-strong);
+    --primary-foreground: var(--bg-weak);
+
+    --secondary: var(--bg-strong);
+    --secondary-foreground: var(--text-strong);
+
+    --muted: var(--bg-strong);
+    --muted-foreground: var(--text-weak);
+
+    --accent: var(--bg-stronger);
+    --accent-foreground: var(--text-strong);
+
+    /* You can later swap these to Tailwind reds or any palette you prefer */
+    --destructive: var(--color-red-500, #ef4444);
+    --destructive-foreground: var(--bg-weak);
+
+    --border: var(--stroke-default);
+    --input: var(--stroke-default);
+    --ring: var(--stroke-strong);
+
+    /* Charts can keep using defaults or be wired similarly later */
+    --chart-1: var(--color-chart-1, #4f46e5);
+    --chart-2: var(--color-chart-2, #22c55e);
+    --chart-3: var(--color-chart-3, #f97316);
+    --chart-4: var(--color-chart-4, #0ea5e9);
+    --chart-5: var(--color-chart-5, #a855f7);
+
+    --radius: 0.625rem;
+
+    --sidebar: var(--bg-weak);
+    --sidebar-foreground: var(--text-strong);
+    --sidebar-primary: var(--text-strong);
+    --sidebar-primary-foreground: var(--bg-weak);
+    --sidebar-accent: var(--bg-strong);
+    --sidebar-accent-foreground: var(--text-strong);
+    --sidebar-border: var(--stroke-default);
+    --sidebar-ring: var(--stroke-strong);
 }
 
 @layer base {
+    html {
+        font-family: var(--font-sans);
+        line-height: 1.5;
+        font-weight: 400;
+
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    html,
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 320px;
+    }
+
+    #root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+    }
+
     * {
         @apply border-border;
     }

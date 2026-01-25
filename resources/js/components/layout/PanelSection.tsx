@@ -1,12 +1,14 @@
 type PanelSectionProps = {
-  children: React.ReactNode;
-  className?: string;
+    children: React.ReactNode;
+    className?: string;
 };
 
 export function PanelSection({ children, className = '' }: PanelSectionProps) {
-  return (
-    <div className={`border-b border-t border-stroke-default py-2.5 px-3 flex overflow-x-auto ${className}`}>
-      {children}
-    </div>
-  );
+    return (
+        <div
+            className={`flex overflow-x-auto border-t border-b border-stroke-default px-3 py-2.5 ${className}`}
+        >
+            {children}
+        </div>
+    );
 }

@@ -364,6 +364,7 @@ import { Link } from '@inertiajs/react'
 import { Form } from '@inertiajs/react'
 
 export default () => (
+
 <Form action="/users" method="post">
 {({
 errors,

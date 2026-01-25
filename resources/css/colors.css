@@ -1,0 +1,98 @@
+/* 4 Theme Modes powered by Tailwind's gray & stone palettes */
+
+/* Cool Light Theme (Default) – uses Tailwind gray scale */
+:root,
+[data-theme='cool-light'] {
+    /* Text Colors */
+    --text-weaker: var(--color-gray-300);
+    --text-weak: var(--color-gray-400);
+    --text-default: var(--color-gray-500);
+    --text-strong: var(--color-gray-700);
+
+    /* Background Colors */
+    --bg-weak: var(--color-white);
+    --bg-default: var(--color-gray-50);
+    --bg-strong: var(--color-gray-100);
+    --bg-stronger: var(--color-gray-200);
+
+    /* Icon Colors */
+    --icon-weak: var(--color-gray-300);
+    --icon-default: var(--color-gray-400);
+    --icon-strong: var(--color-gray-700);
+
+    /* Stroke/Border Colors */
+    --stroke-default: var(--color-gray-200);
+    --stroke-strong: var(--color-gray-300);
+}
+
+/* Warm Light Theme – uses Tailwind stone scale */
+[data-theme='warm-light'] {
+    /* Text Colors - warmer tones */
+    --text-weaker: var(--color-stone-300);
+    --text-weak: var(--color-stone-400);
+    --text-default: var(--color-stone-500);
+    --text-strong: var(--color-stone-700);
+
+    /* Background Colors - warmer tones */
+    --bg-weak: var(--color-white);
+    --bg-default: var(--color-stone-50);
+    --bg-strong: var(--color-stone-100);
+    --bg-stronger: var(--color-stone-200);
+
+    /* Icon Colors - warmer tones */
+    --icon-weak: var(--color-stone-300);
+    --icon-default: var(--color-stone-400);
+    --icon-strong: var(--color-stone-700);
+
+    /* Stroke/Border Colors - warmer tones */
+    --stroke-default: var(--color-stone-200);
+    --stroke-strong: var(--color-stone-300);
+}
+
+/* Cool Dark Theme – uses Tailwind gray scale, inverted */
+[data-theme='cool-dark'] {
+    /* Text Colors - inverted for dark */
+    --text-weaker: var(--color-gray-500);
+    --text-weak: var(--color-gray-400);
+    --text-default: var(--color-gray-300);
+    --text-strong: var(--color-gray-50);
+
+    /* Background Colors - dark tones */
+    --bg-weak: var(--color-gray-900);
+    --bg-default: var(--color-gray-800);
+    --bg-strong: var(--color-gray-700);
+    --bg-stronger: var(--color-gray-600);
+
+    /* Icon Colors - dark theme */
+    --icon-weak: var(--color-gray-500);
+    --icon-default: var(--color-gray-400);
+    --icon-strong: var(--color-gray-50);
+
+    /* Stroke/Border Colors - dark theme */
+    --stroke-default: var(--color-gray-700);
+    --stroke-strong: var(--color-gray-600);
+}
+
+/* Warm Dark Theme – uses Tailwind stone scale, inverted */
+[data-theme='warm-dark'] {
+    /* Text Colors - warm dark tones */
+    --text-weaker: var(--color-stone-500);
+    --text-weak: var(--color-stone-400);
+    --text-default: var(--color-stone-300);
+    --text-strong: var(--color-stone-50);
+
+    /* Background Colors - warm dark tones */
+    --bg-weak: var(--color-stone-900);
+    --bg-default: var(--color-stone-800);
+    --bg-strong: var(--color-stone-700);
+    --bg-stronger: var(--color-stone-600);
+
+    /* Icon Colors - warm dark */
+    --icon-weak: var(--color-stone-500);
+    --icon-default: var(--color-stone-400);
+    --icon-strong: var(--color-stone-50);
+
+    /* Stroke/Border Colors - warm dark */
+    --stroke-default: var(--color-stone-700);
+    --stroke-strong: var(--color-stone-600);
+}
