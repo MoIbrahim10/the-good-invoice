@@ -1,9 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 @import 'tailwindcss';
 @import './colors.css';
-
 @import 'tw-animate-css';
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -35,6 +33,9 @@
     /* Stroke/Border Color Utilities */
     --color-stroke-default: var(--stroke-default);
     --color-stroke-strong: var(--stroke-strong);
+
+    /* NG Hover Color Utility */
+    --color-ng-hover: var(--ng-hover);
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);

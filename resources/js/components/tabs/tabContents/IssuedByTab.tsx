@@ -1,79 +1,36 @@
-import { LogoIcon } from '../../icons/LogoIcon';
-import { Button } from '../../layout/Button';
-import { useInvoiceState } from '../../../hooks/useInvoiceState';
+import { useId } from 'react';
 import { useInvoiceActions } from '../../../hooks/useInvoiceActions';
+import { useInvoiceState } from '../../../hooks/useInvoiceState';
+import { LogoUpload } from '../components/LogoUpload';
 
 export function IssuedByTab() {
     const { state } = useInvoiceState();
     const { updateIssuer } = useInvoiceActions();
 
     const issuer = state.data.issuer;
-
-    const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const result = reader.result as string;
-                updateIssuer({ logo: result });
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    const nameId = useId();
+    const emailId = useId();
+    const addressId = useId();
 
     return (
-        <div className="flex flex-col gap-3 py-3">
-            {/* Logo Upload Section */}
-            <div className="flex items-stretch gap-2.5">
-                {/* Logo Placeholder */}
-                <div
-                    className="flex aspect-square min-h-[55px] flex-row items-center justify-center self-stretch rounded-md border border-dashed border-stroke-strong bg-bg-strong px-3 py-2"
-                >
-                    <div>
-                        {issuer.logo ? (
-                            <img
-                                src={issuer.logo}
-                                alt="Logo"
-                                className="rounded-md object-contain"
-                            />
-                        ) : (
-                            <LogoIcon size={18} />
-                        )}
-                    </div>
-                </div>
-
-                {/* Logo Info and Upload */}
-                <div className="flex h-fit items-end justify-between gap-2.5">
-                    <div className="flex flex-col gap-1">
-                        <h3 className="flex items-center text-sm leading-[17px] font-normal text-text-default">
-                            Your logo
-                        </h3>
-                        <p className="flex items-center text-sm leading-[17px] font-normal text-text-weaker">
-                            Square (1:1) format only. SVG preferred, PNG and
-                            JPEG supported.
-                        </p>
-                    </div>
-
-                    <label className="shrink-0 cursor-pointer">
-                        <input
-                            type="file"
-                            accept="image/svg+xml,image/png,image/jpeg,image/jpg"
-                            onChange={handleLogoUpload}
-                            className="hidden"
-                        />
-                        <Button>Upload</Button>
-                    </label>
-                </div>
-            </div>
+        <div className="flex flex-col">
+            <LogoUpload
+                logo={issuer.logo ?? null}
+                onUpload={(logo) => updateIssuer({ logo })}
+            />
 
             {/* Input Fields Section */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 p-3">
                 {/* Name Field */}
                 <div className="flex items-center gap-4">
-                    <label className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong">
+                    <label
+                        htmlFor={nameId}
+                        className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong"
+                    >
                         Name
                     </label>
                     <input
+                        id={nameId}
                         type="text"
                         value={issuer.companyName}
                         onChange={(e) =>
@@ -86,10 +43,14 @@ export function IssuedByTab() {
 
                 {/* Email Field */}
                 <div className="flex items-center gap-4">
-                    <label className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong">
+                    <label
+                        htmlFor={emailId}
+                        className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong"
+                    >
                         Email
                     </label>
                     <input
+                        id={emailId}
                         type="email"
                         value={issuer.contact.email || ''}
                         onChange={(e) =>
@@ -107,10 +68,14 @@ export function IssuedByTab() {
 
                 {/* Address Field */}
                 <div className="flex items-start gap-4">
-                    <label className="w-20 shrink-0 pt-2 text-sm leading-none font-normal text-text-strong">
+                    <label
+                        htmlFor={addressId}
+                        className="w-20 shrink-0 pt-2 text-sm leading-none font-normal text-text-strong"
+                    >
                         Address
                     </label>
                     <textarea
+                        id={addressId}
                         value={issuer.address.line1}
                         onChange={(e) =>
                             updateIssuer({

@@ -1,13 +1,13 @@
-import { PanelHeader } from '../layout/PanelHeader';
-import { TabNavigation } from '../tabs/TabNavigation';
 import { PanelFooter } from '../layout/PanelFooter';
+import { PanelHeader } from '../layout/PanelHeader';
 import { useTabNavigation } from '../providers/TabNavigationProvider';
-import { IssuedByTab } from '../tabs/tabContents/IssuedByTab';
+import { TabNavigation } from '../tabs/TabNavigation';
 import { BillToTab } from '../tabs/tabContents/BillToTab';
 import { DetailsTab } from '../tabs/tabContents/DetailsTab';
+import { DisplayTab } from '../tabs/tabContents/DisplayTab';
+import { IssuedByTab } from '../tabs/tabContents/IssuedByTab';
 import { ItemsTab } from '../tabs/tabContents/ItemsTab';
 import { NotesTab } from '../tabs/tabContents/NotesTab';
-import { DisplayTab } from '../tabs/tabContents/DisplayTab';
 
 export function InputPanel() {
     const { activeTabId } = useTabNavigation();
@@ -22,7 +22,7 @@ export function InputPanel() {
                 <TabNavigation />
 
                 {/* Tab Content Area - Scrollable, constrained to remaining height */}
-                <div className="flex-1 overflow-y-auto px-3">
+                <div className="flex-1 overflow-y-auto">
                     {activeTabId === 'issued-by' && <IssuedByTab />}
                     {activeTabId === 'bill-to' && <BillToTab />}
                     {activeTabId === 'details' && <DetailsTab />}

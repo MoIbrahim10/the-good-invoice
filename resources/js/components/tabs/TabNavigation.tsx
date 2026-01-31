@@ -1,7 +1,7 @@
-import { TabButton } from './TabButton';
-import { useTabNavigation } from '../providers/TabNavigationProvider';
-import { PanelSection } from '../layout/PanelSection';
 import type { TabState } from '../../types/tabs';
+import { PanelSection } from '../layout/PanelSection';
+import { useTabNavigation } from '../providers/TabNavigationProvider';
+import { TabButton } from './TabButton';
 
 export function TabNavigation() {
     const { tabs, navigateToTab, canNavigateToTab } = useTabNavigation();
@@ -63,7 +63,7 @@ export function TabNavigation() {
 
                         return (
                             <div
-                                key={`group-${groupIndex}`}
+                                key={`group-${groupIndex.toString()}`}
                                 className={`flex gap-1.5 ${groupBgClass} ${groupBorderRadius} transition-all duration-300 ease-in-out`}
                             >
                                 {group.tabs.map((tab) => {
