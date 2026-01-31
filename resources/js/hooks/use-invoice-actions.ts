@@ -6,6 +6,7 @@ import type {
     InvoiceDetails,
     InvoiceItem,
     IssuerData,
+    AmountType,
 } from '../types/invoice';
 import { useInvoiceState } from './use-invoice-state';
 
@@ -37,6 +38,15 @@ export function useInvoiceActions() {
             },
             updateNotes: (notes: string) => {
                 dispatch({ type: 'UPDATE_NOTES', payload: notes });
+            },
+            updateTax: (payload: { value?: number; type?: AmountType }) => {
+                dispatch({ type: 'UPDATE_TAX', payload });
+            },
+            updateDiscount: (payload: {
+                value?: number;
+                type?: AmountType;
+            }) => {
+                dispatch({ type: 'UPDATE_DISCOUNT', payload });
             },
             updateDisplay: (options: Partial<DisplayOptions>) => {
                 dispatch({ type: 'UPDATE_DISPLAY', payload: options });

@@ -1,4 +1,5 @@
 import type {
+    AmountType,
     BillToData,
     DisplayOptions,
     InvoiceData,
@@ -28,6 +29,11 @@ export type InvoiceAction =
     | { type: 'REMOVE_ITEM'; payload: string }
     | { type: 'REORDER_ITEMS'; payload: { from: number; to: number } }
     | { type: 'UPDATE_NOTES'; payload: string }
+    | { type: 'UPDATE_TAX'; payload: { value?: number; type?: AmountType } }
+    | {
+          type: 'UPDATE_DISCOUNT';
+          payload: { value?: number; type?: AmountType };
+      }
     | { type: 'UPDATE_DISPLAY'; payload: Partial<DisplayOptions> }
     | { type: 'RESET_INVOICE' }
     | { type: 'LOAD_INVOICE'; payload: InvoiceData };

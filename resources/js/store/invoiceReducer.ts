@@ -26,16 +26,25 @@ const initialInvoiceData: InvoiceData = {
     },
     details: {
         invoiceNumber: '',
-        issueDate: new Date(),
-        dueDate: new Date(),
-        paymentTerms: '',
+        dueDate: new Date().toISOString(),
+        currency: 'USD',
     },
-    items: [],
+    items: [
+        {
+            id: 'initial-item',
+            description: '',
+            quantity: 0,
+            unitPrice: 0,
+        },
+    ],
+    tax: 0,
+    taxType: 'percentage',
+    discount: 0,
+    discountType: 'percentage',
     notes: '',
     display: {
-        currency: 'USD',
-        locale: 'en-US',
-        dateFormat: 'MM/DD/YYYY',
+        style: 'solid',
+        color: 'gray',
     },
 };
 
@@ -164,6 +173,37 @@ export function invoiceReducer(
                 data: {
                     ...state.data,
                     notes: action.payload,
+                },
+                meta: updateMeta(state),
+            };
+        }
+
+        case 'UPDATE_TAX': {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    tax:
+                        action.payload.value !== undefined
+                            ? action.payload.value
+                            : state.data.tax,
+                    taxType: action.payload.type || state.data.taxType,
+                },
+                meta: updateMeta(state),
+            };
+        }
+
+        case 'UPDATE_DISCOUNT': {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    discount:
+                        action.payload.value !== undefined
+                            ? action.payload.value
+                            : state.data.discount,
+                    discountType:
+                        action.payload.type || state.data.discountType,
                 },
                 meta: updateMeta(state),
             };

@@ -1,3 +1,5 @@
+import type { Currency } from './currency';
+
 export type Address = {
     line1: string;
     line2?: string;
@@ -28,9 +30,8 @@ export type BillToData = {
 
 export type InvoiceDetails = {
     invoiceNumber: string;
-    issueDate: Date;
     dueDate: Date;
-    paymentTerms: string;
+    currency: Currency['code'];
 };
 
 export type InvoiceItem = {
@@ -38,20 +39,24 @@ export type InvoiceItem = {
     description: string;
     quantity: number;
     unitPrice: number;
-    taxRate?: number;
 };
 
 export type DisplayOptions = {
-    currency: string;
-    locale: string;
-    dateFormat: string;
+    style: 'solid' | 'accent';
+    color: 'gray' | 'cream' | 'blue' | 'green';
 };
+
+export type AmountType = 'percentage' | 'currency';
 
 export type InvoiceData = {
     issuer: IssuerData;
     billTo: BillToData;
     details: InvoiceDetails;
     items: InvoiceItem[];
+    tax: number;
+    taxType: AmountType;
+    discount: number;
+    discountType: AmountType;
     notes: string;
     display: DisplayOptions;
 };

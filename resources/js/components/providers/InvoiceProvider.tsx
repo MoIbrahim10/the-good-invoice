@@ -1,7 +1,7 @@
 import { createContext, useMemo, useReducer } from 'react';
 import {
-    invoiceReducer,
     initialInvoiceState,
+    invoiceReducer,
 } from '../../store/invoiceReducer';
 import type { InvoiceContextValue } from '../../types/state';
 
@@ -16,7 +16,7 @@ export function InvoiceProvider({ children }: InvoiceProviderProps) {
 
     const value = useMemo<InvoiceContextValue>(
         () => ({ state, dispatch }),
-        [state, dispatch],
+        [state],
     );
 
     return (

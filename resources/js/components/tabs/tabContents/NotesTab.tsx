@@ -1,7 +1,26 @@
+import { useId } from 'react';
+import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../hooks/use-invoice-state';
+import { LabeledTextarea } from '../../custom/labeled-textarea';
+
 export function NotesTab() {
+    const { state } = useInvoiceState();
+    const { updateNotes } = useInvoiceActions();
+
+    const notes = state.data.notes;
+    const notesId = useId();
+
     return (
-        <div className="py-6">
-            <p className="text-sm text-text-weak">Notes content</p>
+        <div className="flex flex-col gap-2 p-3 border-b-layered">
+            {/* Notes Field */}
+            <LabeledTextarea
+                id={notesId}
+                label="Notes"
+                labelClassName="w-14 shrink-0"
+                value={notes}
+                onChange={(e) => updateNotes(e.target.value)}
+                placeholder="Payment or context details"
+            />
         </div>
     );
 }

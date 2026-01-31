@@ -88,14 +88,16 @@
 @utility border-b-layered {
     border-bottom: 1px solid var(--stroke-default);
     --layered-shadow-b: 0 1px 0 0 var(--bg-weak);
-    box-shadow: var(--layered-shadow-t, 0 0 0 0 transparent),
+    box-shadow:
+        var(--layered-shadow-t, 0 0 0 0 transparent),
         var(--layered-shadow-b, 0 0 0 0 transparent);
 }
 
 @utility border-t-layered {
     border-top: 1px solid var(--stroke-default);
     --layered-shadow-t: inset 0 1px 0 0 var(--bg-weak);
-    box-shadow: var(--layered-shadow-t, 0 0 0 0 transparent),
+    box-shadow:
+        var(--layered-shadow-t, 0 0 0 0 transparent),
         var(--layered-shadow-b, 0 0 0 0 transparent);
 }
 

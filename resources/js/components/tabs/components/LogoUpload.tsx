@@ -3,7 +3,6 @@ import { useId, useRef, useState } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { RectangularSwitch } from '@/components/custom/rectangular-switch';
 import { Field, FieldLabel } from '@/components/ui/field';
-import { DeleteIcon } from '../../icons/DeleteIcon';
 import { LogoIcon } from '../../icons/LogoIcon';
 
 type LogoUploadProps = {
@@ -28,15 +27,8 @@ export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
         }
     };
 
-    const handleRemoveLogo = () => {
-        onUpload('');
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-    };
-
     return (
-        <div className="flex flex-col border-b-layered p-3">
+        <div className="flex flex-col p-3 border-b-layered">
             {/* use logo section */}
             <div className="flex justify-between">
                 <Field orientation="horizontal">
@@ -96,17 +88,6 @@ export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
                                     />
                                     {logo ? (
                                         <div className="flex items-center gap-3">
-                                            <CustomButton
-                                                icon={<DeleteIcon />}
-                                                ariaLabel="Remove logo"
-                                                size="default"
-                                                onClick={handleRemoveLogo}
-                                                tooltips={{
-                                                    default: {
-                                                        content: 'Remove logo',
-                                                    },
-                                                }}
-                                            />
                                             <CustomButton
                                                 text="Replace"
                                                 size="default"
