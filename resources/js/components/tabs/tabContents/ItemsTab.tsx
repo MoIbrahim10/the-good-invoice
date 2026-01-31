@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { currencies } from '@/data/currencies';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
@@ -49,10 +50,28 @@ export function ItemsTab() {
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map((item, index) => (
-                        <tr key={item.id}>
-                            {/* Description */}
-                            <td className="pe-2 pb-2">
+                    <AnimatePresence initial={false}>
+                        {items.map((item, index) => (
+                            <motion.tr
+                                key={item.id}
+                                layout
+                                initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+                                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                                exit={{
+                                    opacity: 0,
+                                    scale: 0.98,
+                                    filter: 'blur(4px)',
+                                    transition: { duration: 0.15 },
+                                }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 260,
+                                    damping: 28,
+                                    mass: 0.6,
+                                }}
+                            >
+                                {/* Description */}
+                                <td className="pe-2 pb-2">
                                 <Input
                                     value={item.description}
                                     onChange={(e) =>
@@ -131,8 +150,9 @@ export function ItemsTab() {
                                     )}
                                 </div>
                             </td>
-                        </tr>
-                    ))}
+                        </motion.tr>
+                        ))}
+                    </AnimatePresence>
                 </tbody>
             </table>
 

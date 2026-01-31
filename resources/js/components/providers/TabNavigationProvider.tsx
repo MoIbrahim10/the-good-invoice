@@ -6,6 +6,7 @@ import {
     useEffect,
     useMemo,
 } from 'react';
+import { useQueryState } from 'nuqs';
 import type { TabId, TabState } from '../../types/tabs';
 
 const TAB_ORDER: TabId[] = [
@@ -59,8 +60,36 @@ type TabNavigationProviderProps = {
 export function TabNavigationProvider({
     children,
 }: TabNavigationProviderProps) {
-    const [tabs, setTabs] = useState<TabState[]>(INITIAL_TABS);
-    const [activeTabId, setActiveTabId] = useState<TabId>('issued-by');
+    const [activeTabId, setActiveTabId] = useQueryState('tab', {
+        defaultValue: 'issued-by' as TabId,
+        parse: (value): TabId => {
+            const validTabs: TabId[] = [
+                'issued-by',
+                'bill-to',
+                'details',
+                'items',
+                'notes',
+                'display',
+            ];
+            return validTabs.includes(value as TabId)
+                ? (value as TabId)
+                : 'issued-by';
+        },
+        serialize: (value) => value,
+        shallow: true,
+    });
+
+    // Initialize tabs state based on activeTabId from URL
+    const [tabs, setTabs] = useState<TabState[]>(() => {
+        const activeIndex = TAB_ORDER.indexOf(activeTabId);
+        return TAB_ORDER.map((id, index) => ({
+            id,
+            label: getTabLabel(id),
+            isActive: id === activeTabId,
+            isVisited: index <= activeIndex,
+            isCompleted: false,
+        }));
+    });
 
     const getActiveTabIndex = useCallback(() => {
         return TAB_ORDER.indexOf(activeTabId);
@@ -106,7 +135,7 @@ export function TabNavigationProvider({
             );
             setActiveTabId(tabId);
         },
-        [canNavigateToTab],
+        [canNavigateToTab, setActiveTabId],
     );
 
     const navigateToPreviousTab = useCallback(() => {
@@ -153,6 +182,21 @@ export function TabNavigationProvider({
         },
         [navigateToPreviousTab, navigateToNextTab],
     );
+
+    // Sync URL tab to local state when URL changes (e.g., browser back/forward)
+    useEffect(() => {
+        setTabs((prevTabs) => {
+            const tabFromUrl = prevTabs.find((t) => t.id === activeTabId);
+            if (tabFromUrl && !tabFromUrl.isActive) {
+                return prevTabs.map((tab) => ({
+                    ...tab,
+                    isActive: tab.id === activeTabId,
+                    isVisited: tab.id === activeTabId ? true : tab.isVisited,
+                }));
+            }
+            return prevTabs;
+        });
+    }, [activeTabId]);
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyboardNavigation);

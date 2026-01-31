@@ -1,3 +1,4 @@
+import { cloneElement, isValidElement, type ReactElement } from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import {
@@ -83,8 +84,25 @@ export function CurrencyDropdown({
                                     {currency.name}
                                 </span>
                             </div>
-                            <div className="flex items-center justify-center text-xs text-white opacity-60">
-                                {currency.symbolIcon}
+                            <div className="flex items-center justify-center text-xs text-white">
+                                {isValidElement(currency.symbolIcon)
+                                    ? cloneElement(
+                                          currency.symbolIcon as ReactElement<{
+                                              className?: string;
+                                          }>,
+                                          {
+                                              className: cn(
+                                                  (
+                                                      currency.symbolIcon
+                                                          .props as {
+                                                          className?: string;
+                                                      }
+                                                  ).className,
+                                                  'text-white',
+                                              ),
+                                          },
+                                      )
+                                    : currency.symbolIcon}
                             </div>
                         </DropdownMenuItem>
                     ))}

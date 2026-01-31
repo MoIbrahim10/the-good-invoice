@@ -3,26 +3,45 @@
 /* Cool Light Theme (Default) – uses Tailwind gray scale */
 :root,
 [data-theme='cool-light'] {
+    --preview-border: var(--color-gray-200);
+
     /* Text Colors */
-    --text-weaker: var(--color-gray-300);
+    --text-weaker: var(--color-gray-350);
     --text-weak: var(--color-gray-400);
     --text-default: var(--color-gray-500);
     --text-strong: var(--color-gray-700);
 
     /* Background Colors */
-    --bg-weak: var(--color-white);
-    --bg-default: var(--color-gray-50);
+    --bg-weak: var(--color-gray-0);
+    --bg-default: var(--color-gray-25);
     --bg-strong: var(--color-gray-100);
     --bg-stronger: var(--color-gray-200);
+    --bg-strongest: var(--color-gray-100);
 
     /* Icon Colors */
-    --icon-weak: var(--color-gray-300);
+    --icon-weaker: var(--color-gray-0);
+    --icon-weak: var(--color-gray-350);
     --icon-default: var(--color-gray-400);
     --icon-strong: var(--color-gray-700);
 
     /* Stroke/Border Colors */
+    --stroke-weaker: var(--color-gray-0);
+    --stroke-weak: var(--color-gray-350);
     --stroke-default: var(--color-gray-200);
-    --stroke-strong: var(--color-gray-300);
+    --stroke-strong: var(--color-gray-200);
+
+    /* Dropdown Colors */
+    --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
+    --dropdown-bg-cool-light: color-mix(in srgb, #4b5563 40%, transparent);
+    --dropdown-bg-item-hover: color-mix(in srgb, #ffffff 25%, transparent);
+    --dropdown-bg-item-stroke: color-mix(in srgb, #ffffff 5%, transparent);
+
+    /* Preview Colors */
+    --preview-col-1: #7e97b4;
+    --preview-col-2: #d69999;
+
+    /* Button Colors */
+    --button-default: var(--color-white);
 
     /* NG Hover - white with 50% opacity */
     --ng-hover: color-mix(in srgb, var(--color-white) 50%, transparent);
@@ -30,6 +49,8 @@
 
 /* Warm Light Theme – uses Tailwind stone scale */
 [data-theme='warm-light'] {
+    --preview-border: var(--color-stone-200);
+
     /* Text Colors - warmer tones */
     --text-weaker: var(--color-stone-300);
     --text-weak: var(--color-stone-400);
@@ -37,19 +58,36 @@
     --text-strong: var(--color-stone-700);
 
     /* Background Colors - warmer tones */
-    --bg-weak: var(--color-white);
+    --bg-weak: var(--color-gray-0);
     --bg-default: var(--color-stone-50);
     --bg-strong: var(--color-stone-100);
     --bg-stronger: var(--color-stone-200);
+    --bg-strongest: var(--color-stone-100);
 
     /* Icon Colors - warmer tones */
-    --icon-weak: var(--color-stone-300);
+    --icon-weaker: var(--color-gray-0);
+    --icon-weak: var(--color-stone-350);
     --icon-default: var(--color-stone-400);
     --icon-strong: var(--color-stone-700);
 
     /* Stroke/Border Colors - warmer tones */
+    --stroke-weaker: var(--color-gray-0);
+    --stroke-weak: var(--color-stone-350);
     --stroke-default: var(--color-stone-200);
-    --stroke-strong: var(--color-stone-300);
+    --stroke-strong: var(--color-stone-200);
+
+    /* Dropdown Colors */
+    --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
+    --dropdown-bg-cool-light: color-mix(in srgb, #43332a 40%, transparent);
+    --dropdown-bg-item-hover: color-mix(in srgb, #ffffff 25%, transparent);
+    --dropdown-bg-item-stroke: color-mix(in srgb, #ffffff 5%, transparent);
+
+    /* Preview Colors */
+    --preview-col-1: #acc584;
+    --preview-col-2: #e0a082;
+
+    /* Button Colors */
+    --button-default: var(--color-white);
 
     /* NG Hover - white with 50% opacity */
     --ng-hover: color-mix(in srgb, var(--color-white) 50%, transparent);
@@ -57,54 +95,92 @@
 
 /* Cool Dark Theme – uses Tailwind gray scale, inverted */
 [data-theme='cool-dark'] {
-    /* Text Colors - inverted for dark */
-    --text-weaker: var(--color-gray-500);
-    --text-weak: var(--color-gray-400);
-    --text-default: var(--color-gray-300);
-    --text-strong: var(--color-gray-50);
+    --preview-border: var(--color-gray-600);
 
-    /* Background Colors - dark tones */
-    --bg-weak: var(--color-gray-900);
-    --bg-default: var(--color-gray-800);
-    --bg-strong: var(--color-gray-700);
-    --bg-stronger: var(--color-gray-600);
+    /* Text Colors - inverted for dark */
+    --text-weaker: var(--color-gray-600);
+    --text-weak: var(--color-gray-500);
+    --text-default: var(--color-gray-400);
+    --text-strong: var(--color-gray-350);
+
+    /* Background Colors - dark tones (Navy) */
+    --bg-weak: var(--color-navy-700);
+    --bg-default: var(--color-navy-800);
+    --bg-strong: var(--color-navy-700);
+    --bg-stronger: var(--color-navy-500);
+    --bg-strongest: var(--color-navy-500);
 
     /* Icon Colors - dark theme */
-    --icon-weak: var(--color-gray-500);
-    --icon-default: var(--color-gray-400);
-    --icon-strong: var(--color-gray-50);
+    --icon-weaker: var(--color-gray-600);
+    --icon-weak: var(--color-gray-400);
+    --icon-default: var(--color-gray-500);
+    --icon-strong: var(--color-gray-350);
 
     /* Stroke/Border Colors - dark theme */
-    --stroke-default: var(--color-gray-700);
-    --stroke-strong: var(--color-gray-600);
+    --stroke-weaker: var(--color-navy-950);
+    --stroke-weak: var(--color-navy-900);
+    --stroke-default: var(--color-navy-600);
+    --stroke-strong: var(--color-navy-600);
 
-    /* NG Hover - white with 50% opacity */
-    --ng-hover: color-mix(in srgb, var(--color-white) 50%, transparent);
+    /* Dropdown Colors */
+    --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
+    --dropdown-bg-cool-light: color-mix(in srgb, #000917 30%, transparent);
+    --dropdown-bg-item-hover: color-mix(in srgb, #000000 25%, transparent);
+    --dropdown-bg-item-stroke: color-mix(in srgb, #000000 5%, transparent);
+
+    /* Preview Colors */
+    --preview-col-1: #3d699c;
+    --preview-col-2: #a45358;
+
+    /* Button Colors */
+    --button-default: var(--color-navy-500);
+
+    /* NG Hover - black with 50% opacity */
+    --ng-hover: color-mix(in srgb, #000000 50%, transparent);
 }
 
 /* Warm Dark Theme – uses Tailwind stone scale, inverted */
 [data-theme='warm-dark'] {
+    --preview-border: var(--color-stone-600);
+
     /* Text Colors - warm dark tones */
-    --text-weaker: var(--color-stone-500);
-    --text-weak: var(--color-stone-400);
-    --text-default: var(--color-stone-300);
-    --text-strong: var(--color-stone-50);
+    --text-weaker: var(--color-stone-600);
+    --text-weak: var(--color-stone-500);
+    --text-default: var(--color-stone-400);
+    --text-strong: var(--color-stone-350);
 
     /* Background Colors - warm dark tones */
-    --bg-weak: var(--color-stone-900);
-    --bg-default: var(--color-stone-800);
-    --bg-strong: var(--color-stone-700);
-    --bg-stronger: var(--color-stone-600);
+    --bg-weak: var(--color-brown-700);
+    --bg-default: var(--color-brown-800);
+    --bg-strong: var(--color-brown-700);
+    --bg-stronger: var(--color-brown-500);
+    --bg-strongest: var(--color-brown-500);
 
     /* Icon Colors - warm dark */
-    --icon-weak: var(--color-stone-500);
-    --icon-default: var(--color-stone-400);
-    --icon-strong: var(--color-stone-50);
+    --icon-weaker: var(--color-stone-600);
+    --icon-weak: var(--color-stone-350);
+    --icon-default: var(--color-stone-500);
+    --icon-strong: var(--color-stone-350);
 
     /* Stroke/Border Colors - warm dark */
-    --stroke-default: var(--color-stone-700);
-    --stroke-strong: var(--color-stone-600);
+    --stroke-weaker: var(--color-brown-950);
+    --stroke-weak: var(--color-brown-900);
+    --stroke-default: var(--color-brown-600);
+    --stroke-strong: var(--color-brown-600);
 
-    /* NG Hover - white with 50% opacity */
-    --ng-hover: color-mix(in srgb, var(--color-white) 50%, transparent);
+    /* Dropdown Colors */
+    --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
+    --dropdown-bg-cool-light: color-mix(in srgb, #0f0700 30%, transparent);
+    --dropdown-bg-item-hover: color-mix(in srgb, #000000 25%, transparent);
+    --dropdown-bg-item-stroke: color-mix(in srgb, #000000 5%, transparent);
+
+    /* Preview Colors */
+    --preview-col-1: #697d41;
+    --preview-col-2: #9b5f36;
+
+    /* Button Colors */
+    --button-default: var(--color-brown-500);
+
+    /* NG Hover - black with 50% opacity */
+    --ng-hover: color-mix(in srgb, #000000 50%, transparent);
 }

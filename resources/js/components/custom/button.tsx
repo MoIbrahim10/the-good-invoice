@@ -80,22 +80,36 @@ interface IconWrapperProps {
 /**
  * Icon wrapper with transition styles
  */
-const IconWrapper = ({ children, size, disabled }: IconWrapperProps) => (
-    <span
-        className={cn(
-            iconSizeClasses[size],
-            'transition-all duration-200 ease-in-out',
-            '[&>svg]:h-full [&>svg]:w-full',
-            'flex items-center justify-center',
-            // Default state
-            '[&_path]:stroke-icon-strong [&>svg]:text-text-strong',
-            // Disabled state
-            disabled && '[&_path]:stroke-icon-weak [&>svg]:text-text-weaker',
-        )}
-    >
-        {children}
-    </span>
-);
+const IconWrapper = ({ children, size, disabled }: IconWrapperProps) => {
+    const icon = React.isValidElement(children)
+        ? React.cloneElement(
+              children as React.ReactElement<{ className?: string }>,
+              {
+                  className: cn(
+                      (children.props as { className?: string }).className,
+                      'size-[inherit]',
+                  ),
+              },
+          )
+        : children;
+
+    return (
+        <span
+            className={cn(
+                iconSizeClasses[size],
+                'transition-all duration-200 ease-in-out',
+                '[&>svg]:h-full [&>svg]:w-full',
+                'flex items-center justify-center',
+                // Default state
+                '[&>svg]:text-text-strong',
+                // Disabled state
+                disabled && '[&>svg]:text-text-weaker',
+            )}
+        >
+            {icon}
+        </span>
+    );
+};
 
 // ============================================================================
 // Custom Button Component
