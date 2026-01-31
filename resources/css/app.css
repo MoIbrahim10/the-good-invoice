@@ -85,6 +85,20 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@utility border-b-layered {
+    border-bottom: 1px solid var(--stroke-default);
+    --layered-shadow-b: 0 1px 0 0 var(--bg-weak);
+    box-shadow: var(--layered-shadow-t, 0 0 0 0 transparent),
+        var(--layered-shadow-b, 0 0 0 0 transparent);
+}
+
+@utility border-t-layered {
+    border-top: 1px solid var(--stroke-default);
+    --layered-shadow-t: inset 0 1px 0 0 var(--bg-weak);
+    box-shadow: var(--layered-shadow-t, 0 0 0 0 transparent),
+        var(--layered-shadow-b, 0 0 0 0 transparent);
+}
+
 @utility bg-tooltip-glass {
     background:
         linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
@@ -94,7 +108,11 @@
 @utility bg-feedback-glass {
     background:
         linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
-        linear-gradient(180deg, rgba(167, 167, 167, 0.55) 0%, rgba(125, 125, 125, 0.55) 100%);
+        linear-gradient(
+            180deg,
+            rgba(167, 167, 167, 0.55) 0%,
+            rgba(125, 125, 125, 0.55) 100%
+        );
 }
 
 :root {

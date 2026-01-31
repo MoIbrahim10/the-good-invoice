@@ -48,7 +48,9 @@ export function LightDarkIcon({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 animate={{
-                    stroke: isDark ? 'var(--icon-strong)' : 'var(--icon-strong)',
+                    stroke: isDark
+                        ? 'var(--icon-strong)'
+                        : 'var(--icon-strong)',
                 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
             />
@@ -58,7 +60,9 @@ export function LightDarkIcon({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 animate={{
-                    stroke: isDark ? 'var(--icon-strong)' : 'var(--icon-strong)',
+                    stroke: isDark
+                        ? 'var(--icon-strong)'
+                        : 'var(--icon-strong)',
                 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
             />
@@ -68,7 +72,9 @@ export function LightDarkIcon({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 animate={{
-                    stroke: isDark ? 'var(--icon-strong)' : 'var(--icon-strong)',
+                    stroke: isDark
+                        ? 'var(--icon-strong)'
+                        : 'var(--icon-strong)',
                 }}
                 transition={{ delay: 0.2, duration: 0.3 }}
             />

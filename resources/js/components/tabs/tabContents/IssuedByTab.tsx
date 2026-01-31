@@ -1,6 +1,8 @@
 import { useId } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
+import { LabeledInput } from '../../custom/labeled-input';
+import { LabeledTextarea } from '../../custom/labeled-textarea';
 import { LogoUpload } from '../components/LogoUpload';
 
 export function IssuedByTab() {
@@ -22,74 +24,51 @@ export function IssuedByTab() {
             {/* Input Fields Section */}
             <div className="flex flex-col gap-2 p-3">
                 {/* Name Field */}
-                <div className="flex items-center gap-4">
-                    <label
-                        htmlFor={nameId}
-                        className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong"
-                    >
-                        Name
-                    </label>
-                    <input
-                        id={nameId}
-                        type="text"
-                        value={issuer.companyName}
-                        onChange={(e) =>
-                            updateIssuer({ companyName: e.target.value })
-                        }
-                        placeholder="Jane Doe"
-                        className="flex-1 rounded-md border border-stroke-default bg-bg-default px-3 py-2 text-sm text-text-strong placeholder:text-text-weak focus:ring-1 focus:ring-stroke-strong focus:outline-none"
-                    />
-                </div>
+                <LabeledInput
+                    id={nameId}
+                    label="Name"
+                    labelClassName="w-14 shrink-0"
+                    value={issuer.companyName}
+                    onChange={(e) =>
+                        updateIssuer({ companyName: e.target.value })
+                    }
+                    placeholder="Jane Doe"
+                />
 
                 {/* Email Field */}
-                <div className="flex items-center gap-4">
-                    <label
-                        htmlFor={emailId}
-                        className="w-20 shrink-0 text-sm leading-none font-normal text-text-strong"
-                    >
-                        Email
-                    </label>
-                    <input
-                        id={emailId}
-                        type="email"
-                        value={issuer.contact.email || ''}
-                        onChange={(e) =>
-                            updateIssuer({
-                                contact: {
-                                    ...issuer.contact,
-                                    email: e.target.value,
-                                },
-                            })
-                        }
-                        placeholder="jane@example.com"
-                        className="flex-1 rounded-md border border-stroke-default bg-bg-default px-3 py-2 text-sm text-text-strong placeholder:text-text-weak focus:ring-1 focus:ring-stroke-strong focus:outline-none"
-                    />
-                </div>
+                <LabeledInput
+                    id={emailId}
+                    label="Email"
+                    labelClassName="w-14 shrink-0"
+                    type="email"
+                    value={issuer.contact.email || ''}
+                    onChange={(e) =>
+                        updateIssuer({
+                            contact: {
+                                ...issuer.contact,
+                                email: e.target.value,
+                            },
+                        })
+                    }
+                    placeholder="jane@example.com"
+                />
 
                 {/* Address Field */}
-                <div className="flex items-start gap-4">
-                    <label
-                        htmlFor={addressId}
-                        className="w-20 shrink-0 pt-2 text-sm leading-none font-normal text-text-strong"
-                    >
-                        Address
-                    </label>
-                    <textarea
-                        id={addressId}
-                        value={issuer.address.line1}
-                        onChange={(e) =>
-                            updateIssuer({
-                                address: {
-                                    ...issuer.address,
-                                    line1: e.target.value,
-                                },
-                            })
-                        }
-                        placeholder="Street, city, country"
-                        rows={3}
-                        className="flex-1 resize-none rounded-md border border-stroke-default bg-bg-default px-3 py-2 text-sm text-text-strong placeholder:text-text-weak focus:ring-1 focus:ring-stroke-strong focus:outline-none"
-                    />
-                </div>
+                <LabeledTextarea
+                    id={addressId}
+                    label="Address"
+                    labelClassName="w-14 shrink-0"
+                    value={issuer.address.line1}
+                    onChange={(e) =>
+                        updateIssuer({
+                            address: {
+                                ...issuer.address,
+                                line1: e.target.value,
+                            },
+                        })
+                    }
+                    placeholder="Street, city, country"
+                />
             </div>
         </div>
     );

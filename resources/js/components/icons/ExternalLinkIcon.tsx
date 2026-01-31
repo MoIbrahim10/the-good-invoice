@@ -3,7 +3,10 @@ type ExternalLinkIconProps = {
     size?: number;
 };
 
-export function ExternalLinkIcon({ className = '', size = 14 }: ExternalLinkIconProps) {
+export function ExternalLinkIcon({
+    className = '',
+    size = 14,
+}: ExternalLinkIconProps) {
     return (
         <svg
             width={size}
@@ -18,8 +21,8 @@ export function ExternalLinkIcon({ className = '', size = 14 }: ExternalLinkIcon
             <path
                 d="M10.7917 9.04159V3.20825M10.7917 3.20825H4.95833M10.7917 3.20825L3.5 10.4999"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );

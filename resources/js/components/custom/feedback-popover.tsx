@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { ExternalLinkIcon } from '../icons/ExternalLinkIcon';
 
@@ -17,25 +21,35 @@ function FeedbackItem({ avatar, username, href }: FeedbackItemProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-                "group flex w-full items-center justify-between rounded-[4px] py-[6px] pl-[8px] pr-[6px] transition-all border border-transparent",
-                "hover:bg-[rgba(255,255,255,0.25)] hover:border-[rgba(255,255,255,0.05)]"
+                'group flex w-full items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[6px] pl-[8px] transition-all',
+                'hover:border-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.25)]',
             )}
         >
             <div className="flex items-center gap-2">
                 <Avatar className="size-5 border border-[rgba(0,0,0,0.1)]">
                     <AvatarImage src={avatar} alt={username} />
-                    <AvatarFallback className="text-[8px]">{username.slice(1, 3).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback className="text-[8px]">
+                        {username.slice(1, 3).toUpperCase()}
+                    </AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-normal text-white">{username}</span>
+                <span className="text-sm font-normal text-white">
+                    {username}
+                </span>
             </div>
             <ExternalLinkIcon className="text-white opacity-60 transition-opacity group-hover:opacity-100" />
         </a>
     );
 }
 
-export function FeedbackPopover({ children }: { children: React.ReactElement<{ className?: string }> }) {
+export function FeedbackPopover({
+    children,
+}: {
+    children: React.ReactElement<{ className?: string }>;
+}) {
     const [open, setOpen] = React.useState(false);
-    const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+    const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+        null,
+    );
 
     const handleOpen = () => {
         if (closeTimeoutRef.current) {
@@ -69,7 +83,7 @@ export function FeedbackPopover({ children }: { children: React.ReactElement<{ c
                 {React.cloneElement(children, {
                     className: cn(
                         children.props.className,
-                        open && 'shadow-none [&_span]:opacity-50'
+                        open && 'shadow-none [&_span]:opacity-50',
                     ),
                 })}
             </PopoverTrigger>
@@ -80,12 +94,14 @@ export function FeedbackPopover({ children }: { children: React.ReactElement<{ c
                 onMouseEnter={handleOpen}
                 onMouseLeave={handleClose}
                 className={cn(
-                    'w-[200px] flex flex-col items-start gap-1 p-1',
-                    'bg-feedback-glass border-stroke-weak shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] rounded-md'
+                    'flex w-[200px] flex-col items-start gap-1 p-1',
+                    'border-stroke-weak rounded-md shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] bg-feedback-glass',
                 )}
             >
-                <div className="py-[4px] pl-[8px] pr-[6px]">
-                    <span className="text-[12px] font-medium leading-[15px] text-gray-50">Share feedback</span>
+                <div className="py-[4px] pr-[6px] pl-[8px]">
+                    <span className="text-[12px] leading-[15px] font-medium text-gray-50">
+                        Share feedback
+                    </span>
                 </div>
                 <div className="flex w-full flex-col gap-0.5">
                     <FeedbackItem

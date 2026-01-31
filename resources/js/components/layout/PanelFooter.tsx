@@ -1,12 +1,12 @@
 import { CustomButton } from '@/components/custom/button';
+import { FeedbackPopover } from '@/components/custom/feedback-popover';
+import { useAppearance } from '@/hooks/use-appearance';
+import { useTheme } from '@/hooks/use-theme';
 import { ExportIcon } from '../icons/ExportIcon';
 import { FeedbackIcon } from '../icons/FeedbackIcon';
 import { LightDarkIcon } from '../icons/LightDarkIcon';
 import { ThemeIcon } from '../icons/ThemeIcon';
-import { FeedbackPopover } from '@/components/custom/feedback-popover';
 import { PanelSection } from './PanelSection';
-import { useAppearance } from '@/hooks/use-appearance';
-import { useTheme } from '@/hooks/use-theme';
 
 export function PanelFooter() {
     const { updateAppearance, resolvedAppearance } = useAppearance();
@@ -57,10 +57,7 @@ export function PanelFooter() {
                         className="border-none bg-transparent shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
-                                content:
-                                    palette === 'warm'
-                                        ? 'Cool'
-                                        : 'Warm',
+                                content: palette === 'warm' ? 'Cool' : 'Warm',
                             },
                         }}
                     />

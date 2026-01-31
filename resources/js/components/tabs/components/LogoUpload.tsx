@@ -36,7 +36,7 @@ export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
     };
 
     return (
-        <div className="flex flex-col border-b border-stroke-default p-3">
+        <div className="flex flex-col border-b-layered p-3">
             {/* use logo section */}
             <div className="flex justify-between">
                 <Field orientation="horizontal">

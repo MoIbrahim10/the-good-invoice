@@ -135,7 +135,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
         // Custom styles to override shadcn Button defaults
         const customClasses = cn(
             // Override shadcn defaults
-            'border border-stroke-default bg-white',
+            'border border-stroke-default bg-bg-weak',
             'shadow-[0px_1px_2px_rgba(0,0,0,0.05)]',
             'rounded-[6px]',
             'transition-all duration-200 ease-in-out',
@@ -144,7 +144,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             // Hover state for icon (only when not disabled)
             !disabled && '[&:active_span]:opacity-50 [&:hover_span]:opacity-50',
             // Hover background override
-            'hover:bg-white',
+            'hover:bg-bg-weak',
             // Icon only sizing
             isIconOnly && iconOnlySizeClasses[size],
             // Text sizing
