@@ -12,6 +12,8 @@ export function CommandIcon({ className = '', size = 14 }: CommandIconProps) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={className}
+            aria-label="Command Icon"
+            role="img"
         >
             <path
                 fillRule="evenodd"

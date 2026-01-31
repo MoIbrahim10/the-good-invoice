@@ -1,8 +1,10 @@
-import { useId } from "react"
-import { Field, FieldLabel } from "@/components/ui/field"
-import { Switch } from "@/components/ui/switch"
+import { AnimatePresence, motion } from 'motion/react';
+import { useId, useRef, useState } from 'react';
+import { CustomButton } from '@/components/custom/button';
+import { RectangularSwitch } from '@/components/custom/rectangular-switch';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { DeleteIcon } from '../../icons/DeleteIcon';
 import { LogoIcon } from '../../icons/LogoIcon';
-import { Button } from '../../layout/Button';
 
 type LogoUploadProps = {
     logo: string | null;
@@ -11,6 +13,9 @@ type LogoUploadProps = {
 
 export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
     const switchId = useId();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [checked, setChecked] = useState<boolean>(true);
+
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -23,62 +28,108 @@ export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
         }
     };
 
+    const handleRemoveLogo = () => {
+        onUpload('');
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
     return (
-        <div className='flex flex-col gap-3 p-3 border-b border-stroke-default'>
-            { /* use logo section */}
-            <div className='flex justify-between '>
-<Field orientation="horizontal">
-        <FieldLabel htmlFor={switchId}>Include logo on invoice</FieldLabel>
-        <Switch id={switchId} size="default" />
-      </Field>
-            </div>
-        <div className="w-full flex items-stretch gap-2.5">
-            {/* Logo Placeholder */}
-            <div
-                className="flex aspect-square w-[38px] flex-row items-center justify-center self-stretch rounded-md border border-dashed border-stroke-strong bg-bg-strong px-3 py-2"
-            >
-                <div>
-                    {logo ? (
-                        <img
-                            src={logo}
-                            alt="Logo"
-                            className="rounded-md object-contain"
-                        />
-                    ) : (
-                        <LogoIcon size={18} />
-                    )}
-                </div>
-            </div>
-
-            {/* Logo Info and Upload */}
-            <div className="w-full flex h-fit items-end justify-between gap-2.5">
-                <div className="flex flex-col gap-1">
-                    <h3 className="flex items-center text-sm leading-[17px] font-normal text-text-default">
-                        Your logo
-                    </h3>
-                    <p className="flex items-center text-sm leading-[17px] font-normal text-text-weaker">
-                        Square (1:1) format only.
-                    </p>
-                </div>
-
-                <label className="shrink-0 cursor-pointer">
-                    <input
-                        type="file"
-                        accept="image/svg+xml,image/png,image/jpeg,image/jpg"
-                        onChange={handleLogoUpload}
-                        className="hidden"
+        <div className="flex flex-col border-b border-stroke-default p-3">
+            {/* use logo section */}
+            <div className="flex justify-between">
+                <Field orientation="horizontal">
+                    <FieldLabel htmlFor={switchId}>
+                        Include logo on invoice
+                    </FieldLabel>
+                    <RectangularSwitch
+                        id={switchId}
+                        size="default"
+                        checked={checked}
+                        onCheckedChange={setChecked}
                     />
-                    <Button>Upload</Button>
-                </label>
+                </Field>
             </div>
-        </div>
-        <div>
-            <div className="flex flex-row justify-end items-center p-2 w-fit bg-bg-weak border border-stroke-default rounded-[4px]">
 
-            <div className="flex flex-col items-end p-0 w-[12px] h-[16px] bg-text-default rounded-[2px]"></div>
+            <AnimatePresence initial={false}>
+                {checked && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                    >
+                        <div className="flex w-full items-stretch gap-2.5 pt-3">
+                            {/* Logo Placeholder */}
+                            <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-dashed border-stroke-strong bg-bg-strong p-1">
+                                {logo ? (
+                                    <img
+                                        src={logo}
+                                        alt="Logo"
+                                        className="h-full w-full rounded-sm object-contain"
+                                    />
+                                ) : (
+                                    <LogoIcon size={18} />
+                                )}
+                            </div>
 
-            </div>
-        </div>
+                            {/* Logo Info and Upload */}
+                            <div className="flex h-fit w-full items-end justify-between gap-2.5">
+                                <div className="flex flex-col gap-1">
+                                    <h3 className="flex items-center text-sm leading-[17px] font-normal text-text-default">
+                                        Your logo
+                                    </h3>
+                                    <p className="flex items-center text-sm leading-[17px] font-normal text-text-weaker">
+                                        Square (1:1) format only.
+                                    </p>
+                                </div>
+
+                                <div className="flex shrink-0 items-center gap-2">
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        accept="image/svg+xml,image/png,image/jpeg,image/jpg"
+                                        onChange={handleLogoUpload}
+                                        className="hidden"
+                                    />
+                                    {logo ? (
+                                        <div className="flex items-center gap-3">
+                                            <CustomButton
+                                                icon={<DeleteIcon />}
+                                                ariaLabel="Remove logo"
+                                                size="default"
+                                                onClick={handleRemoveLogo}
+                                                tooltips={{
+                                                    default: {
+                                                        content: 'Remove logo',
+                                                    },
+                                                }}
+                                            />
+                                            <CustomButton
+                                                text="Replace"
+                                                size="default"
+                                                onClick={() =>
+                                                    fileInputRef.current?.click()
+                                                }
+                                            />
+                                        </div>
+                                    ) : (
+                                        <CustomButton
+                                            text="Upload"
+                                            size="default"
+                                            onClick={() =>
+                                                fileInputRef.current?.click()
+                                            }
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
