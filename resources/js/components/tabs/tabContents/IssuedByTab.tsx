@@ -1,6 +1,6 @@
 import { useId } from 'react';
-import { useInvoiceActions } from '../../../hooks/useInvoiceActions';
-import { useInvoiceState } from '../../../hooks/useInvoiceState';
+import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { LogoUpload } from '../components/LogoUpload';
 
 export function IssuedByTab() {

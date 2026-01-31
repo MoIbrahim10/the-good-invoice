@@ -1,5 +1,5 @@
-import type { InvoiceAction, InvoiceState } from '../types/state';
 import type { InvoiceData } from '../types/invoice';
+import type { InvoiceAction, InvoiceState } from '../types/state';
 
 const initialInvoiceData: InvoiceData = {
     issuer: {
