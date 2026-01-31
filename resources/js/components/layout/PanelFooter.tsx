@@ -1,39 +1,83 @@
+import { CustomButton } from '@/components/custom/button';
+import { ExportIcon } from '../icons/ExportIcon';
+import { FeedbackIcon } from '../icons/FeedbackIcon';
 import { LightDarkIcon } from '../icons/LightDarkIcon';
 import { ThemeIcon } from '../icons/ThemeIcon';
-import { FeedbackIcon } from '../icons/FeedbackIcon';
-import { ExportIcon } from '../icons/ExportIcon';
+import { FeedbackPopover } from '@/components/custom/feedback-popover';
 import { PanelSection } from './PanelSection';
-import { IconButton } from './IconButton';
-import { Button } from './Button';
+import { useAppearance } from '@/hooks/use-appearance';
+import { useTheme } from '@/hooks/use-theme';
 
 export function PanelFooter() {
+    const { updateAppearance, resolvedAppearance } = useAppearance();
+    const { palette, setPalette } = useTheme();
+
     const handleExport = () => {
         // Placeholder for export functionality
         console.log('Export clicked');
+    };
+
+    const toggleAppearance = () => {
+        updateAppearance(resolvedAppearance === 'dark' ? 'light' : 'dark');
+    };
+
+    const togglePalette = () => {
+        setPalette(palette === 'warm' ? 'cool' : 'warm');
     };
 
     return (
         <PanelSection className="justify-between">
             <div className="flex items-center gap-2">
                 <div className="flex items-center rounded-md bg-bg-strong">
-                    <IconButton
-                        icon={<LightDarkIcon size={18} />}
+                    <CustomButton
+                        onClick={toggleAppearance}
+                        icon={
+                            <LightDarkIcon
+                                size={18}
+                                isDark={resolvedAppearance === 'dark'}
+                            />
+                        }
                         ariaLabel="Light/Dark"
+                        className="border-none bg-transparent shadow-none hover:bg-transparent"
+                        tooltips={{
+                            default: {
+                                content:
+                                    resolvedAppearance === 'dark'
+                                        ? 'Light'
+                                        : 'Dark',
+                            },
+                        }}
                     />
-                    <IconButton
-                        icon={<ThemeIcon size={18} />}
+                    <CustomButton
+                        onClick={togglePalette}
+                        icon={
+                            <ThemeIcon size={18} isWarm={palette === 'warm'} />
+                        }
                         ariaLabel="Warm/Cool"
+                        className="border-none bg-transparent shadow-none hover:bg-transparent"
+                        tooltips={{
+                            default: {
+                                content:
+                                    palette === 'warm'
+                                        ? 'Cool'
+                                        : 'Warm',
+                            },
+                        }}
                     />
                 </div>
-                <IconButton
-                    icon={<FeedbackIcon size={18} />}
-                    ariaLabel="Feedback"
-                />
+                <FeedbackPopover>
+                    <CustomButton
+                        icon={<FeedbackIcon size={18} />}
+                        ariaLabel="Feedback"
+                        className="border-none bg-bg-strong p-1.5 shadow-none hover:bg-bg-strong"
+                    />
+                </FeedbackPopover>
             </div>
-            <Button onClick={handleExport}>
-                <ExportIcon size={18} />
-                <span>Export</span>
-            </Button>
+            <CustomButton
+                onClick={handleExport}
+                icon={<ExportIcon size={18} />}
+                text="Export"
+            />
         </PanelSection>
     );
 }

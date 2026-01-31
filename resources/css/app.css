@@ -86,7 +86,15 @@
 }
 
 @utility bg-tooltip-glass {
-    background: linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)), rgba(125, 125, 125, 0.55)
+    background:
+        linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
+        rgba(125, 125, 125, 0.55);
+}
+
+@utility bg-feedback-glass {
+    background:
+        linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
+        linear-gradient(180deg, rgba(167, 167, 167, 0.55) 0%, rgba(125, 125, 125, 0.55) 100%);
 }
 
 :root {

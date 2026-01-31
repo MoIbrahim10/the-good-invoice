@@ -64,7 +64,7 @@ function TooltipContent({
                     // Border radius
                     'rounded-[4px]',
                     // Typography
-                    'text-[12px] text-gray-50 font-medium',
+                    'text-[12px] font-medium text-gray-50',
                     // Animations
                     'animate-in fade-in-0 zoom-in-95',
                     'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
