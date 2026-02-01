@@ -164,7 +164,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             // Text sizing
             (isTextOnly || isTextWithIcon) && textSizeClasses[size],
             // Text styles
-            'font-medium text-text-strong leading-normal!',
+            'font-medium text-text-strong leading-tight!',
             // Disabled text
             disabled && 'text-text-weaker opacity-100',
             className,
