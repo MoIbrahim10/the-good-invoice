@@ -39,7 +39,7 @@ export function LogoUpload({
             {/* use logo section */}
             <div className="flex justify-between">
                 <Field orientation="horizontal">
-                    <FieldLabel htmlFor={switchId} className="text-sm font-normal whitespace-nowrap text-text-default">
+                    <FieldLabel htmlFor={switchId} className="text-[14px] font-normal whitespace-nowrap text-text-default">
                         Include logo on invoice
                     </FieldLabel>
                     <RectangularSwitch
@@ -77,10 +77,10 @@ export function LogoUpload({
                             {/* Logo Info and Upload */}
                             <div className="flex h-fit w-full items-end justify-between gap-2.5">
                                 <div className="flex flex-col gap-1">
-                                    <h3 className="flex items-center text-sm font-normal text-text-default">
+                                    <h3 className="flex items-center text-[14px] font-normal text-text-default">
                                         Your logo
                                     </h3>
-                                    <p className="flex items-center text-sm font-normal text-text-weaker">
+                                    <p className="flex items-center text-[14px] font-normal text-text-weaker">
                                         Square (1:1) format only.
                                     </p>
                                 </div>

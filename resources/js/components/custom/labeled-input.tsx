@@ -37,7 +37,7 @@ const LabeledInput = React.forwardRef<HTMLInputElement, LabeledInputProps>(
                 <Label
                     htmlFor={inputId}
                     className={cn(
-                        'text-sm font-normal whitespace-nowrap text-text-default',
+                        'text-[14px] font-normal whitespace-nowrap text-text-default',
                         labelClassName,
                     )}
                 >
@@ -47,7 +47,7 @@ const LabeledInput = React.forwardRef<HTMLInputElement, LabeledInputProps>(
                     id={inputId}
                     ref={ref}
                     className={cn(
-                        'h-auto min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent',
+                        'h-auto min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent',
                         className,
                     )}
                     aria-invalid={error ? true : undefined}

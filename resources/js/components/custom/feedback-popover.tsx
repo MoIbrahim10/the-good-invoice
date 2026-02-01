@@ -32,7 +32,7 @@ function FeedbackItem({ avatar, username, href }: FeedbackItemProps) {
                         {username.slice(1, 3).toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-normal text-white">
+                <span className="text-[14px] font-normal text-white">
                     {username}
                 </span>
             </div>

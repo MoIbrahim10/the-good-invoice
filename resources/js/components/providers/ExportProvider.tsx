@@ -117,7 +117,7 @@ function ExportOverlay({
                                 ease: 'linear',
                             }}
                         />
-                        <p className="text-sm font-medium text-text-strong">
+                        <p className="text-[14px] font-medium text-text-strong">
                             Preparing PDF...
                         </p>
                     </>
@@ -153,7 +153,7 @@ function ExportOverlay({
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-sm font-medium text-text-strong"
+                        className="text-[14px] font-medium text-text-strong"
                     >
                         Downloaded!
                     </motion.p>

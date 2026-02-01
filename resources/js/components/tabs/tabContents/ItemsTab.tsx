@@ -134,7 +134,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-sm font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
+                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-[14px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
                                         />
                                         {isTouched(
                                             `items.${index}.description`,
@@ -221,7 +221,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.quantity`) &&
                                         isDirty(`items.${index}.quantity`) &&
@@ -249,7 +249,7 @@ export function ItemsTab() {
                                             Item {index + 1} rate
                                         </label>
                                         <span
-                                            className="shrink-0 text-sm text-text-weak"
+                                            className="shrink-0 text-[14px] text-text-weak"
                                             aria-hidden="true"
                                         >
                                             {selectedCurrency.symbol}
@@ -311,7 +311,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.rate`) &&
                                         isDirty(`items.${index}.rate`) &&
@@ -332,21 +332,21 @@ export function ItemsTab() {
                                     <div className="flex justify-center">
                                         {index === 0 ? (
                                             <CustomButton
-                                                icon={<PlusIcon size={16} />}
+                                                icon={<PlusIcon size={18} />}
                                                 size="default"
                                                 onClick={handleAddItem}
                                                 disabled={items.length >= 5}
-                                                className="aspect-square h-[32px] p-2"
+                                                className="aspect-square w-[32px] h-[32px] p-[7px]"
                                                 ariaLabel="Add item."
                                             />
                                         ) : (
                                             <CustomButton
-                                                icon={<DeleteIcon size={16} />}
+                                                icon={<DeleteIcon size={18} />}
                                                 size="default"
                                                 onClick={() =>
                                                     removeItem(item.id)
                                                 }
-                                                className="aspect-square h-[32px] p-2"
+                                                className="aspect-square w-[32px] h-[32px] p-[7px]"
                                                 ariaLabel="Remove item."
                                             />
                                         )}

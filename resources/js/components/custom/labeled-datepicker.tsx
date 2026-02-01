@@ -47,7 +47,7 @@ const LabeledDatePicker = React.forwardRef<
                 <Label
                     htmlFor={inputId}
                     className={cn(
-                        'text-sm font-normal whitespace-nowrap text-text-default',
+                        'text-[14px] font-normal whitespace-nowrap text-text-default',
                         labelClassName,
                     )}
                 >
@@ -58,7 +58,7 @@ const LabeledDatePicker = React.forwardRef<
                     ref={ref}
                     dateFormat={format}
                     className={cn(
-                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent',
+                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent',
                         className,
                     )}
                     placeholder={placeholder || defaultPlaceholder}

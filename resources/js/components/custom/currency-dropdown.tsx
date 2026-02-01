@@ -1,14 +1,14 @@
+import { ChevronDown } from 'lucide-react';
 import { cloneElement, isValidElement, type ReactElement } from 'react';
-import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 import { currencies } from '@/data/currencies';
+import { cn } from '@/lib/utils';
 
 interface CurrencyDropdownProps {
     value: string;
@@ -41,7 +41,7 @@ export function CurrencyDropdown({
                     >
                         <Label
                             className={cn(
-                                'cursor-default text-sm font-normal whitespace-nowrap text-text-default',
+                                'cursor-default text-[14px] font-normal whitespace-nowrap text-text-default',
                                 labelClassName,
                             )}
                         >
@@ -50,7 +50,7 @@ export function CurrencyDropdown({
                         <div className="flex flex-1 items-center justify-between">
                             <div className="flex items-center gap-[6px]">
                                 {selectedCurrency.flagIcon}
-                                <span className="text-sm font-normal text-text-strong">
+                                <span className="text-[14px] font-normal text-text-strong">
                                     {selectedCurrency.code}
                                 </span>
                             </div>
@@ -80,11 +80,11 @@ export function CurrencyDropdown({
                                 <div className="flex size-5 items-center justify-center">
                                     {currency.flagIcon}
                                 </div>
-                                <span className="text-sm font-normal text-white">
+                                <span className="text-[14px] font-normal text-white">
                                     {currency.name}
                                 </span>
                             </div>
-                            <div className="flex items-center justify-center text-xs text-white">
+                            <div className="flex items-center justify-center text-[12px] text-white">
                                 {isValidElement(currency.symbolIcon)
                                     ? cloneElement(
                                           currency.symbolIcon as ReactElement<{

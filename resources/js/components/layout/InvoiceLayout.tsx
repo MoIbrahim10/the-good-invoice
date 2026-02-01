@@ -96,7 +96,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                                 type="button"
                                 onClick={() => setViewTab(tab.id)}
                                 className={cn(
-                                    'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                    'relative rounded-md px-3 py-2 text-[14px] font-medium transition-colors',
                                     viewTab === tab.id
                                         ? 'text-text-strong'
                                         : 'text-text-default hover:text-text-strong',
@@ -125,7 +125,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                                 type="button"
                                 onClick={() => setViewTab(tab.id)}
                                 className={cn(
-                                    'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                    'relative rounded-md px-3 py-2 text-[14px] font-medium transition-colors',
                                     viewTab === tab.id
                                         ? 'text-text-strong'
                                         : 'text-text-default hover:text-text-strong',

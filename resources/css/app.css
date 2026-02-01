@@ -288,7 +288,7 @@
 @layer base {
     html {
         font-family: var(--font-sans);
-        line-height: 1.5;
+        line-height: normal;
         font-weight: 400;
 
         font-synthesis: none;

@@ -62,7 +62,7 @@ export function LabeledAdjustableInput({
         >
             <Label
                 htmlFor={inputId}
-                className="mr-2 text-sm font-normal whitespace-nowrap text-text-default"
+                className="mr-2 text-[14px] font-normal whitespace-nowrap text-text-default"
             >
                 {label}
             </Label>
@@ -76,7 +76,7 @@ export function LabeledAdjustableInput({
                 value={value === 0 ? '' : value}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className="h-auto flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="h-auto flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             <CustomButton
                 icon={
