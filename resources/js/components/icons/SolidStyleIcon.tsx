@@ -38,12 +38,12 @@ export function SolidStyleIcon({
                         rx="4"
                         fill="var(--bg-weak)"
                     />
-                    <mask id={maskId1} fill="white">
+                    <mask id={maskId1} fill="var(--bg--weak)">
                         <path d="M11 11H128V28.9189H11V11Z" />
                     </mask>
                     <path d="M11 11H128V28.9189H11V11Z" fill="var(--bg-weak)" />
                     <path
-                        d="M128 28.9189V28.1189H11V28.9189V29.7189H128V28.9189Z"
+                        d="M128 28.9189V28.4189H11V28.9189V29.4189H128V28.9189Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId1})"
                     />
@@ -79,7 +79,7 @@ export function SolidStyleIcon({
                         rx="1.05405"
                         fill="var(--bg-strongest)"
                     />
-                    <mask id={maskId2} fill="white">
+                    <mask id={maskId2} fill="var(--bg-weak)">
                         <path d="M11 28.9187H128V50.2633H11V28.9187Z" />
                     </mask>
                     <path
@@ -87,7 +87,7 @@ export function SolidStyleIcon({
                         fill="var(--bg-weak)"
                     />
                     <path
-                        d="M128 50.2633V49.4633H11V50.2633V51.0633H128V50.2633Z"
+                        d="M128 50.2633V49.7633H11V50.2633V50.7633H128V50.2633Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId2})"
                     />
@@ -139,7 +139,7 @@ export function SolidStyleIcon({
                         rx="1.05405"
                         fill="var(--bg-strongest)"
                     />
-                    <mask id={maskId3} fill="white">
+                    <mask id={maskId3} fill="var(--bg--weak)">
                         <path d="M11 50.2634H128V58.4323H11V50.2634Z" />
                     </mask>
                     <path
@@ -147,7 +147,7 @@ export function SolidStyleIcon({
                         fill="var(--bg-weak)"
                     />
                     <path
-                        d="M128 58.4323V57.6323H11V58.4323V59.2323H128V58.4323Z"
+                        d="M128 58.4323V57.9323H11V58.4323V58.9323H128V58.4323Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId3})"
                     />
@@ -159,7 +159,7 @@ export function SolidStyleIcon({
                         rx="1.05405"
                         fill="var(--bg-strongest)"
                     />
-                    <mask id={maskId4} fill="white">
+                    <mask id={maskId4} fill="var(--bg--weak)">
                         <path d="M11 58.4324H128V80.831H11V58.4324Z" />
                     </mask>
                     <path
@@ -188,7 +188,7 @@ export function SolidStyleIcon({
             />
             <defs>
                 <clipPath id={clipId0}>
-                    <rect width="60" height="60" rx="6" fill="white" />
+                    <rect width="60" height="60" rx="6" fill="var(--bg--weak)" />
                 </clipPath>
                 <clipPath id={clipId1}>
                     <rect
@@ -197,7 +197,7 @@ export function SolidStyleIcon({
                         width="117"
                         height="69.8311"
                         rx="4"
-                        fill="white"
+                        fill="var(--bg--weak)"
                     />
                 </clipPath>
             </defs>

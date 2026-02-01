@@ -38,15 +38,15 @@ export function AccentStyleIcon({
                         rx="4"
                         fill="var(--bg-weak)"
                     />
-                    <mask id={maskId1} fill="white">
+                    <mask id={maskId1} fill="var(--bg-weak)">
                         <path d="M11 11H128V28.9189H11V11Z" />
                     </mask>
                     <path
                         d="M11 11H128V28.9189H11V11Z"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <path
-                        d="M128 28.9189V28.1189H11V28.9189V29.7189H128V28.9189Z"
+                        d="M128 28.9189V28.4189H11V28.9189V29.4189H128V28.9189Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId1})"
                     />
@@ -86,7 +86,7 @@ export function AccentStyleIcon({
                         <path d="M11 28.9187H128V50.2633H11V28.9187Z" />
                     </mask>
                     <path
-                        d="M128 50.2633V49.4633H11V50.2633V51.0633H128V50.2633Z"
+                        d="M128 50.2633V49.7633H11V50.2633V50.7633H128V50.2633Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId2})"
                     />
@@ -96,7 +96,7 @@ export function AccentStyleIcon({
                         width="12.9122"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <rect
                         x="15.2168"
@@ -104,7 +104,7 @@ export function AccentStyleIcon({
                         width="10.277"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <rect
                         x="26.5488"
@@ -112,7 +112,7 @@ export function AccentStyleIcon({
                         width="14.4932"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <rect
                         x="15.2168"
@@ -120,7 +120,7 @@ export function AccentStyleIcon({
                         width="19.2365"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <rect
                         x="35.5078"
@@ -128,7 +128,7 @@ export function AccentStyleIcon({
                         width="8.69595"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <rect
                         x="45.2578"
@@ -136,17 +136,17 @@ export function AccentStyleIcon({
                         width="14.4932"
                         height="2.37162"
                         rx="1.05405"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
-                    <mask id={maskId3} fill="white">
+                    <mask id={maskId3} fill="var(--bg-weak)">
                         <path d="M11 50.2634H128V58.4323H11V50.2634Z" />
                     </mask>
                     <path
                         d="M11 50.2634H128V58.4323H11V50.2634Z"
-                        fill="var(--bg-stronger)"
+                        fill="var(--bg-strongest)"
                     />
                     <path
-                        d="M128 58.4323V57.6323H11V58.4323V59.2323H128V58.4323Z"
+                        d="M128 58.4323V57.9323H11V58.4323V58.9323H128V58.4323Z"
                         fill="var(--stroke-default)"
                         mask="url(#${maskId3})"
                     />
@@ -158,7 +158,7 @@ export function AccentStyleIcon({
                         rx="1.05405"
                         fill="var(--bg-weak)"
                     />
-                    <mask id={maskId4} fill="white">
+                    <mask id={maskId4} fill="var(--bg-weak)">
                         <path d="M11 58.4324H128V80.831H11V58.4324Z" />
                     </mask>
                     <path
@@ -169,7 +169,7 @@ export function AccentStyleIcon({
                 </g>
                 <rect
                     x="11.4"
-                    y="11.4"
+                    y="10.4"
                     width="116.2"
                     height="69.0311"
                     rx="3.6"
@@ -187,7 +187,7 @@ export function AccentStyleIcon({
             />
             <defs>
                 <clipPath id={clipId0}>
-                    <rect width="60" height="60" rx="6" fill="white" />
+                    <rect width="60" height="60" rx="6" fill="var(--bg-weak)" />
                 </clipPath>
                 <clipPath id={clipId1}>
                     <rect
@@ -196,10 +196,14 @@ export function AccentStyleIcon({
                         width="117"
                         height="69.8311"
                         rx="4"
-                        fill="white"
+                        fill="var(--bg-weak)"
                     />
                 </clipPath>
             </defs>
         </svg>
     );
 }
+
+
+
+
