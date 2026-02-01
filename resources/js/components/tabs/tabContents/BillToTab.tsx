@@ -2,9 +2,9 @@ import { useId } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { LabeledInput } from '../../custom/labeled-input';
 import { LabeledTextarea } from '../../custom/labeled-textarea';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 
 export function BillToTab() {
     const { state } = useInvoiceState();
@@ -14,24 +14,25 @@ export function BillToTab() {
 
     const billTo = state.data.billTo;
     const placeholders = state.placeholders.billTo;
-    const emailId = useId();
+    const nameId = useId();
     const addressId = useId();
 
     return (
         <div className="flex flex-col gap-2 p-3 border-b-layered">
-            {/* Email Field */}
+            {/* Name Field */}
             <LabeledInput
-                id={emailId}
-                label="Email"
+                id={nameId}
+                name="billto-name"
+                label="Name"
                 labelClassName="w-14 shrink-0"
-                type="email"
-                value={billTo.email}
-                onChange={(e) => updateBillTo({ email: e.target.value })}
-                onBlur={() => touchField('billTo.email')}
-                placeholder={placeholders.email}
+                type="text"
+                value={billTo.name}
+                onChange={(e) => updateBillTo({ name: e.target.value })}
+                onBlur={() => touchField('billTo.name')}
+                placeholder={placeholders.name}
                 error={
-                    isTouched('billTo.email')
-                        ? fieldErrors['billTo.email']
+                    isTouched('billTo.name')
+                        ? fieldErrors['billTo.name']
                         : undefined
                 }
             />
@@ -39,6 +40,7 @@ export function BillToTab() {
             {/* Address Field */}
             <LabeledTextarea
                 id={addressId}
+                name="billto-address"
                 label="Address"
                 labelClassName="w-14 shrink-0"
                 value={billTo.address}

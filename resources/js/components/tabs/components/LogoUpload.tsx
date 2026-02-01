@@ -19,6 +19,7 @@ export function LogoUpload({
     onIncludeLogoChange,
 }: LogoUploadProps) {
     const switchId = useId();
+    const logoUploadId = useId();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +86,12 @@ export function LogoUpload({
                                 </div>
 
                                 <div className="flex shrink-0 items-center gap-2">
+                                    <label className="sr-only" htmlFor={logoUploadId}>
+                                        Upload logo image
+                                    </label>
                                     <input
+                                        id={logoUploadId}
+                                        name="logo-upload"
                                         type="file"
                                         ref={fileInputRef}
                                         accept="image/svg+xml,image/png,image/jpeg,image/jpg"

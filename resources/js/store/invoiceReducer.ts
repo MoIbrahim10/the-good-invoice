@@ -8,7 +8,7 @@ export const defaultPlaceholders: InvoicePlaceholders = {
         address: 'Street, city, country',
     },
     billTo: {
-        email: 'john@example.com',
+        name: 'John Doe',
         address: 'Street, city, country',
     },
     details: {
@@ -31,7 +31,7 @@ const initialInvoiceData: InvoiceData = {
         includeLogo: true,
     },
     billTo: {
-        email: '',
+        name: '',
         address: '',
     },
     details: {

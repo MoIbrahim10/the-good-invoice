@@ -69,6 +69,7 @@ export function DisplayTab() {
                     {displayThemes.map((theme) => (
                         <label
                             key={theme.value}
+                            htmlFor={`display-style-${theme.value}`}
                             className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
                                 selectedStyle === theme.value
                                     ? 'bg-bg-strong'
@@ -76,6 +77,7 @@ export function DisplayTab() {
                             }`}
                         >
                             <input
+                                id={`display-style-${theme.value}`}
                                 type="radio"
                                 name="display-style"
                                 value={theme.value}
@@ -100,6 +102,7 @@ export function DisplayTab() {
                 {displayColors.map((color) => (
                     <label
                         key={color.value}
+                        htmlFor={`display-color-${color.value}`}
                         className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
                             selectedColor === color.value
                                 ? 'bg-bg-strong'
@@ -107,6 +110,7 @@ export function DisplayTab() {
                         }`}
                     >
                         <input
+                            id={`display-color-${color.value}`}
                             type="radio"
                             name="display-color"
                             value={color.value}

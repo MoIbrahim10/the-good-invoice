@@ -12,8 +12,7 @@ import {
     formatCurrencyForDisplay,
     formatNumberForDisplay,
 } from '@/lib/utils';
-import type { InvoiceData, InvoiceItem } from '@/types/invoice';
-import type { InvoicePlaceholders } from '@/types/invoice';
+import type { InvoiceData, InvoiceItem, InvoicePlaceholders } from '@/types/invoice';
 
 const colors = {
     border: '#e5e7eb',
@@ -251,7 +250,7 @@ export function InvoicePdfDocument({
                             <Text
                                 style={[
                                     styles.invoiceNumber,
-                                    invoiceNo.placeholder && styles.addressPlaceholder,
+                                    ...(invoiceNo.placeholder ? [styles.addressPlaceholder] : []),
                                 ]}
                             >
                                 {invoiceNo.text}
@@ -270,8 +269,8 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                previewText(issuer.address, placeholders.issuer.address)
-                                    .placeholder && styles.addressPlaceholder,
+                                ...(previewText(issuer.address, placeholders.issuer.address)
+                                    .placeholder ? [styles.addressPlaceholder] : []),
                             ]}
                         >
                             {previewText(issuer.address, placeholders.issuer.address).text}
@@ -279,8 +278,8 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                previewText(issuer.email, placeholders.issuer.email)
-                                    .placeholder && styles.addressPlaceholder,
+                                ...(previewText(issuer.email, placeholders.issuer.email)
+                                    .placeholder ? [styles.addressPlaceholder] : []),
                             ]}
                         >
                             {previewText(issuer.email, placeholders.issuer.email).text}
@@ -291,20 +290,20 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                previewText(billTo.address, placeholders.billTo.address)
-                                    .placeholder && styles.addressPlaceholder,
+                                ...(previewText(billTo.name, placeholders.billTo.name)
+                                    .placeholder ? [styles.addressPlaceholder] : []),
                             ]}
                         >
-                            {previewText(billTo.address, placeholders.billTo.address).text}
+                            {previewText(billTo.name, placeholders.billTo.name).text}
                         </Text>
                         <Text
                             style={[
                                 styles.addressText,
-                                previewText(billTo.email, placeholders.billTo.email)
-                                    .placeholder && styles.addressPlaceholder,
+                                ...(previewText(billTo.address, placeholders.billTo.address)
+                                    .placeholder ? [styles.addressPlaceholder] : []),
                             ]}
                         >
-                            {previewText(billTo.email, placeholders.billTo.email).text}
+                            {previewText(billTo.address, placeholders.billTo.address).text}
                         </Text>
                     </View>
                 </View>

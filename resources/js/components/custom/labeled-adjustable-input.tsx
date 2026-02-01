@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, type ReactNode } from 'react';
+import { cloneElement, isValidElement, type ReactNode, useId } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { PercentageIcon } from '@/components/icons/PercentageIcon';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,8 @@ interface LabeledAdjustableInputProps {
     currencyIcon: ReactNode;
     placeholder?: string;
     containerClassName?: string;
+    id?: string;
+    name?: string;
 }
 
 export function LabeledAdjustableInput({
@@ -25,7 +27,12 @@ export function LabeledAdjustableInput({
     currencyIcon,
     placeholder = '0',
     containerClassName,
+    id,
+    name,
 }: LabeledAdjustableInputProps) {
+    const generatedId = useId();
+    const inputId = id || generatedId;
+
     const renderedCurrencyIcon = isValidElement(currencyIcon)
         ? cloneElement(currencyIcon as React.ReactElement<{ size?: number }>, {
               size: 14,
@@ -52,10 +59,12 @@ export function LabeledAdjustableInput({
                 containerClassName,
             )}
         >
-            <Label className="mr-2 text-sm leading-[17px] font-normal whitespace-nowrap text-text-default">
+            <Label htmlFor={inputId} className="mr-2 text-sm leading-[17px] font-normal whitespace-nowrap text-text-default">
                 {label}
             </Label>
             <Input
+                id={inputId}
+                name={name}
                 type="number"
                 min={min}
                 max={max}

@@ -2,10 +2,10 @@ import { useEffect, useId, useState } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { CurrencyDropdown } from '../../custom/currency-dropdown';
 import { LabeledDatePicker } from '../../custom/labeled-datepicker';
 import { LabeledInput } from '../../custom/labeled-input';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { formatDate, parseDateString } from '../../ui/datepicker';
 
 export function DetailsTab() {
@@ -80,6 +80,7 @@ export function DetailsTab() {
                 />
                 <LabeledInput
                     id={numberId}
+                    name="invoice-number"
                     label="Invoice no."
                     containerClassName="flex-1"
                     value={details.invoiceNumber}
@@ -99,6 +100,7 @@ export function DetailsTab() {
             {/* Second Row: Due Date */}
             <LabeledDatePicker
                 id={dueId}
+                name="invoice-due-date"
                 label="Due date"
                 value={dueValue}
                 onChange={handleDueChange}

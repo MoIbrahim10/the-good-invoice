@@ -29,7 +29,10 @@ const issuerSchema = z.object({
 });
 
 const billToSchema = z.object({
-    email: z.email('Enter a valid email'),
+    name: z
+        .string()
+        .min(1, 'Name is required')
+        .max(200, 'Name must be at most 200 characters'),
     address: z
         .string()
         .min(1, 'Address is required')

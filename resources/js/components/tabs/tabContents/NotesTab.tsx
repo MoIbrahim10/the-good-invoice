@@ -16,6 +16,7 @@ export function NotesTab() {
             {/* Notes Field */}
             <LabeledTextarea
                 id={notesId}
+                name="invoice-notes"
                 label="Notes"
                 labelClassName="w-14 shrink-0"
                 value={notes}

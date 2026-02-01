@@ -9,7 +9,7 @@ export type IssuerData = {
 };
 
 export type BillToData = {
-    email: string;
+    name: string;
     address: string;
 };
 
@@ -23,7 +23,7 @@ export type InvoiceDetails = {
 
 export type InvoicePlaceholders = {
     issuer: { name: string; email: string; address: string };
-    billTo: { email: string; address: string };
+    billTo: { name: string; address: string };
     details: { invoiceNumber: string; dueDate: string };
     items: { description: string; quantity: string; rate: string };
     notes: string;

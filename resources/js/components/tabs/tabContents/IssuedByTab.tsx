@@ -1,10 +1,10 @@
 import { useId } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
 import { LabeledInput } from '../../custom/labeled-input';
 import { LabeledTextarea } from '../../custom/labeled-textarea';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { LogoUpload } from '../components/LogoUpload';
 
 export function IssuedByTab() {
@@ -35,6 +35,7 @@ export function IssuedByTab() {
                 {/* Name Field */}
                 <LabeledInput
                     id={nameId}
+                    name="issuer-name"
                     label="Name"
                     labelClassName="w-14 shrink-0"
                     value={issuer.name}
@@ -51,6 +52,7 @@ export function IssuedByTab() {
                 {/* Email Field */}
                 <LabeledInput
                     id={emailId}
+                    name="issuer-email"
                     label="Email"
                     labelClassName="w-14 shrink-0"
                     type="email"
@@ -68,6 +70,7 @@ export function IssuedByTab() {
                 {/* Address Field */}
                 <LabeledTextarea
                     id={addressId}
+                    name="issuer-address"
                     label="Address"
                     labelClassName="w-14 shrink-0"
                     value={issuer.address}

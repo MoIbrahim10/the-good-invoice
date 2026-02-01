@@ -81,7 +81,12 @@ export function ItemsTab() {
                                 {/* Description */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex max-h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                        <label className="sr-only" htmlFor={`item-${item.id}-description`}>
+                                            Item {index + 1} description
+                                        </label>
                                         <Input
+                                            id={`item-${item.id}-description`}
+                                            name={`item-${index}-description`}
                                             value={item.description}
                                             onChange={(e) =>
                                                 updateItem(item.id, {
@@ -128,7 +133,12 @@ export function ItemsTab() {
                                 {/* QTY */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                        <label className="sr-only" htmlFor={`item-${item.id}-quantity`}>
+                                            Item {index + 1} quantity
+                                        </label>
                                         <Input
+                                            id={`item-${item.id}-quantity`}
+                                            name={`item-${index}-quantity`}
                                             type="number"
                                             min={QUANTITY_MIN}
                                             max={QUANTITY_MAX}
@@ -190,10 +200,15 @@ export function ItemsTab() {
                                 {/* Rate */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong">
-                                        <span className="shrink-0 text-sm text-text-weak">
+                                        <label className="sr-only" htmlFor={`item-${item.id}-rate`}>
+                                            Item {index + 1} rate
+                                        </label>
+                                        <span className="shrink-0 text-sm text-text-weak" aria-hidden="true">
                                             {selectedCurrency.symbol}
                                         </span>
                                         <Input
+                                            id={`item-${item.id}-rate`}
+                                            name={`item-${index}-rate`}
                                             type="number"
                                             min={RATE_MIN}
                                             max={RATE_MAX}
@@ -284,6 +299,7 @@ export function ItemsTab() {
             <div className="flex gap-2 p-3 border-b-layered border-t-layered">
                 <LabeledAdjustableInput
                     label="Tax"
+                    name="invoice-tax"
                     value={state.data.tax}
                     type={state.data.taxType}
                     onValueChange={(value) => updateTax({ value })}
@@ -293,6 +309,7 @@ export function ItemsTab() {
 
                 <LabeledAdjustableInput
                     label="Discount"
+                    name="invoice-discount"
                     value={state.data.discount}
                     type={state.data.discountType}
                     onValueChange={(value) => updateDiscount({ value })}

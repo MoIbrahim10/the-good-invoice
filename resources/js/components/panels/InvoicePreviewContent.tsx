@@ -265,8 +265,8 @@ export function InvoicePreviewContent({
                                 }
                             >
                                 <PreviewText
-                                    value={billTo.address}
-                                    placeholder={placeholders.billTo.address}
+                                    value={billTo.name}
+                                    placeholder={placeholders.billTo.name}
                                 />
                             </p>
                             <p
@@ -277,8 +277,8 @@ export function InvoicePreviewContent({
                                 }
                             >
                                 <PreviewText
-                                    value={billTo.email}
-                                    placeholder={placeholders.billTo.email}
+                                    value={billTo.address}
+                                    placeholder={placeholders.billTo.address}
                                 />
                             </p>
                         </div>
