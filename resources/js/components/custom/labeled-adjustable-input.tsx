@@ -3,6 +3,7 @@ import { CustomButton } from '@/components/custom/button';
 import { PercentageIcon } from '@/components/icons/PercentageIcon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { TAX_DISCOUNT_MAX } from '@/lib/invoiceLimits';
 import { cn } from '@/lib/utils';
 
 interface LabeledAdjustableInputProps {
@@ -41,7 +42,7 @@ export function LabeledAdjustableInput({
 
     const isPercentage = type === 'percentage';
     const min = 0;
-    const max = isPercentage ? 100 : 999_999_999;
+    const max = isPercentage ? 100 : TAX_DISCOUNT_MAX;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const raw = Number(e.target.value);
@@ -55,11 +56,11 @@ export function LabeledAdjustableInput({
     return (
         <div
             className={cn(
-                'flex min-h-[33px] flex-1 items-center rounded-[6px] border border-stroke-default bg-bg-weak py-2 ps-3 pe-1.5 shadow-none transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
+                'flex h-[32px] min-h-[32px] flex-1 items-center rounded-[6px] border border-stroke-default bg-bg-weak py-2 ps-3 pe-1.5 shadow-none transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
                 containerClassName,
             )}
         >
-            <Label htmlFor={inputId} className="mr-2 text-sm leading-[17px] font-normal whitespace-nowrap text-text-default">
+            <Label htmlFor={inputId} className="mr-2 text-sm font-normal whitespace-nowrap text-text-default">
                 {label}
             </Label>
             <Input

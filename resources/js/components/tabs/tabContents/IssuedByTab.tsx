@@ -1,4 +1,9 @@
 import { useId } from 'react';
+import {
+    ADDRESS_MAX_LENGTH,
+    EMAIL_MAX_LENGTH,
+    NAME_MAX_LENGTH,
+} from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
@@ -38,6 +43,7 @@ export function IssuedByTab() {
                     name="issuer-name"
                     label="Name"
                     labelClassName="w-14 shrink-0"
+                    maxLength={NAME_MAX_LENGTH}
                     value={issuer.name}
                     onChange={(e) => updateIssuer({ name: e.target.value })}
                     onBlur={() => touchField('issuer.name')}
@@ -56,6 +62,7 @@ export function IssuedByTab() {
                     label="Email"
                     labelClassName="w-14 shrink-0"
                     type="email"
+                    maxLength={EMAIL_MAX_LENGTH}
                     value={issuer.email}
                     onChange={(e) => updateIssuer({ email: e.target.value })}
                     onBlur={() => touchField('issuer.email')}
@@ -73,6 +80,7 @@ export function IssuedByTab() {
                     name="issuer-address"
                     label="Address"
                     labelClassName="w-14 shrink-0"
+                    maxLength={ADDRESS_MAX_LENGTH}
                     value={issuer.address}
                     onChange={(e) => updateIssuer({ address: e.target.value })}
                     onBlur={() => touchField('issuer.address')}

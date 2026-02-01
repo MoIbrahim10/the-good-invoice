@@ -210,7 +210,7 @@ export function TabNavigation() {
                                 if (!rect) return null;
                                 const isUnvisited = !tab.isVisited;
                                 const labelClasses = cn(
-                                    'flex items-center justify-center px-[10px] py-[6px] text-[14px] font-normal leading-none whitespace-nowrap',
+                                    'flex items-center justify-center px-[10px] py-[6px] text-[14px] font-normal whitespace-nowrap',
                                     tab.isActive && 'text-text-strong',
                                     (!tab.isActive && tab.isVisited) || isUnvisited
                                         ? 'text-text-default'

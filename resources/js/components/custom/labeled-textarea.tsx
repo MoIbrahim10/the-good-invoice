@@ -40,7 +40,7 @@ const LabeledTextarea = React.forwardRef<
                 <Label
                     htmlFor={inputId}
                     className={cn(
-                        'pt-0.5 text-sm leading-[17px] font-normal whitespace-nowrap text-text-default',
+                        'pt-0.5 text-sm font-normal whitespace-nowrap text-text-default',
                         labelClassName,
                     )}
                 >

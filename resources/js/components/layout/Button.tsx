@@ -14,7 +14,7 @@ export function Button({
     disabled = false,
 }: ButtonProps) {
     const baseClasses =
-        'flex items-center gap-1.5 py-[7px] px-[10px] bg-bg-weak border border-stroke-default rounded-md hover:opacity-90 transition-opacity cursor-default text-sm font-medium leading-[17px] text-text-strong';
+        'flex items-center gap-1.5 py-[7px] px-[10px] bg-bg-weak border border-stroke-default rounded-md hover:opacity-90 transition-opacity cursor-default text-sm font-medium text-text-strong';
 
     const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
 

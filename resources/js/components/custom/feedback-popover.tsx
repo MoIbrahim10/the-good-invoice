@@ -99,7 +99,7 @@ export function FeedbackPopover({
                 )}
             >
                 <div className="py-[4px] pr-[6px] pl-[8px]">
-                    <span className="text-[12px] leading-[15px] font-medium text-gray-50">
+                    <span className="text-[12px] font-medium text-gray-50">
                         Share feedback
                     </span>
                 </div>

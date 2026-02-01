@@ -150,8 +150,8 @@ export function InvoicePreviewContent({
                             </AnimatePresence>
                         )}
 
-                        <div className="flex w-full flex-col justify-center gap-[2px]">
-                            <h1 className="text-[12px] text-text-strong">
+                        <div className="flex w-full min-w-0 flex-col justify-center gap-[2px]">
+                            <h1 className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 Invoice from{' '}
                                 <PreviewText
                                     value={issuer.name}
@@ -193,89 +193,41 @@ export function InvoicePreviewContent({
                     </div>
 
                     {/* Addresses */}
-                    <div
-                        className={
-                            forExport
-                                ? 'grid min-w-0 grid-cols-2 gap-2.5 p-4'
-                                : 'grid grid-cols-2 gap-2.5 p-4'
-                        }
-                    >
-                        <div
-                            className={
-                                forExport
-                                    ? 'flex min-w-0 flex-col gap-1 overflow-visible'
-                                    : 'flex flex-col gap-1'
-                            }
-                        >
+                    <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4">
+                        <div className="flex min-w-0 flex-col gap-1 overflow-visible">
                             <h3 className="text-[12px] text-text-default">
                                 Bill from
                             </h3>
-                            <p
-                                className={
-                                    forExport
-                                        ? 'min-w-0 text-[12px] text-text-strong wrap-break-word overflow-visible'
-                                        : 'text-[12px] text-text-strong'
-                                }
-                            >
+                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 <PreviewText
                                     value={issuer.name}
                                     placeholder={placeholders.issuer.name}
                                 />
                             </p>
-                            <p
-                                className={
-                                    forExport
-                                        ? 'min-w-0 text-[12px] text-text-strong wrap-break-word overflow-visible'
-                                        : 'text-[12px] text-text-strong'
-                                }
-                            >
+                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 <PreviewText
                                     value={issuer.address}
                                     placeholder={placeholders.issuer.address}
                                 />
                             </p>
-                            <p
-                                className={
-                                    forExport
-                                        ? 'min-w-0 text-[12px] text-text-strong wrap-break-word overflow-visible'
-                                        : 'text-[12px] text-text-strong'
-                                }
-                            >
+                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 <PreviewText
                                     value={issuer.email}
                                     placeholder={placeholders.issuer.email}
                                 />
                             </p>
                         </div>
-                        <div
-                            className={
-                                forExport
-                                    ? 'flex min-w-0 flex-col gap-1 overflow-visible'
-                                    : 'flex flex-col gap-1'
-                            }
-                        >
+                        <div className="flex min-w-0 flex-col gap-1 overflow-visible">
                             <h3 className="text-[12px] text-text-default">
                                 Bill to
                             </h3>
-                            <p
-                                className={
-                                    forExport
-                                        ? 'min-w-0 text-[12px] text-text-strong wrap-break-word overflow-visible'
-                                        : 'text-[12px] text-text-strong'
-                                }
-                            >
+                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 <PreviewText
                                     value={billTo.name}
                                     placeholder={placeholders.billTo.name}
                                 />
                             </p>
-                            <p
-                                className={
-                                    forExport
-                                        ? 'min-w-0 text-[12px] text-text-strong wrap-break-word overflow-visible'
-                                        : 'text-[12px] text-text-strong'
-                                }
-                            >
+                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
                                 <PreviewText
                                     value={billTo.address}
                                     placeholder={placeholders.billTo.address}

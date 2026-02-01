@@ -1,4 +1,5 @@
 import { useEffect, useId, useState } from 'react';
+import { INVOICE_NUMBER_MAX_LENGTH } from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
@@ -83,6 +84,7 @@ export function DetailsTab() {
                     name="invoice-number"
                     label="Invoice no."
                     containerClassName="flex-1"
+                    maxLength={INVOICE_NUMBER_MAX_LENGTH}
                     value={details.invoiceNumber}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         updateDetails({ invoiceNumber: e.target.value })

@@ -4,6 +4,17 @@ import {
     getDueDateValidationError,
 } from '@/components/ui/datepicker';
 import type { InvoiceData } from '@/types/invoice';
+import {
+    ADDRESS_MAX_LENGTH,
+    DUE_DATE_INPUT_LENGTH,
+    INVOICE_NUMBER_MAX_LENGTH,
+    ITEM_DESCRIPTION_MAX_LENGTH,
+    NAME_MAX_LENGTH,
+    NOTES_MAX_LENGTH,
+    QUANTITY_MAX,
+    RATE_MAX,
+    TAX_DISCOUNT_MAX,
+} from '@/lib/invoiceLimits';
 
 const currencyCodeSchema = z.enum(['USD', 'EUR', 'GBP', 'JPY', 'INR', 'RUB']);
 
@@ -20,23 +31,23 @@ const issuerSchema = z.object({
     name: z
         .string()
         .min(1, 'Name is required')
-        .max(200, 'Name must be at most 200 characters'),
+        .max(NAME_MAX_LENGTH, `Name must be at most ${NAME_MAX_LENGTH} characters`),
     email: z.email('Enter a valid email'),
     address: z
         .string()
         .min(1, 'Address is required')
-        .max(500, 'Address must be at most 500 characters'),
+        .max(ADDRESS_MAX_LENGTH, `Address must be at most ${ADDRESS_MAX_LENGTH} characters`),
 });
 
 const billToSchema = z.object({
     name: z
         .string()
         .min(1, 'Name is required')
-        .max(200, 'Name must be at most 200 characters'),
+        .max(NAME_MAX_LENGTH, `Name must be at most ${NAME_MAX_LENGTH} characters`),
     address: z
         .string()
         .min(1, 'Address is required')
-        .max(500, 'Address must be at most 500 characters'),
+        .max(ADDRESS_MAX_LENGTH, `Address must be at most ${ADDRESS_MAX_LENGTH} characters`),
 });
 
 const dueDateSchema = z.union([
@@ -53,7 +64,7 @@ const detailsSchema = z.object({
     invoiceNumber: z
         .string()
         .min(1, 'Invoice number is required')
-        .max(50, 'Invoice number must be at most 50 characters'),
+        .max(INVOICE_NUMBER_MAX_LENGTH, `Invoice number must be at most ${INVOICE_NUMBER_MAX_LENGTH} characters`),
     dueDate: dueDateSchema,
     currency: currencyCodeSchema,
 });
@@ -63,15 +74,15 @@ const invoiceItemSchema = z.object({
     description: z
         .string()
         .min(1, 'Description is required')
-        .max(500, 'Description must be at most 500 characters'),
+        .max(ITEM_DESCRIPTION_MAX_LENGTH, `Description must be at most ${ITEM_DESCRIPTION_MAX_LENGTH} characters`),
     quantity: z
         .number()
         .min(0, 'Quantity must be 0 or greater')
-        .max(999_999, 'Quantity is too large'),
+        .max(QUANTITY_MAX, 'Quantity is too large'),
     rate: z
         .number()
         .min(0, 'Rate must be 0 or greater')
-        .max(999_999_999, 'Rate is too large'),
+        .max(RATE_MAX, 'Rate is too large'),
 });
 
 const displaySchema = z.object({
@@ -87,11 +98,11 @@ export const invoiceDataSchema = z.object({
         .array(invoiceItemSchema)
         .min(1, 'At least one item is required')
         .max(100, 'Too many items'),
-    tax: z.number().min(0).max(999_999_999),
+    tax: z.number().min(0).max(TAX_DISCOUNT_MAX),
     taxType: z.enum(['percentage', 'currency']),
-    discount: z.number().min(0).max(999_999_999),
+    discount: z.number().min(0).max(TAX_DISCOUNT_MAX),
     discountType: z.enum(['percentage', 'currency']),
-    notes: z.string().max(2000, 'Notes must be at most 2000 characters'),
+    notes: z.string().max(NOTES_MAX_LENGTH, `Notes must be at most ${NOTES_MAX_LENGTH} characters`),
     display: displaySchema,
 });
 
@@ -112,7 +123,7 @@ export function getFieldErrors(data: InvoiceData): Record<string, string> {
     }
 
     const dueDateInput = data.details.dueDateInput ?? '';
-    if (dueDateInput.length === 10) {
+    if (dueDateInput.length === DUE_DATE_INPUT_LENGTH) {
         const dueDateError = getDueDateValidationError(
             dueDateInput,
             'DD/MM/YYYY',

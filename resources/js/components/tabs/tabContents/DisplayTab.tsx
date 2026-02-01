@@ -87,10 +87,10 @@ export function DisplayTab() {
                             />
                             {theme.icon}
                             <div className="flex flex-1 flex-col items-start justify-center">
-                                <span className="text-sm leading-normal font-normal text-text-default">
+                                <span className="text-sm font-normal text-text-default">
                                     {theme.name}
                                 </span>
-                                <span className="text-sm leading-normal font-normal text-text-weak">
+                                <span className="text-sm  font-normal text-text-weak">
                                     {theme.description}
                                 </span>
                             </div>
@@ -128,7 +128,7 @@ export function DisplayTab() {
                                 }
                             />
                         </div>
-                        <span className="text-sm leading-normal font-normal text-text-default">
+                        <span className="text-sm font-normal text-text-default">
                             {color.name}
                         </span>
                     </label>

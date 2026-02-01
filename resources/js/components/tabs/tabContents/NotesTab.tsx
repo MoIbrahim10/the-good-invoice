@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { NOTES_MAX_LENGTH } from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { LabeledTextarea } from '../../custom/labeled-textarea';
@@ -19,6 +20,7 @@ export function NotesTab() {
                 name="invoice-notes"
                 label="Notes"
                 labelClassName="w-14 shrink-0"
+                maxLength={NOTES_MAX_LENGTH}
                 value={notes}
                 onChange={(e) => updateNotes(e.target.value)}
                 placeholder={placeholder}

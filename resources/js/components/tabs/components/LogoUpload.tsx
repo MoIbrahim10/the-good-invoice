@@ -77,10 +77,10 @@ export function LogoUpload({
                             {/* Logo Info and Upload */}
                             <div className="flex h-fit w-full items-end justify-between gap-2.5">
                                 <div className="flex flex-col gap-1">
-                                    <h3 className="flex items-center text-sm leading-[17px] font-normal text-text-default">
+                                    <h3 className="flex items-center text-sm font-normal text-text-default">
                                         Your logo
                                     </h3>
-                                    <p className="flex items-center text-sm leading-[17px] font-normal text-text-weaker">
+                                    <p className="flex items-center text-sm font-normal text-text-weaker">
                                         Square (1:1) format only.
                                     </p>
                                 </div>

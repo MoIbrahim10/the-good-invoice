@@ -1,4 +1,5 @@
 import * as React from "react"
+import { DUE_DATE_INPUT_LENGTH } from "@/lib/invoiceLimits"
 import { cn } from "@/lib/utils"
 import { Input } from "./input"
 
@@ -17,7 +18,7 @@ export function formatDate(date: Date | undefined, _locale = "en-US", format: "M
   if (format === "DD/MM/YYYY") {
     return `${day}/${month}/${year}`;
   }
-  
+
   return `${month}/${day}/${year}`;
 }
 
@@ -141,23 +142,23 @@ type DateInputProps = React.ComponentProps<typeof Input> & {
 
 const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
   ({ className, onChange, value, dateFormat: _dateFormat = "MM/DD/YYYY", ...props }, ref) => {
-    
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       let val = e.target.value;
       const prevVal = String(value || "");
-      
+
       // If the user is adding characters, apply the mask
       if (val.length > prevVal.length) {
         // Strip everything except digits
         const digits = val.replace(/\D/g, '').slice(0, 8);
-        
+
         let masked = "";
         if (digits.length > 0) {
           masked = digits.substring(0, 2);
           if (digits.length > 2) {
-            masked += "/" + digits.substring(2, 4);
+            masked += `/${digits.substring(2, 4)}`;
             if (digits.length > 4) {
-              masked += "/" + digits.substring(4, 8);
+              masked += `/${digits.substring(4, 8)}`;
             }
           }
         }
@@ -172,7 +173,7 @@ const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
           value: val
         }
       } as React.ChangeEvent<HTMLInputElement>;
-      
+
       if (onChange) {
         onChange(syntheticEvent);
       }
@@ -182,7 +183,7 @@ const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       // Allow navigation and deletion keys
       const allowedKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'];
       const isNumber = /^[0-9]$/.test(e.key);
-      
+
       if (!allowedKeys.includes(e.key) && !isNumber && !e.ctrlKey && !e.metaKey) {
         e.preventDefault();
       }
@@ -192,6 +193,7 @@ const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
       <Input
         ref={ref}
         type="text"
+        maxLength={DUE_DATE_INPUT_LENGTH}
         className={cn("tabular-nums rounded-none", className)}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}

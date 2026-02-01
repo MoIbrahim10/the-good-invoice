@@ -27,7 +27,7 @@ export function TabButton({
     buttonRef,
 }: TabButtonProps) {
     const baseClasses =
-        'px-[10px] py-[6px] text-[14px] font-normal leading-none whitespace-nowrap relative rounded-[6px]';
+        'px-[10px] py-[6px] text-[14px] font-normal whitespace-nowrap relative rounded-[6px]';
 
     const isUnvisited = !tab.isVisited;
 

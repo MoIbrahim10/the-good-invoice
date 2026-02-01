@@ -41,7 +41,7 @@ export function CurrencyDropdown({
                     >
                         <Label
                             className={cn(
-                                'cursor-default text-sm leading-[17px] font-normal whitespace-nowrap text-text-default',
+                                'cursor-default text-sm font-normal whitespace-nowrap text-text-default',
                                 labelClassName,
                             )}
                         >
@@ -50,7 +50,7 @@ export function CurrencyDropdown({
                         <div className="flex flex-1 items-center justify-between">
                             <div className="flex items-center gap-[6px]">
                                 {selectedCurrency.flagIcon}
-                                <span className="text-sm leading-[17px] font-normal text-text-strong">
+                                <span className="text-sm font-normal text-text-strong">
                                     {selectedCurrency.code}
                                 </span>
                             </div>

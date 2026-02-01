@@ -1,6 +1,13 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo } from 'react';
 import { currencies } from '@/data/currencies';
+import {
+    ITEM_DESCRIPTION_MAX_LENGTH,
+    QUANTITY_INPUT_MAX_LENGTH,
+    QUANTITY_MAX,
+    RATE_INPUT_MAX_LENGTH,
+    RATE_MAX,
+} from '@/lib/invoiceLimits';
 import { itemRowAnimation } from '@/lib/itemRowAnimation';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
@@ -14,9 +21,7 @@ import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { Input } from '../../ui/input';
 
 const QUANTITY_MIN = 0;
-const QUANTITY_MAX = 999_999;
 const RATE_MIN = 0;
-const RATE_MAX = 999_999_999;
 
 export function ItemsTab() {
     const { state } = useInvoiceState();
@@ -55,13 +60,13 @@ export function ItemsTab() {
                 </colgroup>
                 <thead>
                     <tr>
-                        <th className="pe-2 pb-2 text-left text-[14px] leading-[17px] font-normal text-text-default">
+                        <th className="pe-2 pb-2 text-left text-[14px] font-normal text-text-default">
                             Item
                         </th>
-                        <th className="pe-2 pb-2 text-left text-[14px] leading-[17px] font-normal text-text-default">
+                        <th className="pe-2 pb-2 text-left text-[14px] font-normal text-text-default">
                             QTY
                         </th>
-                        <th className="pe-2 pb-2 text-left text-[14px] leading-[17px] font-normal text-text-default">
+                        <th className="pe-2 pb-2 text-left text-[14px] font-normal text-text-default">
                             Rate
                         </th>
                         <th className="pb-2"></th>
@@ -80,13 +85,14 @@ export function ItemsTab() {
                             >
                                 {/* Description */}
                                 <td className="pe-2 pb-2">
-                                    <div className="flex max-h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
                                         <label className="sr-only" htmlFor={`item-${item.id}-description`}>
                                             Item {index + 1} description
                                         </label>
                                         <Input
                                             id={`item-${item.id}-description`}
                                             name={`item-${index}-description`}
+                                            maxLength={ITEM_DESCRIPTION_MAX_LENGTH}
                                             value={item.description}
                                             onChange={(e) =>
                                                 updateItem(item.id, {
@@ -111,7 +117,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-sm leading-[17px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
+                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-sm font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
                                         />
                                         {isTouched(
                                             `items.${index}.description`,
@@ -148,9 +154,11 @@ export function ItemsTab() {
                                                     : item.quantity
                                             }
                                             onChange={(e) => {
-                                                const raw = Number(
-                                                    e.target.value,
+                                                const val = e.target.value.slice(
+                                                    0,
+                                                    QUANTITY_INPUT_MAX_LENGTH,
                                                 );
+                                                const raw = Number(val);
                                                 const clamped = Math.max(
                                                     QUANTITY_MIN,
                                                     Math.min(
@@ -217,9 +225,11 @@ export function ItemsTab() {
                                                 item.rate === 0 ? '' : item.rate
                                             }
                                             onChange={(e) => {
-                                                const raw = Number(
-                                                    e.target.value,
+                                                const val = e.target.value.slice(
+                                                    0,
+                                                    RATE_INPUT_MAX_LENGTH,
                                                 );
+                                                const raw = Number(val);
                                                 const clamped = Math.max(
                                                     RATE_MIN,
                                                     Math.min(

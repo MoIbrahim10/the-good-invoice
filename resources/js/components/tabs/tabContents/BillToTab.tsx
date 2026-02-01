@@ -1,4 +1,8 @@
 import { useId } from 'react';
+import {
+    ADDRESS_MAX_LENGTH,
+    NAME_MAX_LENGTH,
+} from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
@@ -26,6 +30,7 @@ export function BillToTab() {
                 label="Name"
                 labelClassName="w-14 shrink-0"
                 type="text"
+                maxLength={NAME_MAX_LENGTH}
                 value={billTo.name}
                 onChange={(e) => updateBillTo({ name: e.target.value })}
                 onBlur={() => touchField('billTo.name')}
@@ -43,6 +48,7 @@ export function BillToTab() {
                 name="billto-address"
                 label="Address"
                 labelClassName="w-14 shrink-0"
+                maxLength={ADDRESS_MAX_LENGTH}
                 value={billTo.address}
                 onChange={(e) => updateBillTo({ address: e.target.value })}
                 onBlur={() => touchField('billTo.address')}
