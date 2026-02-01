@@ -188,7 +188,12 @@ export function SolidStyleIcon({
             />
             <defs>
                 <clipPath id={clipId0}>
-                    <rect width="60" height="60" rx="6" fill="var(--bg--weak)" />
+                    <rect
+                        width="60"
+                        height="60"
+                        rx="6"
+                        fill="var(--bg--weak)"
+                    />
                 </clipPath>
                 <clipPath id={clipId1}>
                     <rect

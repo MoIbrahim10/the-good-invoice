@@ -39,7 +39,10 @@ export function LogoUpload({
             {/* use logo section */}
             <div className="flex justify-between">
                 <Field orientation="horizontal">
-                    <FieldLabel htmlFor={switchId} className="text-[14px] font-normal whitespace-nowrap text-text-default">
+                    <FieldLabel
+                        htmlFor={switchId}
+                        className="text-[14px] font-normal whitespace-nowrap text-text-default"
+                    >
                         Include logo on invoice
                     </FieldLabel>
                     <RectangularSwitch

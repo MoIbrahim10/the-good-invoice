@@ -336,7 +336,7 @@ export function ItemsTab() {
                                                 size="default"
                                                 onClick={handleAddItem}
                                                 disabled={items.length >= 5}
-                                                className="aspect-square w-[32px] h-[32px] p-[7px]"
+                                                className="aspect-square h-[32px] w-[32px] p-[7px]"
                                                 ariaLabel="Add item."
                                             />
                                         ) : (
@@ -346,7 +346,7 @@ export function ItemsTab() {
                                                 onClick={() =>
                                                     removeItem(item.id)
                                                 }
-                                                className="aspect-square w-[32px] h-[32px] p-[7px]"
+                                                className="aspect-square h-[32px] w-[32px] p-[7px]"
                                                 ariaLabel="Remove item."
                                             />
                                         )}

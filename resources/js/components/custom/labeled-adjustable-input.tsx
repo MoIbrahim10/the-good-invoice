@@ -76,7 +76,7 @@ export function LabeledAdjustableInput({
                 value={value === 0 ? '' : value}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className="h-auto flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="h-auto flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-[14px] text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             <CustomButton
                 icon={

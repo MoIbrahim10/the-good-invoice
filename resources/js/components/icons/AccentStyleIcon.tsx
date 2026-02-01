@@ -203,7 +203,3 @@ export function AccentStyleIcon({
         </svg>
     );
 }
-
-
-
-

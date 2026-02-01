@@ -1,5 +1,9 @@
-import { ChevronDown } from 'lucide-react';
-import { cloneElement, isValidElement, type ReactElement } from 'react';
+import {
+    cloneElement,
+    isValidElement,
+    type ReactElement,
+    useState,
+} from 'react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,6 +13,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { currencies } from '@/data/currencies';
 import { cn } from '@/lib/utils';
+import { ChevronDownIcon } from '../icons/ChevronDownIcon';
 
 interface CurrencyDropdownProps {
     value: string;
@@ -25,17 +30,18 @@ export function CurrencyDropdown({
     labelClassName,
     containerClassName,
 }: CurrencyDropdownProps) {
+    const [open, setOpen] = useState(false);
     const selectedCurrency =
         currencies.find((c) => c.code === value) || currencies[0];
 
     return (
         <div className={cn('flex flex-col gap-2', containerClassName)}>
-            <DropdownMenu>
+            <DropdownMenu open={open} onOpenChange={setOpen}>
                 <DropdownMenuTrigger asChild>
                     <button
                         type="button"
                         className={cn(
-                            'flex flex-row items-center gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 text-left transition-shadow focus:ring-1 focus:ring-stroke-strong focus:outline-none',
+                            'flex h-[32px] flex-row items-center gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak py-2 ps-3 pe-2 text-left transition-shadow focus:ring-1 focus:ring-stroke-strong focus:outline-none',
                             'group',
                         )}
                     >
@@ -54,16 +60,22 @@ export function CurrencyDropdown({
                                     {selectedCurrency.code}
                                 </span>
                             </div>
-                            <ChevronDown className="h-4 w-4 text-text-weak transition-colors group-hover:text-text-strong" />
+                            <ChevronDownIcon
+                                size={18}
+                                className={cn(
+                                    'shrink-0 transition-transform duration-200',
+                                    open && 'rotate-180',
+                                )}
+                            />
                         </div>
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                     align="end"
-                    sideOffset={8}
+                    sideOffset={6}
                     className={cn(
-                        'flex w-[200px] flex-col items-start gap-1 p-1',
-                        'border-stroke-weak rounded-md shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] bg-feedback-glass',
+                        'flex w-(--radix-dropdown-menu-trigger-width) flex-col items-start p-[2px]',
+                        'border-stroke-weak rounded-[6px] shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] bg-feedback-glass',
                     )}
                 >
                     {currencies.map((currency) => (
@@ -71,7 +83,7 @@ export function CurrencyDropdown({
                             key={currency.code}
                             onClick={() => onChange(currency.code)}
                             className={cn(
-                                'group flex w-full cursor-default items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[6px] pl-[8px] transition-all',
+                                'group flex w-full cursor-default items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[9px] pl-[8px] transition-all',
                                 'hover:border-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.25)]',
                                 'focus:bg-[rgba(255,255,255,0.25)] focus:text-white',
                             )}
@@ -89,6 +101,7 @@ export function CurrencyDropdown({
                                     ? cloneElement(
                                           currency.symbolIcon as ReactElement<{
                                               className?: string;
+                                              size?: number;
                                           }>,
                                           {
                                               className: cn(
@@ -98,8 +111,9 @@ export function CurrencyDropdown({
                                                           className?: string;
                                                       }
                                                   ).className,
-                                                  'text-white',
+                                                  'size-3.5 text-white',
                                               ),
+                                              size: 14,
                                           },
                                       )
                                     : currency.symbolIcon}

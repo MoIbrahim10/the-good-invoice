@@ -55,7 +55,10 @@ const subscribe = (callback: () => void) => {
     return () => listeners.delete(callback);
 };
 
-const notify = (): void => listeners.forEach((listener) => { listener(); });
+const notify = (): void =>
+    listeners.forEach((listener) => {
+        listener();
+    });
 
 const THEME_SWITCHING_ATTR = 'data-theme-switching';
 
