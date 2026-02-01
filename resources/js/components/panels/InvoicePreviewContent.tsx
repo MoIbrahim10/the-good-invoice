@@ -627,7 +627,7 @@ export function InvoicePreviewContent({
                             <h4 className="mb-1 text-[10px] text-text-weak">
                                 Notes
                             </h4>
-                            <p className="text-[10px] text-text-default">
+                            <p className="min-w-0 text-[10px] text-text-default whitespace-pre-wrap wrap-break-word">
                                 <PreviewText
                                     value={notes}
                                     placeholder={placeholders.notes}

@@ -40,7 +40,7 @@ const LabeledTextarea = React.forwardRef<
                 <Label
                     htmlFor={inputId}
                     className={cn(
-                        'pt-0.5 text-[14px] font-normal whitespace-nowrap text-text-default',
+                        'text-[14px] font-normal whitespace-nowrap text-text-default',
                         labelClassName,
                     )}
                 >
@@ -50,7 +50,7 @@ const LabeledTextarea = React.forwardRef<
                     id={inputId}
                     ref={ref}
                     className={cn(
-                        'field-sizing-content max-h-[68px] min-h-[68px] min-w-0 flex-1 resize-none overflow-y-auto rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent',
+                        'field-sizing-content min-h-[68px] max-h-[68px] min-w-0 flex-1 resize-none overflow-y-auto rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 text-[14px] dark:bg-transparent',
                         className,
                     )}
                     aria-invalid={error ? true : undefined}

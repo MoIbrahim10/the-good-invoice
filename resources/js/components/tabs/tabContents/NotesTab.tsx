@@ -19,6 +19,7 @@ export function NotesTab() {
                 id={notesId}
                 name="invoice-notes"
                 label="Notes"
+                className='min-h-[144px]'
                 labelClassName="w-14 shrink-0"
                 maxLength={NOTES_MAX_LENGTH}
                 value={notes}

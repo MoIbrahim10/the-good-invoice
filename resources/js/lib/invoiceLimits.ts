@@ -4,10 +4,10 @@
  */
 export const NAME_MAX_LENGTH = 50;
 export const ADDRESS_MAX_LENGTH = 100;
-export const EMAIL_MAX_LENGTH = 100;
+export const EMAIL_MAX_LENGTH = 30;
 export const INVOICE_NUMBER_MAX_LENGTH = 25;
 export const ITEM_DESCRIPTION_MAX_LENGTH = 100;
-export const NOTES_MAX_LENGTH = 500;
+export const NOTES_MAX_LENGTH = 250;
 export const DUE_DATE_INPUT_LENGTH = 10;
 
 export const QUANTITY_MAX = 999_999;

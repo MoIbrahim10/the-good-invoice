@@ -84,7 +84,7 @@ export function InputPanel() {
         usePage<SharedData>().props.tabsContentAnimation;
 
     return (
-        <div className="mx-auto flex min-h-0 w-full max-w-[446px] shrink-0 flex-col overflow-hidden max-lg:min-h-0 max-lg:flex-1 lg:mx-0 lg:h-full lg:max-h-[626px] lg:max-w-none lg:min-w-[446px]">
+        <div className="mx-auto flex min-h-0 w-full max-w-[446px] shrink-0 flex-col overflow-hidden max-lg:min-h-0 max-lg:flex-1 lg:mx-0 lg:h-full lg:max-h-[626px] lg:max-w-none lg:min-w-[446px] pb-px">
             <div className="flex min-h-0 flex-1 flex-col">
                 <PanelHeader />
                 <TabNavigation />
