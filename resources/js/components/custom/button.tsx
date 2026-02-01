@@ -63,7 +63,7 @@ const iconSizeClasses: Record<ButtonSize, string> = {
 
 const textSizeClasses: Record<ButtonSize, string> = {
     sm: 'h-auto text-[12px] px-2 py-1',
-    default: 'h-auto text-[14px] px-3 py-[7px]',
+    default: 'h-auto text-[14px] px-[10px] py-[7px]',
     lg: 'h-auto text-[16px] px-4 py-[9px]',
 };
 
@@ -164,7 +164,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             // Text sizing
             (isTextOnly || isTextWithIcon) && textSizeClasses[size],
             // Text styles
-            'font-medium text-text-strong',
+            'font-medium text-text-strong leading-none!',
             // Disabled text
             disabled && 'text-text-weaker opacity-100',
             className,
