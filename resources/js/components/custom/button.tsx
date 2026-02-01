@@ -154,7 +154,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
             'rounded-[6px]',
             'transition-all duration-200 ease-in-out',
             // Cursor
-            disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+            disabled ? 'cursor-not-allowed' : 'cursor-default',
             // Hover state for icon (only when not disabled)
             !disabled && '[&:active_span]:opacity-50 [&:hover_span]:opacity-50',
             // Hover background override

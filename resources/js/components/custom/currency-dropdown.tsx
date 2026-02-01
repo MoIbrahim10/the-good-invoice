@@ -41,7 +41,7 @@ export function CurrencyDropdown({
                     >
                         <Label
                             className={cn(
-                                'cursor-pointer text-sm leading-[17px] font-normal whitespace-nowrap text-text-default',
+                                'cursor-default text-sm leading-[17px] font-normal whitespace-nowrap text-text-default',
                                 labelClassName,
                             )}
                         >
@@ -71,7 +71,7 @@ export function CurrencyDropdown({
                             key={currency.code}
                             onClick={() => onChange(currency.code)}
                             className={cn(
-                                'group flex w-full cursor-pointer items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[6px] pl-[8px] transition-all',
+                                'group flex w-full cursor-default items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[6px] pl-[8px] transition-all',
                                 'hover:border-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.25)]',
                                 'focus:bg-[rgba(255,255,255,0.25)] focus:text-white',
                             )}

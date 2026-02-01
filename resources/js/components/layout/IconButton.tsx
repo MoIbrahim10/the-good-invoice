@@ -9,7 +9,7 @@ export function IconButton({ icon, ariaLabel, onClick }: IconButtonProps) {
         <button
             type="button"
             onClick={onClick}
-            className="cursor-pointer rounded-md bg-bg-strong p-1.5 transition-colors hover:bg-bg-stronger"
+            className="cursor-default rounded-md bg-bg-strong p-1.5 transition-colors hover:bg-bg-stronger"
             aria-label={ariaLabel}
         >
             {icon}

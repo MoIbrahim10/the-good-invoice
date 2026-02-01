@@ -69,7 +69,7 @@ export function DisplayTab() {
                     {displayThemes.map((theme) => (
                         <label
                             key={theme.value}
-                            className={`flex flex-1 cursor-pointer items-center gap-2 rounded-md p-1.5 transition-colors ${
+                            className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
                                 selectedStyle === theme.value
                                     ? 'bg-bg-strong'
                                     : 'bg-transparent hover:bg-bg-strong'
@@ -100,7 +100,7 @@ export function DisplayTab() {
                 {displayColors.map((color) => (
                     <label
                         key={color.value}
-                        className={`flex flex-1 cursor-pointer items-center gap-2 rounded-md p-1.5 transition-colors ${
+                        className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
                             selectedColor === color.value
                                 ? 'bg-bg-strong'
                                 : 'bg-transparent hover:bg-bg-strong'

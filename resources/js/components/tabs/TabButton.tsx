@@ -49,7 +49,7 @@ export function TabButton({
     const disabledClasses =
         !isEnabled && !tab.isActive
             ? 'cursor-not-allowed opacity-50'
-            : 'cursor-pointer hover:opacity-90';
+            : 'cursor-default hover:opacity-90';
 
     const handleClick = () => {
         if (isEnabled || tab.isActive || tab.isVisited) {
