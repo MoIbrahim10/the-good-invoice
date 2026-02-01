@@ -106,7 +106,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-sm leading-[17px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
+                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-sm leading-[17px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
                                         />
                                         {isTouched(
                                             `items.${index}.description`,
@@ -170,7 +170,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.quantity`) &&
                                         fieldErrors[
@@ -234,7 +234,7 @@ export function ItemsTab() {
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.rate`) &&
                                         fieldErrors[`items.${index}.rate`] ? (

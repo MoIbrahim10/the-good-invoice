@@ -13,7 +13,7 @@ type TabButtonProps = {
 
 const springTransition = {
     type: 'spring',
-    bounce: 0.2,
+    bounce: 0,
     duration: 0.5,
 } as const;
 

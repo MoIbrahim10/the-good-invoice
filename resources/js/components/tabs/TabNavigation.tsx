@@ -8,8 +8,8 @@ import { TabButton } from './TabButton';
 
 const springTransition = {
     type: 'spring',
-    bounce: 0.25,
-    duration: 0.55,
+    bounce: 0,
+    duration: 0.35,
 } as const;
 
 export type GroupSegment = 'first' | 'middle' | 'last' | 'alone' | null;
