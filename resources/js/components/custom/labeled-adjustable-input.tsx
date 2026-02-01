@@ -60,7 +60,10 @@ export function LabeledAdjustableInput({
                 containerClassName,
             )}
         >
-            <Label htmlFor={inputId} className="mr-2 text-sm font-normal whitespace-nowrap text-text-default">
+            <Label
+                htmlFor={inputId}
+                className="mr-2 text-sm font-normal whitespace-nowrap text-text-default"
+            >
                 {label}
             </Label>
             <Input
@@ -94,8 +97,8 @@ export function LabeledAdjustableInput({
                     default: {
                         content:
                             type === 'percentage'
-                                ? 'Switch to currency'
-                                : 'Switch to percentage',
+                                ? 'Switch to currency.'
+                                : 'Switch to percentage.',
                     },
                 }}
             />

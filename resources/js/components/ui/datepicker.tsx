@@ -72,9 +72,10 @@ export function isDateStringValid(
   return true;
 }
 
+const DATE_ERROR_MESSAGE = "Enter a valid date.";
+
 /**
- * Returns a specific error message for an invalid due date string, or null if valid.
- * Tells the user exactly what is wrong (day, month, year, or combination).
+ * Returns an error message for an invalid due date string, or null if valid.
  */
 export function getDueDateValidationError(
   dateStr: string,
@@ -82,7 +83,7 @@ export function getDueDateValidationError(
   yearRange: number = DUE_DATE_YEAR_RANGE,
 ): string | null {
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
-    return "Enter a date as DD/MM/YYYY (e.g. 31/12/2025).";
+    return DATE_ERROR_MESSAGE;
   }
 
   const parts = dateStr.split('/').map(Number);
@@ -93,29 +94,21 @@ export function getDueDateValidationError(
     [month, day, year] = parts;
   }
 
-  const errors: string[] = [];
-
   if (month < 1 || month > 12) {
-    errors.push("Month must be between 1 and 12.");
+    return DATE_ERROR_MESSAGE;
   }
 
   const currentYear = new Date().getFullYear();
   if (year < currentYear - yearRange || year > currentYear + yearRange) {
-    errors.push(
-      `Year must be between ${currentYear - yearRange} and ${currentYear + yearRange}.`,
-    );
+    return DATE_ERROR_MESSAGE;
   }
 
-  if (errors.length === 0) {
-    const daysInMonth = new Date(year, month, 0).getDate();
-    if (day < 1 || day > daysInMonth) {
-      errors.push(
-        `Day must be between 1 and ${daysInMonth} for this month.`,
-      );
-    }
+  const daysInMonth = new Date(year, month, 0).getDate();
+  if (day < 1 || day > daysInMonth) {
+    return DATE_ERROR_MESSAGE;
   }
 
-  return errors.length > 0 ? errors.join(" ") : null;
+  return null;
 }
 
 /**

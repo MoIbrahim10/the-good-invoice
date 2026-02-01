@@ -14,7 +14,7 @@ type TabButtonProps = {
 };
 
 const joinTransition = {
-    duration: .5,
+    duration: 0.5,
     ease: 'easeInOut' as const,
 };
 
@@ -78,7 +78,9 @@ export function TabButton({
             disabledClasses,
         ),
         'aria-current': tab.isActive ? ('page' as const) : undefined,
-        style: { WebkitTapHighlightColor: 'transparent' } as React.CSSProperties,
+        style: {
+            WebkitTapHighlightColor: 'transparent',
+        } as React.CSSProperties,
     };
 
     if (!tabsAnimation) {

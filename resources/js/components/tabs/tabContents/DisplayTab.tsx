@@ -65,7 +65,7 @@ export function DisplayTab() {
         <div className="flex flex-col">
             <div className="flex flex-col gap-2 p-3">
                 <p>Theme</p>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex flex-wrap gap-2">
                     {displayThemes.map((theme) => (
                         <label
                             key={theme.value}
@@ -90,7 +90,7 @@ export function DisplayTab() {
                                 <span className="text-sm font-normal text-text-default">
                                     {theme.name}
                                 </span>
-                                <span className="text-sm  font-normal text-text-weak">
+                                <span className="text-sm font-normal text-text-weak">
                                     {theme.description}
                                 </span>
                             </div>
@@ -98,7 +98,7 @@ export function DisplayTab() {
                     ))}
                 </div>
             </div>
-            <div className="flex gap-2 p-3 border-b-layered border-t-layered flex-wrap">
+            <div className="flex flex-wrap gap-2 p-3 border-b-layered border-t-layered">
                 {displayColors.map((color) => (
                     <label
                         key={color.value}

@@ -24,10 +24,7 @@ type BubbleStyle = { left: number; top: number; width: number; height: number };
 
 export type GroupSegment = 'first' | 'middle' | 'last' | 'alone' | null;
 
-function getGroupSegment(
-    tabs: TabState[],
-    index: number,
-): GroupSegment {
+function getGroupSegment(tabs: TabState[], index: number): GroupSegment {
     const tab = tabs[index];
     if (!tab.isVisited) {
         return null;
@@ -81,11 +78,15 @@ export function TabNavigation() {
     const activeTabId = tabs.find((t) => t.isActive)?.id ?? tabs[0].id;
 
     const containerRef = useRef<HTMLDivElement>(null);
-    const tabRefs = useRef<Partial<Record<TabId, HTMLButtonElement | null>>>({});
+    const tabRefs = useRef<Partial<Record<TabId, HTMLButtonElement | null>>>(
+        {},
+    );
     const previousActiveIdRef = useRef<TabId>(activeTabId);
 
     const [bubbleStyle, setBubbleStyle] = useState<BubbleStyle | null>(null);
-    const [labelRects, setLabelRects] = useState<Partial<Record<TabId, BubbleStyle>>>({});
+    const [labelRects, setLabelRects] = useState<
+        Partial<Record<TabId, BubbleStyle>>
+    >({});
 
     useLayoutEffect(() => {
         if (!tabsAnimation || !containerRef.current) return;
@@ -131,9 +132,10 @@ export function TabNavigation() {
         setLabelRects(rects);
     }, [activeTabId, tabsAnimation, tabs]);
 
-    const registerButtonRef = (tabId: TabId) => (el: HTMLButtonElement | null) => {
-        tabRefs.current[tabId] = el;
-    };
+    const registerButtonRef =
+        (tabId: TabId) => (el: HTMLButtonElement | null) => {
+            tabRefs.current[tabId] = el;
+        };
 
     const content = segments.map((indices) => {
         const segmentKey =
@@ -154,7 +156,9 @@ export function TabNavigation() {
                     isEnabled={canNavigateToTab(tab.id)}
                     groupSegment={getGroupSegment(tabs, index)}
                     tabsAnimation={tabsAnimation}
-                    buttonRef={tabsAnimation ? registerButtonRef(tab.id) : undefined}
+                    buttonRef={
+                        tabsAnimation ? registerButtonRef(tab.id) : undefined
+                    }
                 />
             );
         });
@@ -212,7 +216,8 @@ export function TabNavigation() {
                                 const labelClasses = cn(
                                     'flex items-center justify-center px-[10px] py-[6px] text-[14px] font-normal whitespace-nowrap',
                                     tab.isActive && 'text-text-strong',
-                                    (!tab.isActive && tab.isVisited) || isUnvisited
+                                    (!tab.isActive && tab.isVisited) ||
+                                        isUnvisited
                                         ? 'text-text-default'
                                         : '',
                                 );

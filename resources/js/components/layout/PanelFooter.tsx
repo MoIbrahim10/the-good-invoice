@@ -41,14 +41,14 @@ export function PanelFooter() {
                                 isDark={resolvedAppearance === 'dark'}
                             />
                         }
-                        ariaLabel="Light/Dark"
+                        ariaLabel="Light/Dark."
                         className="border-none bg-transparent shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
                                 content:
                                     resolvedAppearance === 'dark'
-                                        ? 'Light'
-                                        : 'Dark',
+                                        ? 'Light.'
+                                        : 'Dark.',
                             },
                         }}
                     />
@@ -57,11 +57,11 @@ export function PanelFooter() {
                         icon={
                             <ThemeIcon size={18} isWarm={palette === 'warm'} />
                         }
-                        ariaLabel="Warm/Cool"
+                        ariaLabel="Warm/Cool."
                         className="border-none bg-transparent shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
-                                content: palette === 'warm' ? 'Cool' : 'Warm',
+                                content: palette === 'warm' ? 'Cool.' : 'Warm.',
                             },
                         }}
                     />
@@ -69,7 +69,7 @@ export function PanelFooter() {
                 <FeedbackPopover>
                     <CustomButton
                         icon={<FeedbackIcon size={18} />}
-                        ariaLabel="Feedback"
+                        ariaLabel="Feedback."
                         className="border-none bg-bg-strong p-1.5 shadow-none hover:bg-bg-strong"
                     />
                 </FeedbackPopover>
@@ -82,8 +82,8 @@ export function PanelFooter() {
                 tooltips={{
                     disabled: {
                         content: exportContext?.isExporting
-                            ? 'Preparing PDF...'
-                            : 'Fill in the required fields to export',
+                            ? 'Preparing PDF….'
+                            : 'Fill in the required fields to export.',
                     },
                 }}
             />

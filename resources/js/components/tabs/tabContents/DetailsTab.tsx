@@ -13,7 +13,8 @@ export function DetailsTab() {
     const { state } = useInvoiceState();
     const { updateDetails } = useInvoiceActions();
     const { fieldErrors } = useInvoiceValidation();
-    const { touchField, isTouched } = useInvoiceTouched();
+    const { touchField, clearTouched, isTouched, markDirty, isDirty } =
+        useInvoiceTouched();
 
     const details = state.data.details;
     const placeholders = state.placeholders.details;
@@ -53,6 +54,7 @@ export function DetailsTab() {
     }, [details.dueDate, details.dueDateInput, dueValue]);
 
     const handleDueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        markDirty('details.dueDate');
         const val = e.target.value;
         setDueValue(val);
 
@@ -86,13 +88,16 @@ export function DetailsTab() {
                     containerClassName="flex-1"
                     maxLength={INVOICE_NUMBER_MAX_LENGTH}
                     value={details.invoiceNumber}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        updateDetails({ invoiceNumber: e.target.value })
-                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        markDirty('details.invoiceNumber');
+                        updateDetails({ invoiceNumber: e.target.value });
+                    }}
+                    onFocus={() => clearTouched('details.invoiceNumber')}
                     onBlur={() => touchField('details.invoiceNumber')}
                     placeholder={placeholders.invoiceNumber}
                     error={
-                        isTouched('details.invoiceNumber')
+                        isTouched('details.invoiceNumber') &&
+                        isDirty('details.invoiceNumber')
                             ? fieldErrors['details.invoiceNumber']
                             : undefined
                     }
@@ -106,11 +111,12 @@ export function DetailsTab() {
                 label="Due date"
                 value={dueValue}
                 onChange={handleDueChange}
+                onFocus={() => clearTouched('details.dueDate')}
                 onBlur={() => touchField('details.dueDate')}
                 placeholder={placeholders.dueDate}
                 format="DD/MM/YYYY"
                 error={
-                    isTouched('details.dueDate')
+                    isTouched('details.dueDate') && isDirty('details.dueDate')
                         ? fieldErrors['details.dueDate']
                         : undefined
                 }

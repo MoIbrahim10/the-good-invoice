@@ -28,7 +28,8 @@ export function ItemsTab() {
     const { addItem, updateItem, removeItem, updateTax, updateDiscount } =
         useInvoiceActions();
     const { fieldErrors } = useInvoiceValidation();
-    const { touchField, isTouched } = useInvoiceTouched();
+    const { touchField, clearTouched, isTouched, markDirty, isDirty } =
+        useInvoiceTouched();
 
     const items = state.data.items;
     const currencyCode = state.data.details.currency;
@@ -86,18 +87,31 @@ export function ItemsTab() {
                                 {/* Description */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
-                                        <label className="sr-only" htmlFor={`item-${item.id}-description`}>
+                                        <label
+                                            className="sr-only"
+                                            htmlFor={`item-${item.id}-description`}
+                                        >
                                             Item {index + 1} description
                                         </label>
                                         <Input
                                             id={`item-${item.id}-description`}
                                             name={`item-${index}-description`}
-                                            maxLength={ITEM_DESCRIPTION_MAX_LENGTH}
+                                            maxLength={
+                                                ITEM_DESCRIPTION_MAX_LENGTH
+                                            }
                                             value={item.description}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
+                                                markDirty(
+                                                    `items.${index}.description`,
+                                                );
                                                 updateItem(item.id, {
                                                     description: e.target.value,
-                                                })
+                                                });
+                                            }}
+                                            onFocus={() =>
+                                                clearTouched(
+                                                    `items.${index}.description`,
+                                                )
                                             }
                                             onBlur={() =>
                                                 touchField(
@@ -112,16 +126,20 @@ export function ItemsTab() {
                                                     isTouched(
                                                         `items.${index}.description`,
                                                     ) &&
+                                                    isDirty(
+                                                        `items.${index}.description`,
+                                                    ) &&
                                                     fieldErrors[
                                                         `items.${index}.description`
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-sm font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
+                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-sm font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
                                         />
                                         {isTouched(
                                             `items.${index}.description`,
                                         ) &&
+                                        isDirty(`items.${index}.description`) &&
                                         fieldErrors[
                                             `items.${index}.description`
                                         ] ? (
@@ -139,7 +157,10 @@ export function ItemsTab() {
                                 {/* QTY */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
-                                        <label className="sr-only" htmlFor={`item-${item.id}-quantity`}>
+                                        <label
+                                            className="sr-only"
+                                            htmlFor={`item-${item.id}-quantity`}
+                                        >
                                             Item {index + 1} quantity
                                         </label>
                                         <Input
@@ -154,10 +175,14 @@ export function ItemsTab() {
                                                     : item.quantity
                                             }
                                             onChange={(e) => {
-                                                const val = e.target.value.slice(
-                                                    0,
-                                                    QUANTITY_INPUT_MAX_LENGTH,
+                                                markDirty(
+                                                    `items.${index}.quantity`,
                                                 );
+                                                const val =
+                                                    e.target.value.slice(
+                                                        0,
+                                                        QUANTITY_INPUT_MAX_LENGTH,
+                                                    );
                                                 const raw = Number(val);
                                                 const clamped = Math.max(
                                                     QUANTITY_MIN,
@@ -172,6 +197,11 @@ export function ItemsTab() {
                                                     quantity: clamped,
                                                 });
                                             }}
+                                            onFocus={() =>
+                                                clearTouched(
+                                                    `items.${index}.quantity`,
+                                                )
+                                            }
                                             onBlur={() =>
                                                 touchField(
                                                     `items.${index}.quantity`,
@@ -183,14 +213,18 @@ export function ItemsTab() {
                                                     isTouched(
                                                         `items.${index}.quantity`,
                                                     ) &&
+                                                    isDirty(
+                                                        `items.${index}.quantity`,
+                                                    ) &&
                                                     fieldErrors[
                                                         `items.${index}.quantity`
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.quantity`) &&
+                                        isDirty(`items.${index}.quantity`) &&
                                         fieldErrors[
                                             `items.${index}.quantity`
                                         ] ? (
@@ -208,10 +242,16 @@ export function ItemsTab() {
                                 {/* Rate */}
                                 <td className="pe-2 pb-2">
                                     <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong">
-                                        <label className="sr-only" htmlFor={`item-${item.id}-rate`}>
+                                        <label
+                                            className="sr-only"
+                                            htmlFor={`item-${item.id}-rate`}
+                                        >
                                             Item {index + 1} rate
                                         </label>
-                                        <span className="shrink-0 text-sm text-text-weak" aria-hidden="true">
+                                        <span
+                                            className="shrink-0 text-sm text-text-weak"
+                                            aria-hidden="true"
+                                        >
                                             {selectedCurrency.symbol}
                                         </span>
                                         <Input
@@ -225,10 +265,14 @@ export function ItemsTab() {
                                                 item.rate === 0 ? '' : item.rate
                                             }
                                             onChange={(e) => {
-                                                const val = e.target.value.slice(
-                                                    0,
-                                                    RATE_INPUT_MAX_LENGTH,
+                                                markDirty(
+                                                    `items.${index}.rate`,
                                                 );
+                                                const val =
+                                                    e.target.value.slice(
+                                                        0,
+                                                        RATE_INPUT_MAX_LENGTH,
+                                                    );
                                                 const raw = Number(val);
                                                 const clamped = Math.max(
                                                     RATE_MIN,
@@ -243,6 +287,11 @@ export function ItemsTab() {
                                                     rate: clamped,
                                                 });
                                             }}
+                                            onFocus={() =>
+                                                clearTouched(
+                                                    `items.${index}.rate`,
+                                                )
+                                            }
                                             onBlur={() =>
                                                 touchField(
                                                     `items.${index}.rate`,
@@ -254,14 +303,18 @@ export function ItemsTab() {
                                                     isTouched(
                                                         `items.${index}.rate`,
                                                     ) &&
+                                                    isDirty(
+                                                        `items.${index}.rate`,
+                                                    ) &&
                                                     fieldErrors[
                                                         `items.${index}.rate`
                                                     ]
                                                 )
                                             }
-                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent dark:bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
                                         {isTouched(`items.${index}.rate`) &&
+                                        isDirty(`items.${index}.rate`) &&
                                         fieldErrors[`items.${index}.rate`] ? (
                                             <ErrorIconWithTooltip
                                                 message={
@@ -284,7 +337,7 @@ export function ItemsTab() {
                                                 onClick={handleAddItem}
                                                 disabled={items.length >= 5}
                                                 className="aspect-square h-[32px] p-2"
-                                                ariaLabel="Add item"
+                                                ariaLabel="Add item."
                                             />
                                         ) : (
                                             <CustomButton
@@ -294,7 +347,7 @@ export function ItemsTab() {
                                                     removeItem(item.id)
                                                 }
                                                 className="aspect-square h-[32px] p-2"
-                                                ariaLabel="Remove item"
+                                                ariaLabel="Remove item."
                                             />
                                         )}
                                     </div>

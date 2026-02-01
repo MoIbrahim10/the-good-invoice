@@ -8,11 +8,12 @@ import {
 } from '@react-pdf/renderer';
 import { format } from 'date-fns';
 import { currencies } from '@/data/currencies';
-import {
-    formatCurrencyForDisplay,
-    formatNumberForDisplay,
-} from '@/lib/utils';
-import type { InvoiceData, InvoiceItem, InvoicePlaceholders } from '@/types/invoice';
+import { formatCurrencyForDisplay, formatNumberForDisplay } from '@/lib/utils';
+import type {
+    InvoiceData,
+    InvoiceItem,
+    InvoicePlaceholders,
+} from '@/types/invoice';
 
 const colors = {
     border: '#e5e7eb',
@@ -232,10 +233,7 @@ export function InvoicePdfDocument({
                     {issuer.includeLogo !== false && (
                         <View style={styles.logoBox}>
                             {issuer.logo ? (
-                                <Image
-                                    src={issuer.logo}
-                                    style={styles.logo}
-                                />
+                                <Image src={issuer.logo} style={styles.logo} />
                             ) : (
                                 <Text style={styles.addressText}>—</Text>
                             )}
@@ -246,11 +244,15 @@ export function InvoicePdfDocument({
                             Invoice from {issuerName.text}
                         </Text>
                         <View style={styles.headerRow}>
-                            <Text style={styles.dueDate}>Due {dueDateText}</Text>
+                            <Text style={styles.dueDate}>
+                                Due {dueDateText}
+                            </Text>
                             <Text
                                 style={[
                                     styles.invoiceNumber,
-                                    ...(invoiceNo.placeholder ? [styles.addressPlaceholder] : []),
+                                    ...(invoiceNo.placeholder
+                                        ? [styles.addressPlaceholder]
+                                        : []),
                                 ]}
                             >
                                 {invoiceNo.text}
@@ -264,25 +266,48 @@ export function InvoicePdfDocument({
                     <View style={styles.addressCol}>
                         <Text style={styles.addressTitle}>Bill from</Text>
                         <Text style={styles.addressText}>
-                            {previewText(issuer.name, placeholders.issuer.name).text}
+                            {
+                                previewText(
+                                    issuer.name,
+                                    placeholders.issuer.name,
+                                ).text
+                            }
                         </Text>
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(issuer.address, placeholders.issuer.address)
-                                    .placeholder ? [styles.addressPlaceholder] : []),
+                                ...(previewText(
+                                    issuer.address,
+                                    placeholders.issuer.address,
+                                ).placeholder
+                                    ? [styles.addressPlaceholder]
+                                    : []),
                             ]}
                         >
-                            {previewText(issuer.address, placeholders.issuer.address).text}
+                            {
+                                previewText(
+                                    issuer.address,
+                                    placeholders.issuer.address,
+                                ).text
+                            }
                         </Text>
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(issuer.email, placeholders.issuer.email)
-                                    .placeholder ? [styles.addressPlaceholder] : []),
+                                ...(previewText(
+                                    issuer.email,
+                                    placeholders.issuer.email,
+                                ).placeholder
+                                    ? [styles.addressPlaceholder]
+                                    : []),
                             ]}
                         >
-                            {previewText(issuer.email, placeholders.issuer.email).text}
+                            {
+                                previewText(
+                                    issuer.email,
+                                    placeholders.issuer.email,
+                                ).text
+                            }
                         </Text>
                     </View>
                     <View style={styles.addressCol}>
@@ -290,20 +315,38 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(billTo.name, placeholders.billTo.name)
-                                    .placeholder ? [styles.addressPlaceholder] : []),
+                                ...(previewText(
+                                    billTo.name,
+                                    placeholders.billTo.name,
+                                ).placeholder
+                                    ? [styles.addressPlaceholder]
+                                    : []),
                             ]}
                         >
-                            {previewText(billTo.name, placeholders.billTo.name).text}
+                            {
+                                previewText(
+                                    billTo.name,
+                                    placeholders.billTo.name,
+                                ).text
+                            }
                         </Text>
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(billTo.address, placeholders.billTo.address)
-                                    .placeholder ? [styles.addressPlaceholder] : []),
+                                ...(previewText(
+                                    billTo.address,
+                                    placeholders.billTo.address,
+                                ).placeholder
+                                    ? [styles.addressPlaceholder]
+                                    : []),
                             ]}
                         >
-                            {previewText(billTo.address, placeholders.billTo.address).text}
+                            {
+                                previewText(
+                                    billTo.address,
+                                    placeholders.billTo.address,
+                                ).text
+                            }
                         </Text>
                     </View>
                 </View>
@@ -324,10 +367,12 @@ export function InvoicePdfDocument({
                         items.map((item: InvoiceItem) => (
                             <View key={item.id} style={styles.tableRow}>
                                 <Text style={styles.colItem}>
-                                    {previewText(
-                                        item.description,
-                                        placeholders.items.description,
-                                    ).text}
+                                    {
+                                        previewText(
+                                            item.description,
+                                            placeholders.items.description,
+                                        ).text
+                                    }
                                 </Text>
                                 <Text style={styles.colQty}>
                                     {item.quantity === 0
@@ -371,8 +416,7 @@ export function InvoicePdfDocument({
                     <View style={styles.summaryRow}>
                         <Text>
                             Discount
-                            {discountType === 'percentage' &&
-                                ` (${discount}%)`}
+                            {discountType === 'percentage' && ` (${discount}%)`}
                         </Text>
                         <Text style={styles.summaryAmount}>
                             {formatAmount(-discountAmount)}

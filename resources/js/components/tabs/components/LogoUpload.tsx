@@ -86,7 +86,10 @@ export function LogoUpload({
                                 </div>
 
                                 <div className="flex shrink-0 items-center gap-2">
-                                    <label className="sr-only" htmlFor={logoUploadId}>
+                                    <label
+                                        className="sr-only"
+                                        htmlFor={logoUploadId}
+                                    >
                                         Upload logo image
                                     </label>
                                     <input

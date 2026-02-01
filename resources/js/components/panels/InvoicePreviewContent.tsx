@@ -110,7 +110,7 @@ export function InvoicePreviewContent({
                 <div className="flex h-full w-full flex-col overflow-auto rounded-[6px] border border-gray-100 bg-gray-0">
                     {/* Header */}
                     <div
-                        className={`flex items-center gap-2.5 p-4 border-b-layered transition-colors  duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
+                        className={`flex items-center gap-2.5 p-4 border-b-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
                     >
                         {forExport ? (
                             issuer.includeLogo !== false && logoBox
@@ -151,7 +151,7 @@ export function InvoicePreviewContent({
                         )}
 
                         <div className="flex w-full min-w-0 flex-col justify-center gap-[2px]">
-                            <h1 className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <h1 className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 Invoice from{' '}
                                 <PreviewText
                                     value={issuer.name}
@@ -198,19 +198,19 @@ export function InvoicePreviewContent({
                             <h3 className="text-[12px] text-text-default">
                                 Bill from
                             </h3>
-                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 <PreviewText
                                     value={issuer.name}
                                     placeholder={placeholders.issuer.name}
                                 />
                             </p>
-                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 <PreviewText
                                     value={issuer.address}
                                     placeholder={placeholders.issuer.address}
                                 />
                             </p>
-                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 <PreviewText
                                     value={issuer.email}
                                     placeholder={placeholders.issuer.email}
@@ -221,13 +221,13 @@ export function InvoicePreviewContent({
                             <h3 className="text-[12px] text-text-default">
                                 Bill to
                             </h3>
-                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 <PreviewText
                                     value={billTo.name}
                                     placeholder={placeholders.billTo.name}
                                 />
                             </p>
-                            <p className="min-w-0 wrap-break-word text-[12px] text-text-strong">
+                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
                                 <PreviewText
                                     value={billTo.address}
                                     placeholder={placeholders.billTo.address}

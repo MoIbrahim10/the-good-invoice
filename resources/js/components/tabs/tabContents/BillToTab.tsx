@@ -1,8 +1,5 @@
 import { useId } from 'react';
-import {
-    ADDRESS_MAX_LENGTH,
-    NAME_MAX_LENGTH,
-} from '@/lib/invoiceLimits';
+import { ADDRESS_MAX_LENGTH, NAME_MAX_LENGTH } from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
@@ -14,7 +11,8 @@ export function BillToTab() {
     const { state } = useInvoiceState();
     const { updateBillTo } = useInvoiceActions();
     const { fieldErrors } = useInvoiceValidation();
-    const { touchField, isTouched } = useInvoiceTouched();
+    const { touchField, clearTouched, isTouched, markDirty, isDirty } =
+        useInvoiceTouched();
 
     const billTo = state.data.billTo;
     const placeholders = state.placeholders.billTo;
@@ -32,11 +30,15 @@ export function BillToTab() {
                 type="text"
                 maxLength={NAME_MAX_LENGTH}
                 value={billTo.name}
-                onChange={(e) => updateBillTo({ name: e.target.value })}
+                onChange={(e) => {
+                    markDirty('billTo.name');
+                    updateBillTo({ name: e.target.value });
+                }}
+                onFocus={() => clearTouched('billTo.name')}
                 onBlur={() => touchField('billTo.name')}
                 placeholder={placeholders.name}
                 error={
-                    isTouched('billTo.name')
+                    isTouched('billTo.name') && isDirty('billTo.name')
                         ? fieldErrors['billTo.name']
                         : undefined
                 }
@@ -50,11 +52,15 @@ export function BillToTab() {
                 labelClassName="w-14 shrink-0"
                 maxLength={ADDRESS_MAX_LENGTH}
                 value={billTo.address}
-                onChange={(e) => updateBillTo({ address: e.target.value })}
+                onChange={(e) => {
+                    markDirty('billTo.address');
+                    updateBillTo({ address: e.target.value });
+                }}
+                onFocus={() => clearTouched('billTo.address')}
                 onBlur={() => touchField('billTo.address')}
                 placeholder={placeholders.address}
                 error={
-                    isTouched('billTo.address')
+                    isTouched('billTo.address') && isDirty('billTo.address')
                         ? fieldErrors['billTo.address']
                         : undefined
                 }

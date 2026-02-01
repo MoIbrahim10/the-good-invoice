@@ -45,7 +45,8 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     const [previewExited, setPreviewExited] = useState(true);
     const isLg = useIsLg();
     const tabsAnimation = usePage<SharedData>().props.tabsAnimation;
-    const tabsContentAnimation = usePage<SharedData>().props.tabsContentAnimation;
+    const tabsContentAnimation =
+        usePage<SharedData>().props.tabsContentAnimation;
     const childArray = Children.toArray(children);
     const [inputPanel, previewPanel] = childArray as [
         React.ReactNode,
@@ -73,8 +74,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
         }
     }, [viewTab, tabsContentAnimation]);
 
-    const containerCanClip =
-        viewTab === 'form' && previewExited;
+    const containerCanClip = viewTab === 'form' && previewExited;
 
     const fromRight = direction > 0;
     const slideIn = fromRight ? SLIDE_PX : -SLIDE_PX;
@@ -83,7 +83,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     return (
         <div
             className={cn(
-                'flex w-full flex-col gap-4 overflow-hidden px-6 md:px-12 lg:grid lg:max-h-[650px] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-center lg:gap-6 lg:px-16 xl:px-20 max-lg:py-8',
+                'flex w-full flex-col gap-4 overflow-hidden px-6 max-lg:py-8 md:px-12 lg:grid lg:max-h-[650px] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-center lg:gap-6 lg:px-16 xl:px-20',
                 'max-lg:min-h-[min(100svh,720px)] max-lg:overflow-y-auto',
             )}
         >
@@ -101,7 +101,9 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                                         ? 'text-text-strong'
                                         : 'text-text-default hover:text-text-strong',
                                 )}
-                                style={{ WebkitTapHighlightColor: 'transparent' }}
+                                style={{
+                                    WebkitTapHighlightColor: 'transparent',
+                                }}
                                 aria-current={
                                     viewTab === tab.id ? 'page' : undefined
                                 }
@@ -187,7 +189,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                                         transition: contentExit,
                                     }}
                                     transition={contentEnter}
-                                    className="flex h-full min-h-0 flex-1 flex-col overflow-hidden items-center"
+                                    className="flex h-full min-h-0 flex-1 flex-col items-center overflow-hidden"
                                 >
                                     {inputPanel}
                                 </motion.div>
@@ -221,7 +223,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                     ) : (
                         <>
                             {viewTab === 'form' && (
-                                <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden items-center">
+                                <div className="flex h-full min-h-0 flex-1 flex-col items-center overflow-hidden">
                                     {inputPanel}
                                 </div>
                             )}

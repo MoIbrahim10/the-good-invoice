@@ -209,11 +209,7 @@ export function useExportPdf(
         } finally {
             setIsExporting(false);
         }
-    }, [
-        containerRef,
-        state.data.details.invoiceNumber,
-        setSuccessFeedback,
-    ]);
+    }, [containerRef, state.data.details.invoiceNumber, setSuccessFeedback]);
 
     return { exportPdf, exportPdfBackup, isExporting, exportSuccess };
 }

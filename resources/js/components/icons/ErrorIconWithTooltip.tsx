@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
-import { ErrorIcon } from './ErrorIcon';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../custom/tooltip';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../custom/tooltip';
+import { ErrorIcon } from './ErrorIcon';
 
 type ErrorIconWithTooltipProps = {
     message: string;
@@ -9,11 +9,18 @@ type ErrorIconWithTooltipProps = {
     id?: string;
 };
 
+function ensureTooltipEndsWithPeriod(text: string): string {
+    const trimmed = text.trimEnd();
+    if (trimmed.length === 0) return trimmed;
+    return trimmed.endsWith('.') ? trimmed : `${trimmed}.`;
+}
+
 export function ErrorIconWithTooltip({
     message,
     className,
     id,
 }: ErrorIconWithTooltipProps) {
+    const displayMessage = ensureTooltipEndsWithPeriod(message);
     return (
         <Tooltip>
             <TooltipTrigger asChild>
@@ -36,7 +43,7 @@ export function ErrorIconWithTooltip({
                         height: 20,
                     }}
                     role="img"
-                    aria-label={`Error: ${message}`}
+                    aria-label={`Error: ${displayMessage}`}
                 >
                     <ErrorIcon size={14} />
                 </motion.div>
@@ -52,7 +59,7 @@ export function ErrorIconWithTooltip({
                     transition={{ duration: 0.05 }}
                     className="block min-w-0"
                 >
-                    {message}
+                    {displayMessage}
                 </motion.span>
             </TooltipContent>
         </Tooltip>

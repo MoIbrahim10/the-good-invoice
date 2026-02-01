@@ -24,16 +24,15 @@ type ExportProviderProps = {
 
 export function ExportProvider({ children }: ExportProviderProps) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const {
-        exportPdf,
-        exportPdfBackup,
-        isExporting,
-        exportSuccess,
-    } = useExportPdf(containerRef);
+    const { exportPdf, exportPdfBackup, isExporting, exportSuccess } =
+        useExportPdf(containerRef);
 
     const value: ExportContextValue = {
         exportPdf: useCallback(() => exportPdf(), [exportPdf]),
-        exportPdfBackup: useCallback(() => exportPdfBackup(), [exportPdfBackup]),
+        exportPdfBackup: useCallback(
+            () => exportPdfBackup(),
+            [exportPdfBackup],
+        ),
         isExporting,
         exportSuccess,
     };

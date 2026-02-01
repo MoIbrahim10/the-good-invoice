@@ -16,7 +16,8 @@ export function IssuedByTab() {
     const { state } = useInvoiceState();
     const { updateIssuer } = useInvoiceActions();
     const { fieldErrors } = useInvoiceValidation();
-    const { touchField, isTouched } = useInvoiceTouched();
+    const { touchField, clearTouched, isTouched, markDirty, isDirty } =
+        useInvoiceTouched();
 
     const issuer = state.data.issuer;
     const placeholders = state.placeholders.issuer;
@@ -45,11 +46,15 @@ export function IssuedByTab() {
                     labelClassName="w-14 shrink-0"
                     maxLength={NAME_MAX_LENGTH}
                     value={issuer.name}
-                    onChange={(e) => updateIssuer({ name: e.target.value })}
+                    onChange={(e) => {
+                        markDirty('issuer.name');
+                        updateIssuer({ name: e.target.value });
+                    }}
+                    onFocus={() => clearTouched('issuer.name')}
                     onBlur={() => touchField('issuer.name')}
                     placeholder={placeholders.name}
                     error={
-                        isTouched('issuer.name')
+                        isTouched('issuer.name') && isDirty('issuer.name')
                             ? fieldErrors['issuer.name']
                             : undefined
                     }
@@ -64,11 +69,15 @@ export function IssuedByTab() {
                     type="email"
                     maxLength={EMAIL_MAX_LENGTH}
                     value={issuer.email}
-                    onChange={(e) => updateIssuer({ email: e.target.value })}
+                    onChange={(e) => {
+                        markDirty('issuer.email');
+                        updateIssuer({ email: e.target.value });
+                    }}
+                    onFocus={() => clearTouched('issuer.email')}
                     onBlur={() => touchField('issuer.email')}
                     placeholder={placeholders.email}
                     error={
-                        isTouched('issuer.email')
+                        isTouched('issuer.email') && isDirty('issuer.email')
                             ? fieldErrors['issuer.email']
                             : undefined
                     }
@@ -82,11 +91,15 @@ export function IssuedByTab() {
                     labelClassName="w-14 shrink-0"
                     maxLength={ADDRESS_MAX_LENGTH}
                     value={issuer.address}
-                    onChange={(e) => updateIssuer({ address: e.target.value })}
+                    onChange={(e) => {
+                        markDirty('issuer.address');
+                        updateIssuer({ address: e.target.value });
+                    }}
+                    onFocus={() => clearTouched('issuer.address')}
                     onBlur={() => touchField('issuer.address')}
                     placeholder={placeholders.address}
                     error={
-                        isTouched('issuer.address')
+                        isTouched('issuer.address') && isDirty('issuer.address')
                             ? fieldErrors['issuer.address']
                             : undefined
                     }
