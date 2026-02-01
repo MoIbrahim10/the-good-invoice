@@ -110,42 +110,67 @@ export function InvoicePreviewContent({
                 <div className="flex h-full w-full flex-col overflow-auto rounded-[6px] border border-gray-100 bg-gray-0">
                     {/* Header */}
                     <div
-                        className={`flex items-center gap-2.5 p-4 border-b-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
+                        className={`flex items-center p-4 border-b-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
                     >
                         {forExport ? (
-                            issuer.includeLogo !== false && logoBox
+                            issuer.includeLogo !== false && (
+                                <div className="flex shrink-0 items-center gap-2.5">
+                                    {logoBox}
+                                </div>
+                            )
                         ) : (
                             <AnimatePresence initial={false}>
                                 {issuer.includeLogo !== false && (
-                                    <LogoWrapper
-                                        key="preview-logo"
+                                    <motion.div
+                                        key="preview-logo-slot"
                                         initial={{
                                             width: 0,
                                             opacity: 0,
-                                            filter: 'blur(8px)',
-                                            scale: 0.85,
                                         }}
                                         animate={{
-                                            width: 36,
+                                            width: 46,
                                             opacity: 1,
-                                            filter: 'blur(0px)',
-                                            scale: 1,
                                         }}
                                         exit={{
                                             width: 0,
                                             opacity: 0,
-                                            filter: 'blur(6px)',
-                                            scale: 0.9,
                                         }}
                                         transition={{
                                             type: 'spring',
                                             stiffness: 260,
                                             damping: 26,
                                         }}
-                                        className="shrink-0 overflow-hidden"
+                                        className="flex shrink-0 items-center gap-2.5 overflow-hidden"
                                     >
-                                        {logoBox}
-                                    </LogoWrapper>
+                                        <LogoWrapper
+                                            initial={{
+                                                width: 0,
+                                                opacity: 0,
+                                                filter: 'blur(8px)',
+                                                scale: 0.85,
+                                            }}
+                                            animate={{
+                                                width: 36,
+                                                opacity: 1,
+                                                filter: 'blur(0px)',
+                                                scale: 1,
+                                            }}
+                                            exit={{
+                                                width: 0,
+                                                opacity: 0,
+                                                filter: 'blur(6px)',
+                                                scale: 0.9,
+                                            }}
+                                            transition={{
+                                                type: 'spring',
+                                                stiffness: 260,
+                                                damping: 26,
+                                            }}
+                                            className="shrink-0 overflow-hidden"
+                                        >
+                                            {logoBox}
+                                        </LogoWrapper>
+                                    </motion.div>
                                 )}
                             </AnimatePresence>
                         )}
