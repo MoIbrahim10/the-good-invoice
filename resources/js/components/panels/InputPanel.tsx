@@ -1,6 +1,5 @@
 import { usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useRef } from 'react';
 import type { SharedData } from '../../types';
 import type { TabId } from '../../types/tabs';
 import { PanelFooter } from '../layout/PanelFooter';
@@ -14,41 +13,25 @@ import { IssuedByTab } from '../tabs/tabContents/IssuedByTab';
 import { ItemsTab } from '../tabs/tabContents/ItemsTab';
 import { NotesTab } from '../tabs/tabContents/NotesTab';
 
-const TAB_ORDER: TabId[] = [
-    'issued-by',
-    'bill-to',
-    'details',
-    'items',
-    'notes',
-    'display',
-];
-
 const SLIDE_PX = 18;
 const BLUR_PX = 3;
 const EASE_OUT_SMOOTH = [0.25, 0.46, 0.45, 0.94] as const;
 
 const contentEnter = {
     type: 'tween' as const,
-    duration: 0.4,
+    duration: 0.3,
     ease: EASE_OUT_SMOOTH,
 };
 
 const contentExit = {
     type: 'tween' as const,
-    duration: 0.25,
+    duration: 0.2,
     ease: EASE_OUT_SMOOTH,
 };
 
-function TabContentPanelAnimated({
-    tabId,
-    direction,
-}: {
-    tabId: TabId;
-    direction: number;
-}) {
-    const fromRight = direction > 0;
-    const slideIn = fromRight ? SLIDE_PX : -SLIDE_PX;
-    const slideOut = fromRight ? -SLIDE_PX : SLIDE_PX;
+function TabContentPanelAnimated({ tabId }: { tabId: TabId }) {
+    const slideIn = SLIDE_PX;
+    const slideOut = -SLIDE_PX;
 
     return (
         <motion.div
@@ -98,19 +81,6 @@ function TabContentPanelStatic({ tabId }: { tabId: TabId }) {
 export function InputPanel() {
     const { activeTabId } = useTabNavigation();
     const tabsContentAnimation = usePage<SharedData>().props.tabsContentAnimation;
-    const activeIndex = TAB_ORDER.indexOf(activeTabId);
-    const prevIndexRef = useRef(activeIndex);
-
-    const direction =
-        activeIndex > prevIndexRef.current
-            ? 1
-            : activeIndex < prevIndexRef.current
-              ? -1
-              : 0;
-
-    useEffect(() => {
-        prevIndexRef.current = activeIndex;
-    }, [activeIndex]);
 
     return (
         <div className="mx-auto flex min-h-0 w-full max-w-[446px] shrink-0 flex-col overflow-hidden max-lg:min-h-0 max-lg:flex-1 lg:mx-0 lg:h-full lg:max-h-[626px] lg:min-w-[446px] lg:max-w-none">
@@ -126,7 +96,6 @@ export function InputPanel() {
                             <TabContentPanelAnimated
                                 key={activeTabId}
                                 tabId={activeTabId}
-                                direction={direction}
                             />
                         </AnimatePresence>
                     ) : (

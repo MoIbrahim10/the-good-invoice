@@ -11,12 +11,12 @@ import { TabButton } from './TabButton';
 const springTransition = {
     type: 'spring',
     bounce: 0,
-    duration: 0.3,
+    duration: 0.2,
 } as const;
 
 const bubbleTransition = {
     type: 'tween' as const,
-    duration: 0.3,
+    duration: 0.2,
     ease: 'easeInOut' as const,
 };
 
