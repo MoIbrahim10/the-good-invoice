@@ -45,7 +45,7 @@ export function PreviewPanel() {
     const total = subtotal - discountAmount + taxAmount;
 
     return (
-        <div className="h-full overflow-hidden bg-bg-weak p-8">
+        <div className="h-full overflow-hidden aspect-468/650">
             {/* Airmail Frame Container */}
             <div className="relative h-full w-full rounded-[8px] bg-preview-stripes p-[14px] shadow-preview-frame">
                 {/* Invoice Card */}

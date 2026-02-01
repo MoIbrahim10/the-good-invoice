@@ -13,8 +13,8 @@ export function InputPanel() {
     const { activeTabId } = useTabNavigation();
 
     return (
-        <div className="flex h-full max-w-[454px] shrink-0 flex-col justify-center overflow-hidden border border-stroke-default">
-            <div className="flex h-full max-h-[626px] flex-col">
+        <div className="flex h-full max-w-[454px] shrink-0 flex-col justify-center overflow-hidden max-h-[626px]">
+            <div className="flex h-full flex-col">
                 {/* Header  */}
                 <PanelHeader />
 
