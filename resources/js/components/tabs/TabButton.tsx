@@ -9,16 +9,12 @@ type TabButtonProps = {
     isEnabled: boolean;
     groupSegment: GroupSegment;
     tabsAnimation: boolean;
+    /** Used when tabsAnimation: register button element for shared bubble positioning. */
+    buttonRef?: (el: HTMLButtonElement | null) => void;
 };
 
-const springTransition = {
-    type: 'spring',
-    bounce: 0,
-    duration: 0.5,
-} as const;
-
 const joinTransition = {
-    duration: 1,
+    duration: .5,
     ease: 'easeInOut' as const,
 };
 
@@ -28,6 +24,7 @@ export function TabButton({
     isEnabled,
     groupSegment,
     tabsAnimation,
+    buttonRef,
 }: TabButtonProps) {
     const baseClasses =
         'px-[10px] py-[6px] text-[14px] font-normal leading-none whitespace-nowrap relative rounded-[6px]';
@@ -43,9 +40,6 @@ export function TabButton({
                 ? 'rounded-none'
                 : 'rounded-[6px]';
 
-    const pullLeftClass =
-        groupSegment === 'middle' || groupSegment === 'last' ? '-ml-1.5' : '';
-
     const disabledClasses =
         !isEnabled && !tab.isActive
             ? 'cursor-not-allowed opacity-50'
@@ -58,12 +52,16 @@ export function TabButton({
     };
 
     const borderColor = isUnvisited ? 'var(--stroke-strong)' : 'transparent';
-    const backgroundColor = isUnvisited
-        ? 'var(--bg-default)'
-        : 'var(--bg-strong)';
+    const backgroundColor =
+        tabsAnimation && tab.isActive
+            ? 'transparent'
+            : isUnvisited
+              ? 'var(--bg-default)'
+              : 'var(--bg-strong)';
 
     const labelClasses = cn(
-        'relative z-10',
+        'relative z-30',
+        tabsAnimation && 'invisible',
         tab.isActive && 'text-text-strong',
         !tab.isActive && tab.isVisited && 'text-text-default',
         isUnvisited && 'text-text-default',
@@ -77,7 +75,6 @@ export function TabButton({
             baseClasses,
             'border border-dashed',
             roundedClasses,
-            pullLeftClass,
             disabledClasses,
         ),
         'aria-current': tab.isActive ? ('page' as const) : undefined,
@@ -88,6 +85,7 @@ export function TabButton({
         return (
             <button
                 {...commonButtonProps}
+                ref={buttonRef}
                 style={{
                     ...commonButtonProps.style,
                     borderColor,
@@ -96,7 +94,7 @@ export function TabButton({
             >
                 {tab.isActive && (
                     <span
-                        className="absolute inset-0 z-0 rounded-[6px] bg-bg-stronger"
+                        className="absolute inset-0 z-20 rounded-[6px] bg-bg-stronger"
                         aria-hidden
                     />
                 )}
@@ -108,6 +106,7 @@ export function TabButton({
     return (
         <motion.button
             {...commonButtonProps}
+            ref={buttonRef}
             initial={false}
             animate={{
                 borderColor,
@@ -115,13 +114,6 @@ export function TabButton({
             }}
             transition={joinTransition}
         >
-            {tab.isActive && (
-                <motion.span
-                    layoutId="tab-bubble"
-                    className="absolute inset-0 z-0 bg-bg-stronger  rounded-[6px]"
-                    transition={springTransition}
-                />
-            )}
             <span className={labelClasses}>{tab.label}</span>
         </motion.button>
     );
