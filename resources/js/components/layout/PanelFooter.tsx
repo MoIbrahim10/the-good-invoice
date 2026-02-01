@@ -55,8 +55,8 @@ export function PanelFooter() {
                             default: {
                                 content:
                                     resolvedAppearance === 'dark'
-                                        ? 'Light.'
-                                        : 'Dark.',
+                                        ? 'Light'
+                                        : 'Dark',
                             },
                         }}
                     />
@@ -69,7 +69,7 @@ export function PanelFooter() {
                         className="border-none bg-transparent shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
-                                content: palette === 'warm' ? 'Cool.' : 'Warm.',
+                                content: palette === 'warm' ? 'Cool' : 'Warm',
                             },
                         }}
                     />
