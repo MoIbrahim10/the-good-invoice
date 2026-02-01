@@ -50,7 +50,7 @@ export function PanelFooter() {
                             />
                         }
                         ariaLabel="Light/Dark."
-                        className="border-none bg-transparent shadow-none hover:bg-transparent"
+                        className="border-none bg-transparent! shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
                                 content:
@@ -66,7 +66,7 @@ export function PanelFooter() {
                             <ThemeIcon size={18} isWarm={palette === 'warm'} />
                         }
                         ariaLabel="Warm/Cool."
-                        className="border-none bg-transparent shadow-none hover:bg-transparent"
+                        className="border-none bg-transparent! shadow-none hover:bg-transparent"
                         tooltips={{
                             default: {
                                 content: palette === 'warm' ? 'Cool' : 'Warm',

@@ -98,7 +98,7 @@ export function DisplayTab() {
                     ))}
                 </div>
             </div>
-            <div className="flex flex-wrap gap-2 p-3 border-b-layered border-t-layered">
+            <div className="flex flex-wrap gap-2 p-3 border-y-layered">
                 {displayColors.map((color) => (
                     <label
                         key={color.value}

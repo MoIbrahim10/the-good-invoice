@@ -359,7 +359,7 @@ export function ItemsTab() {
             </table>
 
             {/* Global Tax & Discount */}
-            <div className="flex gap-2 p-3 border-b-layered border-t-layered">
+            <div className="flex gap-2 p-3 border-y-layered">
                 <LabeledAdjustableInput
                     label="Tax"
                     name="invoice-tax"

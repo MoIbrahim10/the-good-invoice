@@ -297,7 +297,7 @@ export function InvoicePreviewContent({
                                 </colgroup>
                                 <thead>
                                     <tr
-                                        className={`text-[12px] text-text-weak border-b-layered border-t-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
+                                        className={`text-[12px] text-text-weak border-y-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
                                     >
                                         <th className="py-2 ps-4">Item</th>
                                         <th className="py-2">QTY</th>
