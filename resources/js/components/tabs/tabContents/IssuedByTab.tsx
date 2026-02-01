@@ -28,10 +28,8 @@ export function IssuedByTab() {
                     id={nameId}
                     label="Name"
                     labelClassName="w-14 shrink-0"
-                    value={issuer.companyName}
-                    onChange={(e) =>
-                        updateIssuer({ companyName: e.target.value })
-                    }
+                    value={issuer.name}
+                    onChange={(e) => updateIssuer({ name: e.target.value })}
                     placeholder="Jane Doe"
                 />
 
@@ -41,15 +39,8 @@ export function IssuedByTab() {
                     label="Email"
                     labelClassName="w-14 shrink-0"
                     type="email"
-                    value={issuer.contact.email || ''}
-                    onChange={(e) =>
-                        updateIssuer({
-                            contact: {
-                                ...issuer.contact,
-                                email: e.target.value,
-                            },
-                        })
-                    }
+                    value={issuer.email}
+                    onChange={(e) => updateIssuer({ email: e.target.value })}
                     placeholder="jane@example.com"
                 />
 
@@ -58,15 +49,8 @@ export function IssuedByTab() {
                     id={addressId}
                     label="Address"
                     labelClassName="w-14 shrink-0"
-                    value={issuer.address.line1}
-                    onChange={(e) =>
-                        updateIssuer({
-                            address: {
-                                ...issuer.address,
-                                line1: e.target.value,
-                            },
-                        })
-                    }
+                    value={issuer.address}
+                    onChange={(e) => updateIssuer({ address: e.target.value })}
                     placeholder="Street, city, country"
                 />
             </div>

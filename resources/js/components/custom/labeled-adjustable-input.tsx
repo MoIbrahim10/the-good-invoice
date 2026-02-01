@@ -32,6 +32,19 @@ export function LabeledAdjustableInput({
           })
         : currencyIcon;
 
+    const isPercentage = type === 'percentage';
+    const min = 0;
+    const max = isPercentage ? 100 : 999_999_999;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const raw = Number(e.target.value);
+        const clamped = Math.max(
+            min,
+            Math.min(max, Number.isNaN(raw) ? 0 : raw),
+        );
+        onValueChange(clamped);
+    };
+
     return (
         <div
             className={cn(
@@ -44,8 +57,11 @@ export function LabeledAdjustableInput({
             </Label>
             <Input
                 type="number"
+                min={min}
+                max={max}
+                step={isPercentage ? 1 : 0.01}
                 value={value === 0 ? '' : value}
-                onChange={(e) => onValueChange(Number(e.target.value))}
+                onChange={handleChange}
                 placeholder={placeholder}
                 className="h-auto flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />

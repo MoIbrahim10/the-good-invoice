@@ -57,13 +57,13 @@ export function DisplayTab() {
         if (!isInitialMount.current && urlColor !== selectedColor) {
             updateDisplay({ color: urlColor });
         }
-    }, [urlColor,  selectedColor,  updateDisplay]);
+    }, [urlColor, selectedColor, updateDisplay]);
 
     useEffect(() => {
         if (!isInitialMount.current && urlStyle !== selectedStyle) {
             updateDisplay({ style: urlStyle });
         }
-    }, [ urlStyle, selectedStyle, updateDisplay]);
+    }, [urlStyle, selectedStyle, updateDisplay]);
 
     // Sync store to URL when store changes (but not on initial mount)
     useEffect(() => {

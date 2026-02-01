@@ -13,6 +13,53 @@
         'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Gray Scale Overrides */
+    --color-gray-0: #ffffff;
+    --color-gray-25: #fafbfc;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-350: #bdc2ca;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+    --color-gray-950: #030712;
+
+    /* Navy Scale Overrides */
+    --color-navy-500: #242830;
+    --color-navy-600: #1e2127;
+    --color-navy-700: #16191f;
+    --color-navy-800: #0e1117;
+    --color-navy-900: #080a0e;
+    --color-navy-950: #000000;
+
+    /* Stone Scale Overrides */
+    --color-stone-25: #fdfdfc;
+    --color-stone-50: #fafaf9;
+    --color-stone-100: #f5f5f4;
+    --color-stone-200: #e7e5e4;
+    --color-stone-300: #d6d3d1;
+    --color-stone-350: #c6c3c0;
+    --color-stone-400: #a8a29e;
+    --color-stone-500: #78716c;
+    --color-stone-600: #57534e;
+    --color-stone-700: #44403c;
+    --color-stone-800: #292524;
+    --color-stone-900: #1c1917;
+    --color-stone-950: #0c0a09;
+
+    /* Brown Scale Overrides */
+    --color-brown-500: #2c2a29;
+    --color-brown-600: #242221;
+    --color-brown-700: #191817;
+    --color-brown-800: #131110;
+    --color-brown-900: #0f0d0b;
+    --color-brown-950: #080504;
+
     /* Text Color Utilities */
     --color-text-weaker: var(--text-weaker);
     --color-text-weak: var(--text-weak);
@@ -99,6 +146,45 @@
     box-shadow:
         var(--layered-shadow-t, 0 0 0 0 transparent),
         var(--layered-shadow-b, 0 0 0 0 transparent);
+}
+
+@utility bg-preview-stripes {
+    --preview-stripe-bar: 14px;
+    --preview-stripe-gap: 21px;
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--preview-col-1) 0,
+        var(--preview-col-1) var(--preview-stripe-bar),
+        var(--preview-border) var(--preview-stripe-bar),
+        var(--preview-border)
+            calc(var(--preview-stripe-bar) + var(--preview-stripe-gap)),
+        var(--preview-col-2)
+            calc(var(--preview-stripe-bar) + var(--preview-stripe-gap)),
+        var(--preview-col-2)
+            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap)),
+        var(--preview-border)
+            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap)),
+        var(--preview-border)
+            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap) * 2)
+    );
+}
+
+@utility shadow-preview-frame {
+    box-shadow:
+        0 3px 3px 0 rgba(0, 0, 0, 0.05),
+        0 4px 4px 0 rgba(0, 0, 0, 0.03),
+        0 7px 7px 0 rgba(0, 0, 0, 0.08),
+        0 1px 1px -0.5px rgba(0, 0, 0, 0.03);
+}
+
+@utility inside-preview-frame {
+    box-shadow:
+        0 3px 3px 0 rgba(0, 0, 0, 0.05),
+        0 4px 4px 0 rgba(0, 0, 0, 0.03),
+        0 7px 7px 0 rgba(0, 0, 0, 0.16),
+        0 1px 1px -0.5px rgba(0, 0, 0, 0.03),
+        0 0 2px 0 rgba(0, 0, 0, 0.2),
+        0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
 @utility bg-tooltip-glass {

@@ -9,3 +9,63 @@ export function cn(...inputs: ClassValue[]) {
 export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
+
+const COMPACT_THRESHOLD = 1_000;
+const MAX_SAFE_DISPLAY = 1e15;
+
+/**
+ * Formats a plain number for display (e.g. quantity). Uses compact notation
+ * (e.g. 10K, 1.2M) for large values so the value doesn't overflow.
+ */
+export function formatNumberForDisplay(value: number): string {
+    const abs = Math.abs(value);
+    const sign = value < 0 ? '-' : '';
+    if (abs >= COMPACT_THRESHOLD || abs > MAX_SAFE_DISPLAY) {
+        const formatted = new Intl.NumberFormat(undefined, {
+            notation: 'compact',
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 0,
+        }).format(abs);
+        return `${sign}${formatted}`;
+    }
+    return `${sign}${abs.toLocaleString(undefined, {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+    })}`;
+}
+
+/**
+ * Formats a number as currency for display. Uses compact notation (e.g. 10K, 1.2M)
+ * for large amounts so the value doesn't overflow in tight layouts.
+ */
+export function formatCurrencyForDisplay(
+    amount: number,
+    symbol: string,
+): string {
+    const abs = Math.abs(amount);
+    const sign = amount < 0 ? '-' : '';
+
+    if (abs > MAX_SAFE_DISPLAY) {
+        const formatted = new Intl.NumberFormat(undefined, {
+            notation: 'compact',
+            maximumFractionDigits: 1,
+            minimumFractionDigits: 0,
+        }).format(abs);
+        return `${sign}${symbol}${formatted}`;
+    }
+
+    if (abs >= COMPACT_THRESHOLD) {
+        const formatted = new Intl.NumberFormat(undefined, {
+            notation: 'compact',
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 0,
+        }).format(abs);
+        return `${sign}${symbol}${formatted}`;
+    }
+
+    const formatted = abs.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    });
+    return `${sign}${symbol}${formatted}`;
+}

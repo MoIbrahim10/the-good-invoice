@@ -6,22 +6,23 @@ import { LabeledTextarea } from '../../custom/labeled-textarea';
 
 export function BillToTab() {
     const { state } = useInvoiceState();
-    const { updateIssuer } = useInvoiceActions();
+    const { updateBillTo } = useInvoiceActions();
 
-    const issuer = state.data.issuer;
-    const nameId = useId();
+    const billTo = state.data.billTo;
+    const emailId = useId();
     const addressId = useId();
 
     return (
         <div className="flex flex-col gap-2 p-3 border-b-layered">
-            {/* Name Field */}
+            {/* Email Field */}
             <LabeledInput
-                id={nameId}
-                label="Name"
+                id={emailId}
+                label="Email"
                 labelClassName="w-14 shrink-0"
-                value={issuer.companyName}
-                onChange={(e) => updateIssuer({ companyName: e.target.value })}
-                placeholder="Jane Doe"
+                type="email"
+                value={billTo.email}
+                onChange={(e) => updateBillTo({ email: e.target.value })}
+                placeholder="john@example.com"
             />
 
             {/* Address Field */}
@@ -29,15 +30,8 @@ export function BillToTab() {
                 id={addressId}
                 label="Address"
                 labelClassName="w-14 shrink-0"
-                value={issuer.address.line1}
-                onChange={(e) =>
-                    updateIssuer({
-                        address: {
-                            ...issuer.address,
-                            line1: e.target.value,
-                        },
-                    })
-                }
+                value={billTo.address}
+                onChange={(e) => updateBillTo({ address: e.target.value })}
                 placeholder="Street, city, country"
             />
         </div>

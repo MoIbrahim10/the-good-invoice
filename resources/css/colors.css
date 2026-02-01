@@ -12,20 +12,20 @@
     --text-strong: var(--color-gray-700);
 
     /* Background Colors */
-    --bg-weak: var(--color-gray-0);
+    --bg-weak: var(--color-white);
     --bg-default: var(--color-gray-25);
     --bg-strong: var(--color-gray-100);
     --bg-stronger: var(--color-gray-200);
     --bg-strongest: var(--color-gray-100);
 
     /* Icon Colors */
-    --icon-weaker: var(--color-gray-0);
+    --icon-weaker: var(--color-white);
     --icon-weak: var(--color-gray-350);
     --icon-default: var(--color-gray-400);
     --icon-strong: var(--color-gray-700);
 
     /* Stroke/Border Colors */
-    --stroke-weaker: var(--color-gray-0);
+    --stroke-weaker: var(--color-white);
     --stroke-weak: var(--color-gray-350);
     --stroke-default: var(--color-gray-200);
     --stroke-strong: var(--color-gray-200);
@@ -58,20 +58,20 @@
     --text-strong: var(--color-stone-700);
 
     /* Background Colors - warmer tones */
-    --bg-weak: var(--color-gray-0);
+    --bg-weak: var(--color-white);
     --bg-default: var(--color-stone-50);
     --bg-strong: var(--color-stone-100);
     --bg-stronger: var(--color-stone-200);
     --bg-strongest: var(--color-stone-100);
 
     /* Icon Colors - warmer tones */
-    --icon-weaker: var(--color-gray-0);
+    --icon-weaker: var(--color-white);
     --icon-weak: var(--color-stone-350);
     --icon-default: var(--color-stone-400);
     --icon-strong: var(--color-stone-700);
 
     /* Stroke/Border Colors - warmer tones */
-    --stroke-weaker: var(--color-gray-0);
+    --stroke-weaker: var(--color-white);
     --stroke-weak: var(--color-stone-350);
     --stroke-default: var(--color-stone-200);
     --stroke-strong: var(--color-stone-200);

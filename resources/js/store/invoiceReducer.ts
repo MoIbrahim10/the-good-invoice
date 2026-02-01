@@ -3,30 +3,17 @@ import type { InvoiceAction, InvoiceState } from '../types/state';
 
 const initialInvoiceData: InvoiceData = {
     issuer: {
-        companyName: '',
-        address: {
-            line1: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            country: '',
-        },
-        contact: {},
+        name: '',
+        email: '',
+        address: '',
     },
     billTo: {
-        clientName: '',
-        address: {
-            line1: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            country: '',
-        },
-        contact: {},
+        email: '',
+        address: '',
     },
     details: {
         invoiceNumber: '',
-        dueDate: new Date().toISOString(),
+        dueDate: new Date(),
         currency: 'USD',
     },
     items: [
@@ -34,7 +21,7 @@ const initialInvoiceData: InvoiceData = {
             id: 'initial-item',
             description: '',
             quantity: 0,
-            unitPrice: 0,
+            rate: 0,
         },
     ],
     tax: 0,
@@ -239,7 +226,6 @@ export function invoiceReducer(
         }
 
         default: {
-            // Exhaustive check with never type
             return state;
         }
     }

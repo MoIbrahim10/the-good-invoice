@@ -1,20 +1,15 @@
+import type { DisplayColorValue, DisplayStyle } from './invoice';
+
 export interface DisplayTheme {
     name: string;
     description: string;
-    value: string;
+    value: DisplayStyle;
     icon: React.ReactNode;
 }
 
-export type DisplayStyle = 'solid' | 'accent';
-
 export interface DisplayColor {
     name: string;
-    value: string;
+    value: DisplayColorValue;
     hex?: string;
     bgColor?: string;
 }
-
-export type DisplayOptions = {
-    style: DisplayStyle;
-    color: DisplayColor;
-};

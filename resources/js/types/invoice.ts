@@ -1,31 +1,15 @@
 import type { Currency } from './currency';
 
-export type Address = {
-    line1: string;
-    line2?: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-};
-
-export type ContactInfo = {
-    email?: string;
-    phone?: string;
-    website?: string;
-};
-
 export type IssuerData = {
-    companyName: string;
-    address: Address;
-    contact: ContactInfo;
     logo?: string; // Base64 data URL or URL string
+    name: string;
+    email: string;
+    address: string;
 };
 
 export type BillToData = {
-    clientName: string;
-    address: Address;
-    contact: ContactInfo;
+    email: string;
+    address: string;
 };
 
 export type InvoiceDetails = {
@@ -38,12 +22,15 @@ export type InvoiceItem = {
     id: string;
     description: string;
     quantity: number;
-    unitPrice: number;
+    rate: number;
 };
 
+export type DisplayStyle = 'solid' | 'accent';
+export type DisplayColorValue = 'gray' | 'cream' | 'blue' | 'green';
+
 export type DisplayOptions = {
-    style: 'solid' | 'accent';
-    color: 'gray' | 'cream' | 'blue' | 'green';
+    style: DisplayStyle;
+    color: DisplayColorValue;
 };
 
 export type AmountType = 'percentage' | 'currency';
