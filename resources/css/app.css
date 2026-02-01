@@ -338,3 +338,10 @@
         display: none;
     }
 }
+
+/* Disable transitions only during theme (dark/light, warm/cool) switch to avoid flash */
+[data-theme-switching] *,
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+    transition: none !important;
+}

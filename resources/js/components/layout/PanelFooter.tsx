@@ -2,7 +2,10 @@ import { useContext } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { FeedbackPopover } from '@/components/custom/feedback-popover';
 import { ExportContext } from '@/components/providers/ExportProvider';
-import { useAppearance } from '@/hooks/use-appearance';
+import {
+    disableTransitionsForThemeSwitch,
+    useAppearance,
+} from '@/hooks/use-appearance';
 import { useInvoiceValidation } from '@/hooks/use-invoice-validation';
 import { useTheme } from '@/hooks/use-theme';
 import { ExportIcon } from '../icons/ExportIcon';
@@ -26,7 +29,12 @@ export function PanelFooter() {
     };
 
     const togglePalette = () => {
-        setPalette(palette === 'warm' ? 'cool' : 'warm');
+        const next = palette === 'warm' ? 'cool' : 'warm';
+        const theme = `${next}-${resolvedAppearance}`;
+        disableTransitionsForThemeSwitch();
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('palette', next);
+        requestAnimationFrame(() => setPalette(next));
     };
 
     return (

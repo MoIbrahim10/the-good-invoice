@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useAppearance } from './use-appearance';
 
 export type Palette = 'cool' | 'warm';
@@ -16,7 +16,7 @@ export function useTheme() {
 
     const theme: Theme = `${palette}-${resolvedAppearance}`;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('palette', palette);
     }, [theme, palette]);
