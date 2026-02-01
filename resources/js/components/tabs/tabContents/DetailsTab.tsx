@@ -1,6 +1,8 @@
 import { useEffect, useId, useState } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { CurrencyDropdown } from '../../custom/currency-dropdown';
 import { LabeledDatePicker } from '../../custom/labeled-datepicker';
 import { LabeledInput } from '../../custom/labeled-input';
@@ -9,8 +11,11 @@ import { formatDate, parseDateString } from '../../ui/datepicker';
 export function DetailsTab() {
     const { state } = useInvoiceState();
     const { updateDetails } = useInvoiceActions();
+    const { fieldErrors } = useInvoiceValidation();
+    const { touchField, isTouched } = useInvoiceTouched();
 
     const details = state.data.details;
+    const placeholders = state.placeholders.details;
 
     const numberId = useId();
     const dueId = useId();
@@ -23,7 +28,7 @@ export function DetailsTab() {
         ),
     );
 
-    // Update local state if global state changes (e.g. from elsewhere)
+    // Sync from global state when it changes elsewhere; do not overwrite partial typing
     useEffect(() => {
         if (details.dueDate instanceof Date) {
             const formatted = formatDate(
@@ -31,23 +36,33 @@ export function DetailsTab() {
                 undefined,
                 'DD/MM/YYYY',
             );
-            if (
-                formatted !== dueValue &&
-                parseDateString(dueValue, 'DD/MM/YYYY')?.getTime() !==
-                    details.dueDate.getTime()
-            ) {
-                setDueValue(formatted);
+            const parsed = parseDateString(dueValue, 'DD/MM/YYYY');
+            if (parsed !== null || dueValue === '') {
+                if (formatted !== dueValue) {
+                    setDueValue(formatted);
+                }
             }
+        } else if (
+            details.dueDate === null &&
+            (details.dueDateInput ?? '') === '' &&
+            dueValue !== ''
+        ) {
+            setDueValue('');
         }
-    }, [details.dueDate, dueValue]);
+    }, [details.dueDate, details.dueDateInput, dueValue]);
 
     const handleDueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
         setDueValue(val);
 
-        const parsedDate = parseDateString(val, 'DD/MM/YYYY');
-        if (parsedDate) {
-            updateDetails({ dueDate: parsedDate });
+        if (val === '') {
+            updateDetails({ dueDate: null, dueDateInput: '' });
+        } else {
+            const parsedDate = parseDateString(val, 'DD/MM/YYYY');
+            updateDetails({
+                dueDate: parsedDate ?? null,
+                dueDateInput: val,
+            });
         }
     };
 
@@ -71,7 +86,13 @@ export function DetailsTab() {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         updateDetails({ invoiceNumber: e.target.value })
                     }
-                    placeholder="INV00-001"
+                    onBlur={() => touchField('details.invoiceNumber')}
+                    placeholder={placeholders.invoiceNumber}
+                    error={
+                        isTouched('details.invoiceNumber')
+                            ? fieldErrors['details.invoiceNumber']
+                            : undefined
+                    }
                 />
             </div>
 
@@ -81,8 +102,14 @@ export function DetailsTab() {
                 label="Due date"
                 value={dueValue}
                 onChange={handleDueChange}
-                placeholder="DD/MM/YYYY"
+                onBlur={() => touchField('details.dueDate')}
+                placeholder={placeholders.dueDate}
                 format="DD/MM/YYYY"
+                error={
+                    isTouched('details.dueDate')
+                        ? fieldErrors['details.dueDate']
+                        : undefined
+                }
             />
         </div>
     );

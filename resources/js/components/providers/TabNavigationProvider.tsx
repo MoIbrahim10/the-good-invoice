@@ -5,8 +5,8 @@ import {
     useCallback,
     useEffect,
     useMemo,
+    useRef,
 } from 'react';
-import { useQueryState } from 'nuqs';
 import type { TabId, TabState } from '../../types/tabs';
 
 const TAB_ORDER: TabId[] = [
@@ -18,13 +18,16 @@ const TAB_ORDER: TabId[] = [
     'display',
 ];
 
-const INITIAL_TABS: TabState[] = TAB_ORDER.map((id, index) => ({
-    id,
-    label: getTabLabel(id),
-    isActive: index === 0,
-    isVisited: index === 0,
-    isCompleted: false,
-}));
+const VALID_TAB_IDS = new Set<string>(TAB_ORDER);
+
+function parseTabFromUrl(): TabId {
+    if (typeof window === 'undefined') {
+        return 'issued-by';
+    }
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    return tab && VALID_TAB_IDS.has(tab) ? (tab as TabId) : 'issued-by';
+}
 
 function getTabLabel(id: TabId): string {
     const labels: Record<TabId, string> = {
@@ -60,24 +63,36 @@ type TabNavigationProviderProps = {
 export function TabNavigationProvider({
     children,
 }: TabNavigationProviderProps) {
-    const [activeTabId, setActiveTabId] = useQueryState('tab', {
-        defaultValue: 'issued-by' as TabId,
-        parse: (value): TabId => {
-            const validTabs: TabId[] = [
-                'issued-by',
-                'bill-to',
-                'details',
-                'items',
-                'notes',
-                'display',
-            ];
-            return validTabs.includes(value as TabId)
-                ? (value as TabId)
-                : 'issued-by';
-        },
-        serialize: (value) => value,
-        shallow: true,
-    });
+    const [activeTabId, setActiveTabIdState] = useState<TabId>(parseTabFromUrl);
+
+    const setActiveTabId = useCallback((tabId: TabId) => {
+        setActiveTabIdState(tabId);
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', tabId);
+        window.history.replaceState(null, '', url.pathname + url.search);
+    }, []);
+
+    const hasSyncedUrl = useRef(false);
+    useEffect(() => {
+        if (hasSyncedUrl.current) {
+            return;
+        }
+        hasSyncedUrl.current = true;
+        const params = new URLSearchParams(window.location.search);
+        if (!params.has('tab')) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('tab', activeTabId);
+            window.history.replaceState(null, '', url.pathname + url.search);
+        }
+    }, [activeTabId]);
+
+    useEffect(() => {
+        const onPopState = () => {
+            setActiveTabIdState(parseTabFromUrl());
+        };
+        window.addEventListener('popstate', onPopState);
+        return () => window.removeEventListener('popstate', onPopState);
+    }, []);
 
     // Initialize tabs state based on activeTabId from URL
     const [tabs, setTabs] = useState<TabState[]>(() => {

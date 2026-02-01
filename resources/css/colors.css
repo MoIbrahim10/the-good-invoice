@@ -1,4 +1,7 @@
-/* 4 Theme Modes powered by Tailwind's gray & stone palettes */
+/* 4 Theme Modes powered by Tailwind's gray & stone palettes
+   Preview display palettes: gray (--color-gray-*), cream (--color-stone-*),
+   blue (--color-blue-*), green (--color-green-*) – gray & stone in app.css @theme,
+   blue & green in app.css @theme. */
 
 /* Cool Light Theme (Default) – uses Tailwind gray scale */
 :root,

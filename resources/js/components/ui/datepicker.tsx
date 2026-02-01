@@ -31,10 +31,18 @@ export function isValidDate(date: Date | undefined): date is Date {
   return !Number.isNaN(date.getTime())
 }
 
+/** Default number of years before/after current year allowed for due date. */
+export const DUE_DATE_YEAR_RANGE = 10;
+
 /**
  * Performs strict validation on a date string to ensure it represents a real calendar date.
+ * Year must be within current year ± yearRange (default 10).
  */
-export function isDateStringValid(dateStr: string, format: "DD/MM/YYYY" | "MM/DD/YYYY"): boolean {
+export function isDateStringValid(
+  dateStr: string,
+  format: "DD/MM/YYYY" | "MM/DD/YYYY",
+  yearRange: number = DUE_DATE_YEAR_RANGE,
+): boolean {
   // Basic pattern check: DD/MM/YYYY or MM/DD/YYYY (10 chars total)
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
     return false;
@@ -50,7 +58,11 @@ export function isDateStringValid(dateStr: string, format: "DD/MM/YYYY" | "MM/DD
   }
 
   if (month < 1 || month > 12) return false;
-  if (year < 1000 || year > 9999) return false;
+
+  const currentYear = new Date().getFullYear();
+  if (year < currentYear - yearRange || year > currentYear + yearRange) {
+    return false;
+  }
 
   // check if day is valid for the month and year
   const daysInMonth = new Date(year, month, 0).getDate();
@@ -60,11 +72,62 @@ export function isDateStringValid(dateStr: string, format: "DD/MM/YYYY" | "MM/DD
 }
 
 /**
- * Converts a valid date string to a Date object.
+ * Returns a specific error message for an invalid due date string, or null if valid.
+ * Tells the user exactly what is wrong (day, month, year, or combination).
  */
-export function parseDateString(dateStr: string, format: "DD/MM/YYYY" | "MM/DD/YYYY"): Date | null {
-  if (!isDateStringValid(dateStr, format)) return null;
-  
+export function getDueDateValidationError(
+  dateStr: string,
+  format: "DD/MM/YYYY" | "MM/DD/YYYY",
+  yearRange: number = DUE_DATE_YEAR_RANGE,
+): string | null {
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    return "Enter a date as DD/MM/YYYY (e.g. 31/12/2025).";
+  }
+
+  const parts = dateStr.split('/').map(Number);
+  let day: number, month: number, year: number;
+  if (format === "DD/MM/YYYY") {
+    [day, month, year] = parts;
+  } else {
+    [month, day, year] = parts;
+  }
+
+  const errors: string[] = [];
+
+  if (month < 1 || month > 12) {
+    errors.push("Month must be between 1 and 12.");
+  }
+
+  const currentYear = new Date().getFullYear();
+  if (year < currentYear - yearRange || year > currentYear + yearRange) {
+    errors.push(
+      `Year must be between ${currentYear - yearRange} and ${currentYear + yearRange}.`,
+    );
+  }
+
+  if (errors.length === 0) {
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) {
+      errors.push(
+        `Day must be between 1 and ${daysInMonth} for this month.`,
+      );
+    }
+  }
+
+  return errors.length > 0 ? errors.join(" ") : null;
+}
+
+/**
+ * Converts a valid date string to a Date object.
+ * Uses same year range as isDateStringValid.
+ */
+export function parseDateString(
+  dateStr: string,
+  format: "DD/MM/YYYY" | "MM/DD/YYYY",
+  yearRange: number = DUE_DATE_YEAR_RANGE,
+): Date | null {
+  if (!isDateStringValid(dateStr, format, yearRange)) return null;
+
   const [p1, p2, p3] = dateStr.split('/').map(Number);
   if (format === "DD/MM/YYYY") {
     return new Date(p3, p2 - 1, p1);

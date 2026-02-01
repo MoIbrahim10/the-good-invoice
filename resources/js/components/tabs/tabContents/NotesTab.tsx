@@ -8,6 +8,7 @@ export function NotesTab() {
     const { updateNotes } = useInvoiceActions();
 
     const notes = state.data.notes;
+    const placeholder = state.placeholders.notes;
     const notesId = useId();
 
     return (
@@ -19,7 +20,7 @@ export function NotesTab() {
                 labelClassName="w-14 shrink-0"
                 value={notes}
                 onChange={(e) => updateNotes(e.target.value)}
-                placeholder="Payment or context details"
+                placeholder={placeholder}
             />
         </div>
     );

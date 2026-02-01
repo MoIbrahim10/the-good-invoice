@@ -5,11 +5,13 @@ import type {
     InvoiceData,
     InvoiceDetails,
     InvoiceItem,
+    InvoicePlaceholders,
     IssuerData,
 } from './invoice';
 
 export type InvoiceState = {
     data: InvoiceData;
+    placeholders: InvoicePlaceholders;
     meta: {
         lastUpdated: number;
         version: number;

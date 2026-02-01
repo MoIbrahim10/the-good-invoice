@@ -1,13 +1,17 @@
-import { useMemo } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useMemo } from 'react';
 import { currencies } from '@/data/currencies';
+import { itemRowAnimation } from '@/lib/itemRowAnimation';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
 import { CustomButton } from '../../custom/button';
-import { DeleteIcon } from '../../icons/DeleteIcon';
-import { PlusIcon } from '../../icons/PlusIcon';
-import { Input } from '../../ui/input';
 import { LabeledAdjustableInput } from '../../custom/labeled-adjustable-input';
+import { DeleteIcon } from '../../icons/DeleteIcon';
+import { ErrorIconWithTooltip } from '../../icons/ErrorIconWithTooltip';
+import { PlusIcon } from '../../icons/PlusIcon';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
+import { Input } from '../../ui/input';
 
 const QUANTITY_MIN = 0;
 const QUANTITY_MAX = 999_999;
@@ -18,9 +22,12 @@ export function ItemsTab() {
     const { state } = useInvoiceState();
     const { addItem, updateItem, removeItem, updateTax, updateDiscount } =
         useInvoiceActions();
+    const { fieldErrors } = useInvoiceValidation();
+    const { touchField, isTouched } = useInvoiceTouched();
 
     const items = state.data.items;
     const currencyCode = state.data.details.currency;
+    const placeholders = state.placeholders.items;
     const selectedCurrency = useMemo(
         () => currencies.find((c) => c.code === currencyCode) || currencies[0],
         [currencyCode],
@@ -60,86 +67,130 @@ export function ItemsTab() {
                         <th className="pb-2"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <AnimatePresence initial={false}>
+                <tbody className="relative">
+                    <AnimatePresence initial={false} mode="popLayout">
                         {items.map((item, index) => (
                             <motion.tr
                                 key={item.id}
                                 layout
-                                initial={{
-                                    opacity: 0,
-                                    y: 8,
-                                    filter: 'blur(4px)',
-                                }}
-                                animate={{
-                                    opacity: 1,
-                                    y: 0,
-                                    filter: 'blur(0px)',
-                                }}
-                                exit={{
-                                    opacity: 0,
-                                    scale: 0.98,
-                                    filter: 'blur(4px)',
-                                    transition: { duration: 0.15 },
-                                }}
-                                transition={{
-                                    type: 'spring',
-                                    stiffness: 260,
-                                    damping: 28,
-                                    mass: 0.6,
-                                }}
+                                initial={itemRowAnimation.initial}
+                                animate={itemRowAnimation.animate}
+                                exit={itemRowAnimation.exit}
+                                transition={itemRowAnimation.transition}
                             >
                                 {/* Description */}
                                 <td className="pe-2 pb-2">
-                                    <Input
-                                        value={item.description}
-                                        onChange={(e) =>
-                                            updateItem(item.id, {
-                                                description: e.target.value,
-                                            })
-                                        }
-                                        placeholder="Description"
-                                        className="min-h-[32px] rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 text-sm leading-[17px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-1 focus-visible:ring-stroke-strong focus-visible:ring-offset-0"
-                                    />
+                                    <div className="flex max-h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                        <Input
+                                            value={item.description}
+                                            onChange={(e) =>
+                                                updateItem(item.id, {
+                                                    description: e.target.value,
+                                                })
+                                            }
+                                            onBlur={() =>
+                                                touchField(
+                                                    `items.${index}.description`,
+                                                )
+                                            }
+                                            placeholder={
+                                                placeholders.description
+                                            }
+                                            aria-invalid={
+                                                !!(
+                                                    isTouched(
+                                                        `items.${index}.description`,
+                                                    ) &&
+                                                    fieldErrors[
+                                                        `items.${index}.description`
+                                                    ]
+                                                )
+                                            }
+                                            className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-sm leading-[17px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0"
+                                        />
+                                        {isTouched(
+                                            `items.${index}.description`,
+                                        ) &&
+                                        fieldErrors[
+                                            `items.${index}.description`
+                                        ] ? (
+                                            <ErrorIconWithTooltip
+                                                message={
+                                                    fieldErrors[
+                                                        `items.${index}.description`
+                                                    ]
+                                                }
+                                            />
+                                        ) : null}
+                                    </div>
                                 </td>
 
                                 {/* QTY */}
                                 <td className="pe-2 pb-2">
-                                    <Input
-                                        type="number"
-                                        min={QUANTITY_MIN}
-                                        max={QUANTITY_MAX}
-                                        value={
-                                            item.quantity === 0
-                                                ? ''
-                                                : item.quantity
-                                        }
-                                        onChange={(e) => {
-                                            const raw = Number(
-                                                e.target.value,
-                                            );
-                                            const clamped = Math.max(
-                                                QUANTITY_MIN,
-                                                Math.min(
-                                                    QUANTITY_MAX,
-                                                    Number.isNaN(raw)
-                                                        ? 0
-                                                        : Math.floor(raw),
-                                                ),
-                                            );
-                                            updateItem(item.id, {
-                                                quantity: clamped,
-                                            });
-                                        }}
-                                        placeholder="0"
-                                        className="h-[32px] [appearance:textfield] rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-1 focus-visible:ring-stroke-strong focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                    />
+                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                        <Input
+                                            type="number"
+                                            min={QUANTITY_MIN}
+                                            max={QUANTITY_MAX}
+                                            value={
+                                                item.quantity === 0
+                                                    ? ''
+                                                    : item.quantity
+                                            }
+                                            onChange={(e) => {
+                                                const raw = Number(
+                                                    e.target.value,
+                                                );
+                                                const clamped = Math.max(
+                                                    QUANTITY_MIN,
+                                                    Math.min(
+                                                        QUANTITY_MAX,
+                                                        Number.isNaN(raw)
+                                                            ? 0
+                                                            : Math.floor(raw),
+                                                    ),
+                                                );
+                                                updateItem(item.id, {
+                                                    quantity: clamped,
+                                                });
+                                            }}
+                                            onBlur={() =>
+                                                touchField(
+                                                    `items.${index}.quantity`,
+                                                )
+                                            }
+                                            placeholder={placeholders.quantity}
+                                            aria-invalid={
+                                                !!(
+                                                    isTouched(
+                                                        `items.${index}.quantity`,
+                                                    ) &&
+                                                    fieldErrors[
+                                                        `items.${index}.quantity`
+                                                    ]
+                                                )
+                                            }
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                        />
+                                        {isTouched(`items.${index}.quantity`) &&
+                                        fieldErrors[
+                                            `items.${index}.quantity`
+                                        ] ? (
+                                            <ErrorIconWithTooltip
+                                                message={
+                                                    fieldErrors[
+                                                        `items.${index}.quantity`
+                                                    ]
+                                                }
+                                            />
+                                        ) : null}
+                                    </div>
                                 </td>
 
                                 {/* Rate */}
                                 <td className="pe-2 pb-2">
-                                    <div className="flex h-[32px] items-center rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong">
-                                        <span className="mr-2 text-sm text-text-weak">
+                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong">
+                                        <span className="shrink-0 text-sm text-text-weak">
                                             {selectedCurrency.symbol}
                                         </span>
                                         <Input
@@ -167,9 +218,34 @@ export function ItemsTab() {
                                                     rate: clamped,
                                                 });
                                             }}
-                                            placeholder="0"
-                                            className="h-auto [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                            onBlur={() =>
+                                                touchField(
+                                                    `items.${index}.rate`,
+                                                )
+                                            }
+                                            placeholder={placeholders.rate}
+                                            aria-invalid={
+                                                !!(
+                                                    isTouched(
+                                                        `items.${index}.rate`,
+                                                    ) &&
+                                                    fieldErrors[
+                                                        `items.${index}.rate`
+                                                    ]
+                                                )
+                                            }
+                                            className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
+                                        {isTouched(`items.${index}.rate`) &&
+                                        fieldErrors[`items.${index}.rate`] ? (
+                                            <ErrorIconWithTooltip
+                                                message={
+                                                    fieldErrors[
+                                                        `items.${index}.rate`
+                                                    ]
+                                                }
+                                            />
+                                        ) : null}
                                     </div>
                                 </td>
 

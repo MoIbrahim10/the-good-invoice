@@ -2,7 +2,6 @@ import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { NuqsAdapter } from 'nuqs/adapters/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -22,9 +21,7 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
-                <NuqsAdapter>
-                    <App {...props} />
-                </NuqsAdapter>
+                <App {...props} />
             </StrictMode>,
         );
     },

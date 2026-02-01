@@ -1,11 +1,34 @@
-import type { InvoiceData } from '../types/invoice';
+import type { InvoiceData, InvoicePlaceholders } from '../types/invoice';
 import type { InvoiceAction, InvoiceState } from '../types/state';
+
+export const defaultPlaceholders: InvoicePlaceholders = {
+    issuer: {
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+        address: 'Street, city, country',
+    },
+    billTo: {
+        email: 'john@example.com',
+        address: 'Street, city, country',
+    },
+    details: {
+        invoiceNumber: 'INV00-001',
+        dueDate: 'DD/MM/YYYY',
+    },
+    items: {
+        description: 'Description',
+        quantity: '0',
+        rate: '0',
+    },
+    notes: 'Payment or context details',
+};
 
 const initialInvoiceData: InvoiceData = {
     issuer: {
         name: '',
         email: '',
         address: '',
+        includeLogo: true,
     },
     billTo: {
         email: '',
@@ -13,7 +36,8 @@ const initialInvoiceData: InvoiceData = {
     },
     details: {
         invoiceNumber: '',
-        dueDate: new Date(),
+        dueDate: null,
+        dueDateInput: '',
         currency: 'USD',
     },
     items: [
@@ -37,6 +61,7 @@ const initialInvoiceData: InvoiceData = {
 
 export const initialInvoiceState: InvoiceState = {
     data: initialInvoiceData,
+    placeholders: defaultPlaceholders,
     meta: {
         lastUpdated: Date.now(),
         version: 1,
@@ -216,6 +241,7 @@ export function invoiceReducer(
 
         case 'LOAD_INVOICE': {
             return {
+                ...state,
                 data: action.payload,
                 meta: {
                     lastUpdated: Date.now(),

@@ -2,6 +2,7 @@ import type { Currency } from './currency';
 
 export type IssuerData = {
     logo?: string; // Base64 data URL or URL string
+    includeLogo?: boolean;
     name: string;
     email: string;
     address: string;
@@ -14,8 +15,18 @@ export type BillToData = {
 
 export type InvoiceDetails = {
     invoiceNumber: string;
-    dueDate: Date;
+    dueDate: Date | null;
+    /** Raw due date input string; used for preview while typing and validation */
+    dueDateInput?: string;
     currency: Currency['code'];
+};
+
+export type InvoicePlaceholders = {
+    issuer: { name: string; email: string; address: string };
+    billTo: { email: string; address: string };
+    details: { invoiceNumber: string; dueDate: string };
+    items: { description: string; quantity: string; rate: string };
+    notes: string;
 };
 
 export type InvoiceItem = {

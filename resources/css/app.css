@@ -52,6 +52,38 @@
     --color-stone-900: #1c1917;
     --color-stone-950: #0c0a09;
 
+    /* Blue scale (preview palette) */
+    --color-blue-0: #ffffff;
+    --color-blue-25: #f5f9ff;
+    --color-blue-50: #eff6ff;
+    --color-blue-100: #dbeafe;
+    --color-blue-200: #bfdbfe;
+    --color-blue-300: #93c5fd;
+    --color-blue-350: #7ab3fc;
+    --color-blue-400: #60a5fa;
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+    --color-blue-700: #1d4ed8;
+    --color-blue-800: #1e40af;
+    --color-blue-900: #1e3a8a;
+    --color-blue-950: #172554;
+
+    /* Green scale (preview palette) */
+    --color-green-0: #ffffff;
+    --color-green-25: #f4fdf5;
+    --color-green-50: #f0fdf4;
+    --color-green-100: #dcfce7;
+    --color-green-200: #bbf7d0;
+    --color-green-300: #86efac;
+    --color-green-350: #6ee79e;
+    --color-green-400: #4ade80;
+    --color-green-500: #22c55e;
+    --color-green-600: #16a34a;
+    --color-green-700: #15803d;
+    --color-green-800: #166534;
+    --color-green-900: #14532d;
+    --color-green-950: #052e16;
+
     /* Brown Scale Overrides */
     --color-brown-500: #2c2a29;
     --color-brown-600: #242221;

@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { FeedbackPopover } from '@/components/custom/feedback-popover';
+import { ExportContext } from '@/components/providers/ExportProvider';
 import { useAppearance } from '@/hooks/use-appearance';
+import { useInvoiceValidation } from '@/hooks/use-invoice-validation';
 import { useTheme } from '@/hooks/use-theme';
 import { ExportIcon } from '../icons/ExportIcon';
 import { FeedbackIcon } from '../icons/FeedbackIcon';
@@ -11,10 +14,11 @@ import { PanelSection } from './PanelSection';
 export function PanelFooter() {
     const { updateAppearance, resolvedAppearance } = useAppearance();
     const { palette, setPalette } = useTheme();
+    const { isValid } = useInvoiceValidation();
+    const exportContext = useContext(ExportContext);
 
     const handleExport = () => {
-        // Placeholder for export functionality
-        console.log('Export clicked');
+        exportContext?.exportPdf();
     };
 
     const toggleAppearance = () => {
@@ -74,6 +78,14 @@ export function PanelFooter() {
                 onClick={handleExport}
                 icon={<ExportIcon size={18} />}
                 text="Export"
+                disabled={!isValid || exportContext?.isExporting}
+                tooltips={{
+                    disabled: {
+                        content: exportContext?.isExporting
+                            ? 'Preparing PDF...'
+                            : 'Fill in the required fields to export',
+                    },
+                }}
             />
         </PanelSection>
     );

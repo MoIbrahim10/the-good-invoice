@@ -1,8 +1,14 @@
-import { useQueryState } from 'nuqs';
 import { useEffect, useRef } from 'react';
 import { displayColors, displayThemes } from '@/data/display';
 import { useInvoiceActions } from '@/hooks/use-invoice-actions';
 import { useInvoiceSelector } from '@/hooks/use-invoice-state';
+import { SESSION_STORAGE_PREFIX } from '@/hooks/use-session-state';
+
+const DISPLAY_COLOR_KEY = `${SESSION_STORAGE_PREFIX}display:color`;
+const DISPLAY_STYLE_KEY = `${SESSION_STORAGE_PREFIX}display:style`;
+
+const VALID_COLORS = ['gray', 'cream', 'blue', 'green'];
+const VALID_STYLES = ['solid', 'accent'];
 
 export function DisplayTab() {
     const { updateDisplay } = useInvoiceActions();
@@ -13,88 +19,53 @@ export function DisplayTab() {
         (state) => state.data.display.style,
     );
 
-    const isInitialMount = useRef(true);
-
-    const [urlColor, setUrlColor] = useQueryState('color', {
-        defaultValue: selectedColor,
-        parse: (value) => {
-            const validColors = ['gray', 'cream', 'blue', 'green'];
-            return validColors.includes(value)
-                ? (value as 'gray' | 'cream' | 'blue' | 'green')
-                : selectedColor;
-        },
-        serialize: (value) => value,
-        shallow: true,
-    });
-
-    const [urlStyle, setUrlStyle] = useQueryState('style', {
-        defaultValue: selectedStyle,
-        parse: (value) => {
-            const validStyles = ['solid', 'accent'];
-            return validStyles.includes(value)
-                ? (value as 'solid' | 'accent')
-                : selectedStyle;
-        },
-        serialize: (value) => value,
-        shallow: true,
-    });
-
-    // On initial mount, sync URL to store if URL has values
+    const hasHydrated = useRef(false);
     useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = false;
-            if (urlColor !== selectedColor) {
-                updateDisplay({ color: urlColor });
-            }
-            if (urlStyle !== selectedStyle) {
-                updateDisplay({ style: urlStyle });
-            }
+        if (hasHydrated.current) {
+            return;
         }
-    }, [urlColor, selectedColor, updateDisplay, urlStyle, selectedStyle]);
-
-    // Sync URL to store when URL changes externally (e.g., browser back/forward)
-    useEffect(() => {
-        if (!isInitialMount.current && urlColor !== selectedColor) {
-            updateDisplay({ color: urlColor });
+        hasHydrated.current = true;
+        const storedColor = sessionStorage.getItem(DISPLAY_COLOR_KEY);
+        const storedStyle = sessionStorage.getItem(DISPLAY_STYLE_KEY);
+        const color =
+            storedColor && VALID_COLORS.includes(storedColor)
+                ? (storedColor as 'gray' | 'cream' | 'blue' | 'green')
+                : null;
+        const style =
+            storedStyle && VALID_STYLES.includes(storedStyle)
+                ? (storedStyle as 'solid' | 'accent')
+                : null;
+        if (color !== null || style !== null) {
+            updateDisplay({
+                ...(color !== null && { color }),
+                ...(style !== null && { style }),
+            });
         }
-    }, [urlColor, selectedColor, updateDisplay]);
+    }, [updateDisplay]);
 
     useEffect(() => {
-        if (!isInitialMount.current && urlStyle !== selectedStyle) {
-            updateDisplay({ style: urlStyle });
-        }
-    }, [urlStyle, selectedStyle, updateDisplay]);
-
-    // Sync store to URL when store changes (but not on initial mount)
-    useEffect(() => {
-        if (!isInitialMount.current && selectedColor !== urlColor) {
-            setUrlColor(selectedColor);
-        }
-    }, [selectedColor, setUrlColor, urlColor]);
+        sessionStorage.setItem(DISPLAY_COLOR_KEY, selectedColor);
+    }, [selectedColor]);
 
     useEffect(() => {
-        if (!isInitialMount.current && selectedStyle !== urlStyle) {
-            setUrlStyle(selectedStyle);
-        }
-    }, [selectedStyle, setUrlStyle, urlStyle]);
+        sessionStorage.setItem(DISPLAY_STYLE_KEY, selectedStyle);
+    }, [selectedStyle]);
 
     const handleColorChange = (colorValue: string) => {
         const color = colorValue as 'gray' | 'cream' | 'blue' | 'green';
         updateDisplay({ color });
-        setUrlColor(color);
     };
 
     const handleStyleChange = (styleValue: string) => {
         const style = styleValue as 'solid' | 'accent';
         updateDisplay({ style });
-        setUrlStyle(style);
     };
 
     return (
         <div className="flex flex-col">
             <div className="flex flex-col gap-2 p-3">
                 <p>Theme</p>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                     {displayThemes.map((theme) => (
                         <label
                             key={theme.value}
@@ -125,7 +96,7 @@ export function DisplayTab() {
                     ))}
                 </div>
             </div>
-            <div className="flex gap-2 p-3 border-b-layered border-t-layered">
+            <div className="flex gap-2 p-3 border-b-layered border-t-layered flex-wrap">
                 {displayColors.map((color) => (
                     <label
                         key={color.value}

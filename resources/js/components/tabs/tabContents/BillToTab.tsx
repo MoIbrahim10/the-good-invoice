@@ -1,14 +1,19 @@
 import { useId } from 'react';
 import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
+import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
 import { LabeledInput } from '../../custom/labeled-input';
 import { LabeledTextarea } from '../../custom/labeled-textarea';
 
 export function BillToTab() {
     const { state } = useInvoiceState();
     const { updateBillTo } = useInvoiceActions();
+    const { fieldErrors } = useInvoiceValidation();
+    const { touchField, isTouched } = useInvoiceTouched();
 
     const billTo = state.data.billTo;
+    const placeholders = state.placeholders.billTo;
     const emailId = useId();
     const addressId = useId();
 
@@ -22,7 +27,13 @@ export function BillToTab() {
                 type="email"
                 value={billTo.email}
                 onChange={(e) => updateBillTo({ email: e.target.value })}
-                placeholder="john@example.com"
+                onBlur={() => touchField('billTo.email')}
+                placeholder={placeholders.email}
+                error={
+                    isTouched('billTo.email')
+                        ? fieldErrors['billTo.email']
+                        : undefined
+                }
             />
 
             {/* Address Field */}
@@ -32,7 +43,13 @@ export function BillToTab() {
                 labelClassName="w-14 shrink-0"
                 value={billTo.address}
                 onChange={(e) => updateBillTo({ address: e.target.value })}
-                placeholder="Street, city, country"
+                onBlur={() => touchField('billTo.address')}
+                placeholder={placeholders.address}
+                error={
+                    isTouched('billTo.address')
+                        ? fieldErrors['billTo.address']
+                        : undefined
+                }
             />
         </div>
     );

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useId, useRef, useState } from 'react';
+import { useId, useRef } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { RectangularSwitch } from '@/components/custom/rectangular-switch';
 import { Field, FieldLabel } from '@/components/ui/field';
@@ -7,13 +7,19 @@ import { LogoIcon } from '../../icons/LogoIcon';
 
 type LogoUploadProps = {
     logo: string | null;
+    includeLogo: boolean;
     onUpload: (logo: string) => void;
+    onIncludeLogoChange: (include: boolean) => void;
 };
 
-export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
+export function LogoUpload({
+    logo,
+    includeLogo,
+    onUpload,
+    onIncludeLogoChange,
+}: LogoUploadProps) {
     const switchId = useId();
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [checked, setChecked] = useState<boolean>(true);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -38,14 +44,14 @@ export function LogoUpload({ logo, onUpload }: LogoUploadProps) {
                     <RectangularSwitch
                         id={switchId}
                         size="default"
-                        checked={checked}
-                        onCheckedChange={setChecked}
+                        checked={includeLogo}
+                        onCheckedChange={onIncludeLogoChange}
                     />
                 </Field>
             </div>
 
             <AnimatePresence initial={false}>
-                {checked && (
+                {includeLogo && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ErrorIconWithTooltip } from '@/components/icons/ErrorIconWithTooltip';
 import { DateInput } from '@/components/ui/datepicker';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -10,6 +11,7 @@ interface LabeledDatePickerProps extends React.ComponentProps<
     labelClassName?: string;
     containerClassName?: string;
     format?: 'MM/DD/YYYY' | 'DD/MM/YYYY';
+    error?: string;
 }
 
 const LabeledDatePicker = React.forwardRef<
@@ -25,6 +27,7 @@ const LabeledDatePicker = React.forwardRef<
             id,
             format = 'MM/DD/YYYY',
             placeholder,
+            error,
             ...props
         },
         ref,
@@ -55,12 +58,20 @@ const LabeledDatePicker = React.forwardRef<
                     ref={ref}
                     dateFormat={format}
                     className={cn(
-                        'h-auto border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm',
+                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-sm dark:bg-transparent',
                         className,
                     )}
                     placeholder={placeholder || defaultPlaceholder}
+                    aria-invalid={error ? true : undefined}
+                    aria-describedby={error ? `${inputId}-error` : undefined}
                     {...props}
                 />
+                {error ? (
+                    <ErrorIconWithTooltip
+                        message={error}
+                        id={`${inputId}-error`}
+                    />
+                ) : null}
             </div>
         );
     },

@@ -4,7 +4,7 @@ type ViewportContainerProps = {
 
 export function ViewportContainer({ children }: ViewportContainerProps) {
     return (
-        <div className="flex h-screen max-h-screen w-screen max-w-7xl items-center justify-center overflow-hidden">
+        <div className="flex h-screen max-h-screen w-screen max-w-7xl items-center justify-center overflow-hidden max-lg:items-stretch">
             {children}
         </div>
     );
