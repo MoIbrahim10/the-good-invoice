@@ -8,6 +8,7 @@ type TabButtonProps = {
     onClick: () => void;
     isEnabled: boolean;
     groupSegment: GroupSegment;
+    tabsAnimation: boolean;
 };
 
 const springTransition = {
@@ -26,6 +27,7 @@ export function TabButton({
     onClick,
     isEnabled,
     groupSegment,
+    tabsAnimation,
 }: TabButtonProps) {
     const baseClasses =
         'px-[10px] py-[6px] text-[14px] font-normal leading-none whitespace-nowrap relative rounded-[6px]';
@@ -60,20 +62,52 @@ export function TabButton({
         ? 'var(--bg-default)'
         : 'var(--bg-strong)';
 
+    const labelClasses = cn(
+        'relative z-10',
+        tab.isActive && 'text-text-strong',
+        !tab.isActive && tab.isVisited && 'text-text-default',
+        isUnvisited && 'text-text-default',
+    );
+
+    const commonButtonProps = {
+        type: 'button' as const,
+        onClick: handleClick,
+        disabled: !isEnabled && !tab.isActive && !tab.isVisited,
+        className: cn(
+            baseClasses,
+            'border border-dashed',
+            roundedClasses,
+            pullLeftClass,
+            disabledClasses,
+        ),
+        'aria-current': tab.isActive ? ('page' as const) : undefined,
+        style: { WebkitTapHighlightColor: 'transparent' } as React.CSSProperties,
+    };
+
+    if (!tabsAnimation) {
+        return (
+            <button
+                {...commonButtonProps}
+                style={{
+                    ...commonButtonProps.style,
+                    borderColor,
+                    backgroundColor,
+                }}
+            >
+                {tab.isActive && (
+                    <span
+                        className="absolute inset-0 z-0 rounded-[6px] bg-bg-stronger"
+                        aria-hidden
+                    />
+                )}
+                <span className={labelClasses}>{tab.label}</span>
+            </button>
+        );
+    }
+
     return (
         <motion.button
-            type="button"
-            onClick={handleClick}
-            disabled={!isEnabled && !tab.isActive && !tab.isVisited}
-            className={cn(
-                baseClasses,
-                'border border-dashed',
-                roundedClasses,
-                pullLeftClass,
-                disabledClasses,
-            )}
-            aria-current={tab.isActive ? 'page' : undefined}
-            style={{ WebkitTapHighlightColor: 'transparent' }}
+            {...commonButtonProps}
             initial={false}
             animate={{
                 borderColor,
@@ -88,16 +122,7 @@ export function TabButton({
                     transition={springTransition}
                 />
             )}
-            <span
-                className={cn(
-                    'relative z-10',
-                    tab.isActive && 'text-text-strong',
-                    !tab.isActive && tab.isVisited && 'text-text-default',
-                    isUnvisited && 'text-text-default',
-                )}
-            >
-                {tab.label}
-            </span>
+            <span className={labelClasses}>{tab.label}</span>
         </motion.button>
     );
 }

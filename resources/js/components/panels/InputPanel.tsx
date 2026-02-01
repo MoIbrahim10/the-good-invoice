@@ -1,5 +1,7 @@
+import { usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
+import type { SharedData } from '../../types';
 import type { TabId } from '../../types/tabs';
 import { PanelFooter } from '../layout/PanelFooter';
 import { PanelHeader } from '../layout/PanelHeader';
@@ -37,7 +39,7 @@ const contentExit = {
     ease: EASE_OUT_SMOOTH,
 };
 
-function TabContentPanel({
+function TabContentPanelAnimated({
     tabId,
     direction,
 }: {
@@ -80,8 +82,22 @@ function TabContentPanel({
     );
 }
 
+function TabContentPanelStatic({ tabId }: { tabId: TabId }) {
+    return (
+        <div key={tabId} className="h-full">
+            {tabId === 'issued-by' && <IssuedByTab />}
+            {tabId === 'bill-to' && <BillToTab />}
+            {tabId === 'details' && <DetailsTab />}
+            {tabId === 'items' && <ItemsTab />}
+            {tabId === 'notes' && <NotesTab />}
+            {tabId === 'display' && <DisplayTab />}
+        </div>
+    );
+}
+
 export function InputPanel() {
     const { activeTabId } = useTabNavigation();
+    const tabsContentAnimation = usePage<SharedData>().props.tabsContentAnimation;
     const activeIndex = TAB_ORDER.indexOf(activeTabId);
     const prevIndexRef = useRef(activeIndex);
 
@@ -102,16 +118,20 @@ export function InputPanel() {
                 <PanelHeader />
                 <TabNavigation />
                 <div className="relative flex-1 overflow-y-auto overflow-x-hidden">
-                    <AnimatePresence
-                        mode="wait"
-                        initial={false}
-                    >
-                        <TabContentPanel
-                            key={activeTabId}
-                            tabId={activeTabId}
-                            direction={direction}
-                        />
-                    </AnimatePresence>
+                    {tabsContentAnimation ? (
+                        <AnimatePresence
+                            mode="wait"
+                            initial={false}
+                        >
+                            <TabContentPanelAnimated
+                                key={activeTabId}
+                                tabId={activeTabId}
+                                direction={direction}
+                            />
+                        </AnimatePresence>
+                    ) : (
+                        <TabContentPanelStatic tabId={activeTabId} />
+                    )}
                 </div>
                 <PanelFooter />
             </div>

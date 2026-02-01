@@ -110,7 +110,7 @@ export function InvoicePreviewContent({
                 <div className="flex h-full w-full flex-col overflow-auto rounded-[6px] border border-gray-100 bg-gray-0">
                     {/* Header */}
                     <div
-                        className={`flex items-center gap-2.5 p-4 border-b-layered ${isAccent ? 'bg-bg-default' : ''}`}
+                        className={`flex items-center gap-2.5 p-4 border-b-layered transition-colors  duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
                     >
                         {forExport ? (
                             issuer.includeLogo !== false && logoBox
@@ -311,7 +311,7 @@ export function InvoicePreviewContent({
                             </colgroup>
                             <thead>
                                 <tr
-                                    className={`text-[12px] text-text-weak border-b-layered border-t-layered ${isAccent ? 'bg-bg-default' : ''}`}
+                                    className={`text-[12px] text-text-weak border-b-layered border-t-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
                                 >
                                     <th className="py-2 ps-4">Item</th>
                                     <th className="py-2">QTY</th>

@@ -1,4 +1,6 @@
+import { usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
+import type { SharedData } from '../../types';
 import type { TabState } from '../../types/tabs';
 import { PanelSection } from '../layout/PanelSection';
 import { useTabNavigation } from '../providers/TabNavigationProvider';
@@ -43,29 +45,37 @@ function getGroupSegment(
 
 export function TabNavigation() {
     const { tabs, navigateToTab, canNavigateToTab } = useTabNavigation();
+    const tabsAnimation = usePage<SharedData>().props.tabsAnimation;
+
+    const content = tabs.map((tab, index) => {
+        const isEnabled = canNavigateToTab(tab.id);
+        const groupSegment = getGroupSegment(tabs, index);
+        return (
+            <TabButton
+                key={tab.id}
+                tab={tab}
+                onClick={() => navigateToTab(tab.id)}
+                isEnabled={isEnabled}
+                groupSegment={groupSegment}
+                tabsAnimation={tabsAnimation}
+            />
+        );
+    });
 
     return (
         <PanelSection>
-            <motion.div
-                className="flex gap-1.5"
-                layout
-                transition={springTransition}
-                initial={false}
-            >
-                {tabs.map((tab, index) => {
-                    const isEnabled = canNavigateToTab(tab.id);
-                    const groupSegment = getGroupSegment(tabs, index);
-                    return (
-                        <TabButton
-                            key={tab.id}
-                            tab={tab}
-                            onClick={() => navigateToTab(tab.id)}
-                            isEnabled={isEnabled}
-                            groupSegment={groupSegment}
-                        />
-                    );
-                })}
-            </motion.div>
+            {tabsAnimation ? (
+                <motion.div
+                    className="flex gap-1.5"
+                    layout
+                    transition={springTransition}
+                    initial={false}
+                >
+                    {content}
+                </motion.div>
+            ) : (
+                <div className="flex gap-1.5">{content}</div>
+            )}
         </PanelSection>
     );
 }

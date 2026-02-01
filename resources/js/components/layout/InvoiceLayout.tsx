@@ -1,7 +1,9 @@
+import { usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Children, useEffect, useRef, useState } from 'react';
 import { useIsLg } from '@/hooks/use-is-lg';
 import { cn } from '@/lib/utils';
+import type { SharedData } from '@/types';
 
 type InvoiceLayoutProps = {
     children: React.ReactNode;
@@ -42,6 +44,8 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     const [viewTab, setViewTab] = useState<ViewTab>('form');
     const [previewExited, setPreviewExited] = useState(true);
     const isLg = useIsLg();
+    const tabsAnimation = usePage<SharedData>().props.tabsAnimation;
+    const tabsContentAnimation = usePage<SharedData>().props.tabsContentAnimation;
     const childArray = Children.toArray(children);
     const [inputPanel, previewPanel] = childArray as [
         React.ReactNode,
@@ -64,8 +68,10 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     useEffect(() => {
         if (viewTab === 'preview') {
             setPreviewExited(false);
+        } else if (!tabsContentAnimation && viewTab === 'form') {
+            setPreviewExited(true);
         }
-    }, [viewTab]);
+    }, [viewTab, tabsContentAnimation]);
 
     const containerCanClip =
         viewTab === 'form' && previewExited;
@@ -83,38 +89,65 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
         >
             <div className="flex shrink-0 justify-center lg:hidden">
                 <div className="flex w-fit gap-1 rounded-[6px] bg-bg-strong p-1">
-                    {viewTabs.map((tab) => (
-                        <motion.button
-                            key={tab.id}
-                            type="button"
-                            onClick={() => setViewTab(tab.id)}
-                            className={cn(
-                                'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                                viewTab === tab.id
-                                    ? 'text-text-strong'
-                                    : 'text-text-default hover:text-text-strong',
-                            )}
-                            style={{ WebkitTapHighlightColor: 'transparent' }}
-                            aria-current={
-                                viewTab === tab.id ? 'page' : undefined
-                            }
-                        >
-                            {viewTab === tab.id && (
-                                <motion.span
-                                    layoutId="view-tab-bubble"
-                                    className="absolute inset-0 z-0 rounded-md bg-bg-stronger"
-                                    transition={bubbleTransition}
-                                />
-                            )}
-                            <span className="relative z-10">
-                                {tab.label}
-                            </span>
-                        </motion.button>
-                    ))}
+                    {viewTabs.map((tab) =>
+                        tabsAnimation ? (
+                            <motion.button
+                                key={tab.id}
+                                type="button"
+                                onClick={() => setViewTab(tab.id)}
+                                className={cn(
+                                    'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                    viewTab === tab.id
+                                        ? 'text-text-strong'
+                                        : 'text-text-default hover:text-text-strong',
+                                )}
+                                style={{ WebkitTapHighlightColor: 'transparent' }}
+                                aria-current={
+                                    viewTab === tab.id ? 'page' : undefined
+                                }
+                            >
+                                {viewTab === tab.id && (
+                                    <motion.span
+                                        layoutId="view-tab-bubble"
+                                        className="absolute inset-0 z-0 rounded-md bg-bg-stronger"
+                                        transition={bubbleTransition}
+                                    />
+                                )}
+                                <span className="relative z-10">
+                                    {tab.label}
+                                </span>
+                            </motion.button>
+                        ) : (
+                            <button
+                                key={tab.id}
+                                type="button"
+                                onClick={() => setViewTab(tab.id)}
+                                className={cn(
+                                    'relative rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                    viewTab === tab.id
+                                        ? 'text-text-strong'
+                                        : 'text-text-default hover:text-text-strong',
+                                )}
+                                aria-current={
+                                    viewTab === tab.id ? 'page' : undefined
+                                }
+                            >
+                                {viewTab === tab.id && (
+                                    <span
+                                        className="absolute inset-0 z-0 rounded-md bg-bg-stronger"
+                                        aria-hidden
+                                    />
+                                )}
+                                <span className="relative z-10">
+                                    {tab.label}
+                                </span>
+                            </button>
+                        ),
+                    )}
                 </div>
             </div>
 
-            {/* Small screens: single content area with slide/fade/blur animation */}
+            {/* Small screens: single content area with optional slide/fade/blur animation */}
             {!isLg && (
                 <div
                     className={cn(
@@ -124,66 +157,81 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
                             : 'flex-none overflow-visible',
                     )}
                 >
-                    <AnimatePresence
-                        mode="wait"
-                        initial={false}
-                        onExitComplete={() => {
-                            if (viewTab === 'form') {
-                                setPreviewExited(true);
-                            }
-                        }}
-                    >
-                        {viewTab === 'form' && (
-                            <motion.div
-                                key="form"
-                                initial={{
-                                    opacity: 0,
-                                    x: slideIn,
-                                    filter: `blur(${BLUR_PX}px)`,
-                                }}
-                                animate={{
-                                    opacity: 1,
-                                    x: 0,
-                                    filter: 'blur(0px)',
-                                }}
-                                exit={{
-                                    opacity: 0,
-                                    x: slideOut,
-                                    filter: `blur(${BLUR_PX}px)`,
-                                    transition: contentExit,
-                                }}
-                                transition={contentEnter}
-                                className="flex h-full min-h-0 flex-1 flex-col overflow-hidden items-center"
-                            >
-                                {inputPanel}
-                            </motion.div>
-                        )}
-                        {viewTab === 'preview' && (
-                            <motion.div
-                                key="preview"
-                                initial={{
-                                    opacity: 0,
-                                    x: slideIn,
-                                    filter: `blur(${BLUR_PX}px)`,
-                                }}
-                                animate={{
-                                    opacity: 1,
-                                    x: 0,
-                                    filter: 'blur(0px)',
-                                }}
-                                exit={{
-                                    opacity: 0,
-                                    x: slideOut,
-                                    filter: `blur(${BLUR_PX}px)`,
-                                    transition: contentExit,
-                                }}
-                                transition={contentEnter}
-                                className="flex min-h-0 flex-none flex-col items-center"
-                            >
-                                {previewPanel}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                    {tabsContentAnimation ? (
+                        <AnimatePresence
+                            mode="wait"
+                            initial={false}
+                            onExitComplete={() => {
+                                if (viewTab === 'form') {
+                                    setPreviewExited(true);
+                                }
+                            }}
+                        >
+                            {viewTab === 'form' && (
+                                <motion.div
+                                    key="form"
+                                    initial={{
+                                        opacity: 0,
+                                        x: slideIn,
+                                        filter: `blur(${BLUR_PX}px)`,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        x: 0,
+                                        filter: 'blur(0px)',
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        x: slideOut,
+                                        filter: `blur(${BLUR_PX}px)`,
+                                        transition: contentExit,
+                                    }}
+                                    transition={contentEnter}
+                                    className="flex h-full min-h-0 flex-1 flex-col overflow-hidden items-center"
+                                >
+                                    {inputPanel}
+                                </motion.div>
+                            )}
+                            {viewTab === 'preview' && (
+                                <motion.div
+                                    key="preview"
+                                    initial={{
+                                        opacity: 0,
+                                        x: slideIn,
+                                        filter: `blur(${BLUR_PX}px)`,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        x: 0,
+                                        filter: 'blur(0px)',
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        x: slideOut,
+                                        filter: `blur(${BLUR_PX}px)`,
+                                        transition: contentExit,
+                                    }}
+                                    transition={contentEnter}
+                                    className="flex min-h-0 flex-none flex-col items-center"
+                                >
+                                    {previewPanel}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    ) : (
+                        <>
+                            {viewTab === 'form' && (
+                                <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden items-center">
+                                    {inputPanel}
+                                </div>
+                            )}
+                            {viewTab === 'preview' && (
+                                <div className="flex min-h-0 flex-none flex-col items-center">
+                                    {previewPanel}
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
             )}
 
