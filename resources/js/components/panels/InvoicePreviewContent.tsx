@@ -106,303 +106,212 @@ export function InvoicePreviewContent({
             style={wrapperStyle}
             data-export-root={forExport ? 'true' : undefined}
         >
-            <div className="relative h-full w-full rounded-[8px] bg-preview-stripes p-[14px] shadow-preview-frame">
-                <div className="flex h-full w-full flex-col overflow-auto rounded-[6px] border border-gray-100 bg-gray-0">
-                    {/* Header */}
-                    <div
-                        className={`flex items-center p-4 border-b-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
-                    >
-                        {forExport ? (
-                            issuer.includeLogo !== false && (
-                                <div className="flex shrink-0 items-center gap-2.5">
-                                    {logoBox}
-                                </div>
-                            )
-                        ) : (
-                            <AnimatePresence initial={false}>
-                                {issuer.includeLogo !== false && (
-                                    <motion.div
-                                        key="preview-logo-slot"
-                                        initial={{
-                                            width: 0,
-                                            opacity: 0,
-                                        }}
-                                        animate={{
-                                            width: 46,
-                                            opacity: 1,
-                                        }}
-                                        exit={{
-                                            width: 0,
-                                            opacity: 0,
-                                        }}
-                                        transition={{
-                                            type: 'spring',
-                                            stiffness: 260,
-                                            damping: 26,
-                                        }}
-                                        className="flex shrink-0 items-center gap-2.5 overflow-hidden"
-                                    >
-                                        <LogoWrapper
+            <div className="relative h-full w-full overflow-visible rounded-[8px] bg-preview-stripes p-[14px] shadow-preview-frame">
+                <div className="flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-gray-100 bg-gray-0 inside-preview-frame">
+                    <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+                        {/* Header */}
+                        <div
+                            className={`flex items-center p-4 border-b-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
+                        >
+                            {forExport ? (
+                                issuer.includeLogo !== false && (
+                                    <div className="flex shrink-0 items-center gap-2.5">
+                                        {logoBox}
+                                    </div>
+                                )
+                            ) : (
+                                <AnimatePresence initial={false}>
+                                    {issuer.includeLogo !== false && (
+                                        <motion.div
+                                            key="preview-logo-slot"
                                             initial={{
                                                 width: 0,
                                                 opacity: 0,
-                                                filter: 'blur(8px)',
-                                                scale: 0.85,
                                             }}
                                             animate={{
-                                                width: 36,
+                                                width: 46,
                                                 opacity: 1,
-                                                filter: 'blur(0px)',
-                                                scale: 1,
                                             }}
                                             exit={{
                                                 width: 0,
                                                 opacity: 0,
-                                                filter: 'blur(6px)',
-                                                scale: 0.9,
                                             }}
                                             transition={{
                                                 type: 'spring',
                                                 stiffness: 260,
                                                 damping: 26,
                                             }}
-                                            className="shrink-0 overflow-hidden"
+                                            className="flex shrink-0 items-center gap-2.5 overflow-hidden"
                                         >
-                                            {logoBox}
-                                        </LogoWrapper>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        )}
-
-                        <div className="flex w-full min-w-0 flex-col justify-center gap-[2px]">
-                            <h1 className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                Invoice from{' '}
-                                <PreviewText
-                                    value={issuer.name}
-                                    placeholder={placeholders.issuer.name}
-                                />
-                            </h1>
-                            <div className="flex items-center justify-between">
-                                <p className="text-[12px] text-text-weak">
-                                    Due{' '}
-                                    {details.dueDateInput?.trim() ? (
-                                        <span className="opacity-100">
-                                            {details.dueDateInput}
-                                        </span>
-                                    ) : details.dueDate ? (
-                                        <span className="opacity-100">
-                                            {format(
-                                                details.dueDate instanceof Date
-                                                    ? details.dueDate
-                                                    : new Date(details.dueDate),
-                                                'dd/MM/yyyy',
-                                            )}
-                                        </span>
-                                    ) : (
-                                        <span className="opacity-50">
-                                            {placeholders.details.dueDate}
-                                        </span>
+                                            <LogoWrapper
+                                                initial={{
+                                                    width: 0,
+                                                    opacity: 0,
+                                                    filter: 'blur(8px)',
+                                                    scale: 0.85,
+                                                }}
+                                                animate={{
+                                                    width: 36,
+                                                    opacity: 1,
+                                                    filter: 'blur(0px)',
+                                                    scale: 1,
+                                                }}
+                                                exit={{
+                                                    width: 0,
+                                                    opacity: 0,
+                                                    filter: 'blur(6px)',
+                                                    scale: 0.9,
+                                                }}
+                                                transition={{
+                                                    type: 'spring',
+                                                    stiffness: 260,
+                                                    damping: 26,
+                                                }}
+                                                className="shrink-0 overflow-hidden"
+                                            >
+                                                {logoBox}
+                                            </LogoWrapper>
+                                        </motion.div>
                                     )}
-                                </p>
-                                <p className="text-[12px] text-text-weaker">
+                                </AnimatePresence>
+                            )}
+
+                            <div className="flex w-full min-w-0 flex-col justify-center gap-[2px]">
+                                <h1 className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    Invoice from{' '}
                                     <PreviewText
-                                        value={details.invoiceNumber}
+                                        value={issuer.name}
+                                        placeholder={placeholders.issuer.name}
+                                    />
+                                </h1>
+                                <div className="flex items-center justify-between">
+                                    <p className="text-[12px] text-text-weak">
+                                        Due{' '}
+                                        {details.dueDateInput?.trim() ? (
+                                            <span className="opacity-100">
+                                                {details.dueDateInput}
+                                            </span>
+                                        ) : details.dueDate ? (
+                                            <span className="opacity-100">
+                                                {format(
+                                                    details.dueDate instanceof
+                                                        Date
+                                                        ? details.dueDate
+                                                        : new Date(
+                                                              details.dueDate,
+                                                          ),
+                                                    'dd/MM/yyyy',
+                                                )}
+                                            </span>
+                                        ) : (
+                                            <span className="opacity-50">
+                                                {placeholders.details.dueDate}
+                                            </span>
+                                        )}
+                                    </p>
+                                    <p className="text-[12px] text-text-weaker">
+                                        <PreviewText
+                                            value={details.invoiceNumber}
+                                            placeholder={
+                                                placeholders.details
+                                                    .invoiceNumber
+                                            }
+                                        />
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Addresses */}
+                        <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4">
+                            <div className="flex min-w-0 flex-col gap-1 overflow-visible">
+                                <h3 className="text-[12px] text-text-default">
+                                    Bill from
+                                </h3>
+                                <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    <PreviewText
+                                        value={issuer.name}
+                                        placeholder={placeholders.issuer.name}
+                                    />
+                                </p>
+                                <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    <PreviewText
+                                        value={issuer.address}
                                         placeholder={
-                                            placeholders.details.invoiceNumber
+                                            placeholders.issuer.address
+                                        }
+                                    />
+                                </p>
+                                <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    <PreviewText
+                                        value={issuer.email}
+                                        placeholder={placeholders.issuer.email}
+                                    />
+                                </p>
+                            </div>
+                            <div className="flex min-w-0 flex-col gap-1 overflow-visible">
+                                <h3 className="text-[12px] text-text-default">
+                                    Bill to
+                                </h3>
+                                <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    <PreviewText
+                                        value={billTo.name}
+                                        placeholder={placeholders.billTo.name}
+                                    />
+                                </p>
+                                <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
+                                    <PreviewText
+                                        value={billTo.address}
+                                        placeholder={
+                                            placeholders.billTo.address
                                         }
                                     />
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Addresses */}
-                    <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4">
-                        <div className="flex min-w-0 flex-col gap-1 overflow-visible">
-                            <h3 className="text-[12px] text-text-default">
-                                Bill from
-                            </h3>
-                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                <PreviewText
-                                    value={issuer.name}
-                                    placeholder={placeholders.issuer.name}
-                                />
-                            </p>
-                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                <PreviewText
-                                    value={issuer.address}
-                                    placeholder={placeholders.issuer.address}
-                                />
-                            </p>
-                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                <PreviewText
-                                    value={issuer.email}
-                                    placeholder={placeholders.issuer.email}
-                                />
-                            </p>
-                        </div>
-                        <div className="flex min-w-0 flex-col gap-1 overflow-visible">
-                            <h3 className="text-[12px] text-text-default">
-                                Bill to
-                            </h3>
-                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                <PreviewText
-                                    value={billTo.name}
-                                    placeholder={placeholders.billTo.name}
-                                />
-                            </p>
-                            <p className="min-w-0 text-[12px] wrap-break-word text-text-strong">
-                                <PreviewText
-                                    value={billTo.address}
-                                    placeholder={placeholders.billTo.address}
-                                />
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Items Table */}
-                    <div>
-                        <table className="w-full table-fixed text-left">
-                            <colgroup>
-                                <col
-                                    style={{
-                                        width: `${(220 / 406) * 100}%`,
-                                    }}
-                                />
-                                <col
-                                    style={{
-                                        width: `${(62 / 406) * 100}%`,
-                                    }}
-                                />
-                                <col
-                                    style={{
-                                        width: `${(62 / 406) * 100}%`,
-                                    }}
-                                />
-                                <col
-                                    style={{
-                                        width: `${(62 / 406) * 100}%`,
-                                    }}
-                                />
-                            </colgroup>
-                            <thead>
-                                <tr
-                                    className={`text-[12px] text-text-weak border-b-layered border-t-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
-                                >
-                                    <th className="py-2 ps-4">Item</th>
-                                    <th className="py-2">QTY</th>
-                                    <th className="py-2">Rate</th>
-                                    <th className="py-2 pe-4 text-right">
-                                        Amount
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="relative text-[12px] text-text-strong">
-                                {items.length > 0 ? (
-                                    forExport ? (
-                                        items.map(
-                                            (item: InvoiceItem, index) => {
-                                                const isFirst = index === 0;
-                                                const isLast =
-                                                    index === items.length - 1;
-                                                const rowPadding =
-                                                    isFirst && isLast
-                                                        ? 'pt-4 pb-4'
-                                                        : isFirst
-                                                          ? 'pt-4 pb-1'
-                                                          : isLast
-                                                            ? 'pt-1 pb-4'
-                                                            : 'py-1';
-                                                return (
-                                                    <tr key={item.id}>
-                                                        <td
-                                                            className={`${rowPadding} min-w-0 overflow-visible ps-4`}
-                                                        >
-                                                            <p
-                                                                className={
-                                                                    forExport
-                                                                        ? 'wrap-break-word'
-                                                                        : 'truncate'
-                                                                }
-                                                            >
-                                                                <PreviewText
-                                                                    value={
-                                                                        item.description
-                                                                    }
-                                                                    placeholder={
-                                                                        placeholders
-                                                                            .items
-                                                                            .description
-                                                                    }
-                                                                />
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
-                                                        >
-                                                            {item.quantity ===
-                                                            0 ? (
-                                                                <span className="opacity-50">
-                                                                    {
-                                                                        placeholders
-                                                                            .items
-                                                                            .quantity
-                                                                    }
-                                                                </span>
-                                                            ) : (
-                                                                formatNumberForDisplay(
-                                                                    item.quantity,
-                                                                )
-                                                            )}
-                                                        </td>
-                                                        <td
-                                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
-                                                        >
-                                                            {item.rate === 0 ? (
-                                                                <span className="opacity-50">
-                                                                    {formatAmount(
-                                                                        0,
-                                                                    )}
-                                                                </span>
-                                                            ) : (
-                                                                formatAmount(
-                                                                    item.rate,
-                                                                )
-                                                            )}
-                                                        </td>
-                                                        <td
-                                                            className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right`}
-                                                        >
-                                                            {item.quantity *
-                                                                item.rate ===
-                                                            0 ? (
-                                                                <span className="opacity-50">
-                                                                    {formatAmount(
-                                                                        0,
-                                                                    )}
-                                                                </span>
-                                                            ) : (
-                                                                formatAmount(
-                                                                    item.quantity *
-                                                                        item.rate,
-                                                                )
-                                                            )}
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            },
-                                        )
-                                    ) : (
-                                        <AnimatePresence
-                                            initial={false}
-                                            mode="popLayout"
-                                        >
-                                            {items.map(
-                                                (
-                                                    item: InvoiceItem,
-                                                    index: number,
-                                                ) => {
+                        {/* Items Table */}
+                        <div>
+                            <table className="w-full table-fixed text-left">
+                                <colgroup>
+                                    <col
+                                        style={{
+                                            width: `${(220 / 406) * 100}%`,
+                                        }}
+                                    />
+                                    <col
+                                        style={{
+                                            width: `${(62 / 406) * 100}%`,
+                                        }}
+                                    />
+                                    <col
+                                        style={{
+                                            width: `${(62 / 406) * 100}%`,
+                                        }}
+                                    />
+                                    <col
+                                        style={{
+                                            width: `${(62 / 406) * 100}%`,
+                                        }}
+                                    />
+                                </colgroup>
+                                <thead>
+                                    <tr
+                                        className={`text-[12px] text-text-weak border-b-layered border-t-layered transition-colors duration-150 ease-in-out ${isAccent ? 'bg-bg-default' : 'bg-gray-0'}`}
+                                    >
+                                        <th className="py-2 ps-4">Item</th>
+                                        <th className="py-2">QTY</th>
+                                        <th className="py-2">Rate</th>
+                                        <th className="py-2 pe-4 text-right">
+                                            Amount
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="relative text-[12px] text-text-strong">
+                                    {items.length > 0 ? (
+                                        forExport ? (
+                                            items.map(
+                                                (item: InvoiceItem, index) => {
                                                     const isFirst = index === 0;
                                                     const isLast =
                                                         index ===
@@ -416,26 +325,17 @@ export function InvoicePreviewContent({
                                                                 ? 'pt-1 pb-4'
                                                                 : 'py-1';
                                                     return (
-                                                        <RowWrapper
-                                                            key={item.id}
-                                                            layout
-                                                            initial={
-                                                                itemRowAnimation.initial
-                                                            }
-                                                            animate={
-                                                                itemRowAnimation.animate
-                                                            }
-                                                            exit={
-                                                                itemRowAnimation.exit
-                                                            }
-                                                            transition={
-                                                                itemRowAnimation.transition
-                                                            }
-                                                        >
+                                                        <tr key={item.id}>
                                                             <td
-                                                                className={`${rowPadding} min-w-0 overflow-hidden ps-4`}
+                                                                className={`${rowPadding} min-w-0 overflow-visible ps-4`}
                                                             >
-                                                                <p className="truncate">
+                                                                <p
+                                                                    className={
+                                                                        forExport
+                                                                            ? 'wrap-break-word'
+                                                                            : 'truncate'
+                                                                    }
+                                                                >
                                                                     <PreviewText
                                                                         value={
                                                                             item.description
@@ -453,14 +353,7 @@ export function InvoicePreviewContent({
                                                             >
                                                                 {item.quantity ===
                                                                 0 ? (
-                                                                    <span
-                                                                        className="opacity-50"
-                                                                        title={
-                                                                            placeholders
-                                                                                .items
-                                                                                .quantity
-                                                                        }
-                                                                    >
+                                                                    <span className="opacity-50">
                                                                         {
                                                                             placeholders
                                                                                 .items
@@ -478,12 +371,7 @@ export function InvoicePreviewContent({
                                                             >
                                                                 {item.rate ===
                                                                 0 ? (
-                                                                    <span
-                                                                        className="opacity-50"
-                                                                        title={formatAmount(
-                                                                            0,
-                                                                        )}
-                                                                    >
+                                                                    <span className="opacity-50">
                                                                         {formatAmount(
                                                                             0,
                                                                         )}
@@ -512,115 +400,240 @@ export function InvoicePreviewContent({
                                                                     )
                                                                 )}
                                                             </td>
-                                                        </RowWrapper>
+                                                        </tr>
                                                     );
                                                 },
-                                            )}
-                                        </AnimatePresence>
-                                    )
-                                ) : (
-                                    <tr>
-                                        <td className="ps-4 pt-4 pb-4">
-                                            No items added yet...
-                                        </td>
-                                        <td className="pt-4 pb-4">-</td>
-                                        <td className="pt-4 pb-4">-</td>
-                                        <td className="pe-4 pt-4 pb-4 text-right">
-                                            -
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Summary */}
-                    <div
-                        className={
-                            forExport
-                                ? 'ml-auto flex w-[220px] flex-col gap-2 py-3 pe-4 text-[12px] text-text-weak'
-                                : 'ml-auto flex w-[190px] flex-col gap-2 py-3 pe-4 text-[12px] text-text-weak'
-                        }
-                    >
-                        <div className="flex min-w-0 justify-between gap-2">
-                            <span className="shrink-0">Subtotal</span>
-                            <span
-                                className={
-                                    forExport
-                                        ? 'shrink-0 text-right text-text-default'
-                                        : 'min-w-0 overflow-hidden text-right text-text-default'
-                                }
-                                dir="ltr"
-                                title={formatAmount(subtotal)}
-                            >
-                                {formatAmount(subtotal)}
-                            </span>
+                                            )
+                                        ) : (
+                                            <AnimatePresence
+                                                initial={false}
+                                                mode="popLayout"
+                                            >
+                                                {items.map(
+                                                    (
+                                                        item: InvoiceItem,
+                                                        index: number,
+                                                    ) => {
+                                                        const isFirst =
+                                                            index === 0;
+                                                        const isLast =
+                                                            index ===
+                                                            items.length - 1;
+                                                        const rowPadding =
+                                                            isFirst && isLast
+                                                                ? 'pt-4 pb-4'
+                                                                : isFirst
+                                                                  ? 'pt-4 pb-1'
+                                                                  : isLast
+                                                                    ? 'pt-1 pb-4'
+                                                                    : 'py-1';
+                                                        return (
+                                                            <RowWrapper
+                                                                key={item.id}
+                                                                layout
+                                                                initial={
+                                                                    itemRowAnimation.initial
+                                                                }
+                                                                animate={
+                                                                    itemRowAnimation.animate
+                                                                }
+                                                                exit={
+                                                                    itemRowAnimation.exit
+                                                                }
+                                                                transition={
+                                                                    itemRowAnimation.transition
+                                                                }
+                                                            >
+                                                                <td
+                                                                    className={`${rowPadding} min-w-0 overflow-hidden ps-4`}
+                                                                >
+                                                                    <p className="truncate">
+                                                                        <PreviewText
+                                                                            value={
+                                                                                item.description
+                                                                            }
+                                                                            placeholder={
+                                                                                placeholders
+                                                                                    .items
+                                                                                    .description
+                                                                            }
+                                                                        />
+                                                                    </p>
+                                                                </td>
+                                                                <td
+                                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
+                                                                >
+                                                                    {item.quantity ===
+                                                                    0 ? (
+                                                                        <span
+                                                                            className="opacity-50"
+                                                                            title={
+                                                                                placeholders
+                                                                                    .items
+                                                                                    .quantity
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                placeholders
+                                                                                    .items
+                                                                                    .quantity
+                                                                            }
+                                                                        </span>
+                                                                    ) : (
+                                                                        formatNumberForDisplay(
+                                                                            item.quantity,
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                                <td
+                                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
+                                                                >
+                                                                    {item.rate ===
+                                                                    0 ? (
+                                                                        <span
+                                                                            className="opacity-50"
+                                                                            title={formatAmount(
+                                                                                0,
+                                                                            )}
+                                                                        >
+                                                                            {formatAmount(
+                                                                                0,
+                                                                            )}
+                                                                        </span>
+                                                                    ) : (
+                                                                        formatAmount(
+                                                                            item.rate,
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                                <td
+                                                                    className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right`}
+                                                                >
+                                                                    {item.quantity *
+                                                                        item.rate ===
+                                                                    0 ? (
+                                                                        <span className="opacity-50">
+                                                                            {formatAmount(
+                                                                                0,
+                                                                            )}
+                                                                        </span>
+                                                                    ) : (
+                                                                        formatAmount(
+                                                                            item.quantity *
+                                                                                item.rate,
+                                                                        )
+                                                                    )}
+                                                                </td>
+                                                            </RowWrapper>
+                                                        );
+                                                    },
+                                                )}
+                                            </AnimatePresence>
+                                        )
+                                    ) : (
+                                        <tr>
+                                            <td className="ps-4 pt-4 pb-4">
+                                                No items added yet...
+                                            </td>
+                                            <td className="pt-4 pb-4">-</td>
+                                            <td className="pt-4 pb-4">-</td>
+                                            <td className="pe-4 pt-4 pb-4 text-right">
+                                                -
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
 
-                        <div className="flex min-w-0 justify-between gap-2">
-                            <span className="shrink-0">
-                                Discount
-                                {discountType === 'percentage' &&
-                                    ` (${discount}%)`}
-                            </span>
-                            <span
-                                className={
-                                    forExport
-                                        ? 'shrink-0 text-right text-text-default'
-                                        : 'min-w-0 overflow-hidden text-right text-text-default'
-                                }
-                                dir="ltr"
-                                title={formatAmount(-discountAmount)}
-                            >
-                                {formatAmount(-discountAmount)}
-                            </span>
+                        {/* Summary */}
+                        <div
+                            className={
+                                forExport
+                                    ? 'ml-auto flex w-[220px] flex-col gap-2 py-3 pe-4 text-[12px] text-text-weak'
+                                    : 'ml-auto flex w-[190px] flex-col gap-2 py-3 pe-4 text-[12px] text-text-weak'
+                            }
+                        >
+                            <div className="flex min-w-0 justify-between gap-2">
+                                <span className="shrink-0">Subtotal</span>
+                                <span
+                                    className={
+                                        forExport
+                                            ? 'shrink-0 text-right text-text-default'
+                                            : 'min-w-0 overflow-hidden text-right text-text-default'
+                                    }
+                                    dir="ltr"
+                                    title={formatAmount(subtotal)}
+                                >
+                                    {formatAmount(subtotal)}
+                                </span>
+                            </div>
+
+                            <div className="flex min-w-0 justify-between gap-2">
+                                <span className="shrink-0">
+                                    Discount
+                                    {discountType === 'percentage' &&
+                                        ` (${discount}%)`}
+                                </span>
+                                <span
+                                    className={
+                                        forExport
+                                            ? 'shrink-0 text-right text-text-default'
+                                            : 'min-w-0 overflow-hidden text-right text-text-default'
+                                    }
+                                    dir="ltr"
+                                    title={formatAmount(-discountAmount)}
+                                >
+                                    {formatAmount(-discountAmount)}
+                                </span>
+                            </div>
+
+                            <div className="flex min-w-0 justify-between gap-2">
+                                <span className="shrink-0">
+                                    Tax
+                                    {taxType === 'percentage' && ` (${tax}%)`}
+                                </span>
+                                <span
+                                    className={
+                                        forExport
+                                            ? 'shrink-0 text-right text-text-default'
+                                            : 'min-w-0 overflow-hidden text-right text-text-default'
+                                    }
+                                    dir="ltr"
+                                    title={formatAmount(taxAmount)}
+                                >
+                                    {formatAmount(taxAmount)}
+                                </span>
+                            </div>
+
+                            <div className="flex min-w-0 justify-between gap-2 font-medium text-text-strong">
+                                <span className="shrink-0">Total</span>
+                                <span
+                                    className={
+                                        forExport
+                                            ? 'shrink-0 text-right'
+                                            : 'min-w-0 overflow-hidden text-right'
+                                    }
+                                    dir="ltr"
+                                    title={formatAmount(total)}
+                                >
+                                    {formatAmount(total)}
+                                </span>
+                            </div>
                         </div>
 
-                        <div className="flex min-w-0 justify-between gap-2">
-                            <span className="shrink-0">
-                                Tax
-                                {taxType === 'percentage' && ` (${tax}%)`}
-                            </span>
-                            <span
-                                className={
-                                    forExport
-                                        ? 'shrink-0 text-right text-text-default'
-                                        : 'min-w-0 overflow-hidden text-right text-text-default'
-                                }
-                                dir="ltr"
-                                title={formatAmount(taxAmount)}
-                            >
-                                {formatAmount(taxAmount)}
-                            </span>
+                        {/* Notes */}
+                        <div className="mt-auto px-4 pb-3">
+                            <h4 className="mb-1 text-[10px] text-text-weak">
+                                Notes
+                            </h4>
+                            <p className="text-[10px] text-text-default">
+                                <PreviewText
+                                    value={notes}
+                                    placeholder={placeholders.notes}
+                                />
+                            </p>
                         </div>
-
-                        <div className="flex min-w-0 justify-between gap-2 font-medium text-text-strong">
-                            <span className="shrink-0">Total</span>
-                            <span
-                                className={
-                                    forExport
-                                        ? 'shrink-0 text-right'
-                                        : 'min-w-0 overflow-hidden text-right'
-                                }
-                                dir="ltr"
-                                title={formatAmount(total)}
-                            >
-                                {formatAmount(total)}
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Notes */}
-                    <div className="mt-auto px-4 pb-3">
-                        <h4 className="mb-1 text-[10px] text-text-weak">
-                            Notes
-                        </h4>
-                        <p className="text-[10px] text-text-default">
-                            <PreviewText
-                                value={notes}
-                                placeholder={placeholders.notes}
-                            />
-                        </p>
                     </div>
                 </div>
             </div>
