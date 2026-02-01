@@ -87,7 +87,7 @@ export function LabeledAdjustableInput({
                     )
                 }
                 size="sm"
-                className="ml-2 flex items-center justify-center border-0 bg-transparent p-[3px] text-text-strong shadow-none transition-all hover:bg-bg-strong hover:[&_span]:opacity-100 active:[&_span]:opacity-100"
+                className="flex items-center justify-center border-0 bg-transparent p-[3px] text-text-strong shadow-none transition-all hover:bg-bg-strong hover:[&_span]:opacity-100 active:[&_span]:opacity-100"
                 onClick={() =>
                     onTypeChange(
                         type === 'percentage' ? 'currency' : 'percentage',
