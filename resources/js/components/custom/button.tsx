@@ -62,9 +62,9 @@ const iconSizeClasses: Record<ButtonSize, string> = {
 };
 
 const textSizeClasses: Record<ButtonSize, string> = {
-    sm: 'h-auto text-[12px] leading-[15px] px-2 py-1',
-    default: 'h-auto text-[14px] leading-[17px] px-3 py-[7px]',
-    lg: 'h-auto text-[16px] leading-[20px] px-4 py-[9px]',
+    sm: 'h-auto text-[12px] px-2 py-1',
+    default: 'h-auto text-[14px] px-3 py-[7px]',
+    lg: 'h-auto text-[16px] px-4 py-[9px]',
 };
 
 // ============================================================================

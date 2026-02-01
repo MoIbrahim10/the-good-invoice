@@ -1,11 +1,11 @@
 import {
     createContext,
-    useContext,
-    useState,
     useCallback,
+    useContext,
     useEffect,
     useMemo,
     useRef,
+    useState,
 } from 'react';
 import type { TabId, TabState } from '../../types/tabs';
 
