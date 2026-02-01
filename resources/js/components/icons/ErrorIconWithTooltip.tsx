@@ -9,9 +9,6 @@ type ErrorIconWithTooltipProps = {
     id?: string;
 };
 
-const errorTooltipContentClass =
-    '!bg-[#FFEFEF] !text-[#EE0000] !border-0 !shadow-[0px_1px_2px_rgba(238,0,0,0.08)]';
-
 export function ErrorIconWithTooltip({
     message,
     className,
@@ -47,16 +44,13 @@ export function ErrorIconWithTooltip({
             <TooltipContent
                 side="top"
                 sideOffset={6}
-                className={cn(
-                    errorTooltipContentClass,
-                    'max-w-[200px] items-start text-wrap wrap-break-word',
-                )}
+                className="max-w-[200px] items-start text-wrap wrap-break-word"
             >
                 <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.12 }}
-                    className="block min-w-0 text-[12px] font-medium text-[#EE0000]"
+                    transition={{ duration: 0.05 }}
+                    className="block min-w-0"
                 >
                     {message}
                 </motion.span>
