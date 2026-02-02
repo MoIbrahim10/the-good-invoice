@@ -55,7 +55,7 @@ function TooltipContent({
                     // Layout
                     'z-50 flex flex-row items-center justify-center',
                     // Spacing
-                    'px-2 py-1',
+                    'px-2 py-[3px]',
                     // Background with gradient overlay
                     'bg-tooltip-glass',
                     // Shadow and blur

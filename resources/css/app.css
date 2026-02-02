@@ -196,7 +196,8 @@
     --preview-stripe-gap: 14px;
     /* Override --preview-stripe-offset to shift the stripe pattern (default 0) */
     --preview-stripe-offset: 0px;
-    background-position: var(--preview-stripe-offset) var(--preview-stripe-offset);
+    background-position: var(--preview-stripe-offset)
+        var(--preview-stripe-offset);
     background-image: repeating-linear-gradient(
         -45deg,
         var(--preview-col-1) 0,
@@ -224,7 +225,8 @@
     bottom: 14px;
     left: 0;
     z-index: 1;
-    background-position: var(--preview-stripe-offset) var(--preview-stripe-offset);
+    background-position: var(--preview-stripe-offset)
+        var(--preview-stripe-offset);
     background-image: repeating-linear-gradient(
         45deg,
         var(--preview-col-1) 0,
@@ -264,8 +266,12 @@
 
 @utility bg-tooltip-glass {
     background:
-        linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
-        rgba(125, 125, 125, 0.55);
+        linear-gradient(
+            0deg,
+            var(--dropdown-bg-overlay, rgba(75, 85, 99, 0.4)) 0%,
+            var(--dropdown-bg-overlay, rgba(75, 85, 99, 0.4)) 100%
+        ),
+        var(--dropdown-bg-solid, rgba(125, 125, 125, 0.55));
 }
 
 @utility bg-feedback-glass {

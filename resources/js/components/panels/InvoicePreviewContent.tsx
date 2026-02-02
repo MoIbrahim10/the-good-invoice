@@ -106,7 +106,7 @@ export function InvoicePreviewContent({
             style={wrapperStyle}
             data-export-root={forExport ? 'true' : undefined}
         >
-            <div className="relative h-full w-full overflow-visible rounded-[8px] bg-preview-stripes p-[14px] shadow-preview-frame">
+            <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[14px] shadow-preview-frame">
                 <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-gray-100 bg-gray-0 inside-preview-frame">
                     <div className="flex min-h-0 flex-1 flex-col overflow-auto">
                         {/* Header */}
@@ -627,7 +627,7 @@ export function InvoicePreviewContent({
                             <h4 className="mb-1 text-[10px] text-text-weak">
                                 Notes
                             </h4>
-                            <p className="min-w-0 text-[10px] text-text-default whitespace-pre-wrap wrap-break-word">
+                            <p className="min-w-0 text-[10px] wrap-break-word whitespace-pre-wrap text-text-default">
                                 <PreviewText
                                     value={notes}
                                     placeholder={placeholders.notes}

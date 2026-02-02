@@ -9,10 +9,10 @@ type ErrorIconWithTooltipProps = {
     id?: string;
 };
 
-function ensureTooltipEndsWithPeriod(text: string): string {
+function ensureTooltipNotEndsWithPeriod(text: string): string {
     const trimmed = text.trimEnd();
     if (trimmed.length === 0) return trimmed;
-    return trimmed.endsWith('.') ? trimmed : `${trimmed}.`;
+    return trimmed.endsWith('.') ? trimmed.slice(0, -1) : trimmed;
 }
 
 export function ErrorIconWithTooltip({
@@ -20,7 +20,7 @@ export function ErrorIconWithTooltip({
     className,
     id,
 }: ErrorIconWithTooltipProps) {
-    const displayMessage = ensureTooltipEndsWithPeriod(message);
+    const displayMessage = ensureTooltipNotEndsWithPeriod(message);
     return (
         <Tooltip>
             <TooltipTrigger asChild>

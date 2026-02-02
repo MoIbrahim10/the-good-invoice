@@ -4,8 +4,8 @@ export function PanelHeader() {
     return (
         <div className="flex flex-col gap-2 px-3 pb-[30px]">
             {/* First line */}
-            <h1 className="font-medium text-text-strong">
-                Build a good invoice
+            <h1 className="text-[14px] font-normal text-text-strong">
+                Build an invoice
             </h1>
 
             {/* Second line */}

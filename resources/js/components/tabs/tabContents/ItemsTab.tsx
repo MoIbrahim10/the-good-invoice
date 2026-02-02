@@ -368,6 +368,7 @@ export function ItemsTab() {
                     onValueChange={(value) => updateTax({ value })}
                     onTypeChange={(type) => updateTax({ type })}
                     currencyIcon={selectedCurrency.symbolIcon}
+                    containerClassName="flex-none w-[calc(207/398*100%)]"
                 />
 
                 <LabeledAdjustableInput

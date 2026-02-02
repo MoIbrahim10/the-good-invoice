@@ -35,7 +35,7 @@
 
     /* Dropdown Colors */
     --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
-    --dropdown-bg-cool-light: color-mix(in srgb, #4b5563 40%, transparent);
+    --dropdown-bg-overlay: color-mix(in srgb, #4b5563 40%, transparent);
     --dropdown-bg-item-hover: color-mix(in srgb, #ffffff 25%, transparent);
     --dropdown-bg-item-stroke: color-mix(in srgb, #ffffff 5%, transparent);
 
@@ -81,7 +81,7 @@
 
     /* Dropdown Colors */
     --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
-    --dropdown-bg-cool-light: color-mix(in srgb, #43332a 40%, transparent);
+    --dropdown-bg-overlay: color-mix(in srgb, #43332a 40%, transparent);
     --dropdown-bg-item-hover: color-mix(in srgb, #ffffff 25%, transparent);
     --dropdown-bg-item-stroke: color-mix(in srgb, #ffffff 5%, transparent);
 
@@ -127,7 +127,7 @@
 
     /* Dropdown Colors */
     --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
-    --dropdown-bg-cool-light: color-mix(in srgb, #000917 30%, transparent);
+    --dropdown-bg-overlay: color-mix(in srgb, #000917 30%, transparent);
     --dropdown-bg-item-hover: color-mix(in srgb, #000000 25%, transparent);
     --dropdown-bg-item-stroke: color-mix(in srgb, #000000 5%, transparent);
 
@@ -173,7 +173,7 @@
 
     /* Dropdown Colors */
     --dropdown-bg-solid: color-mix(in srgb, #7d7d7d 55%, transparent);
-    --dropdown-bg-cool-light: color-mix(in srgb, #0f0700 30%, transparent);
+    --dropdown-bg-overlay: color-mix(in srgb, #0f0700 30%, transparent);
     --dropdown-bg-item-hover: color-mix(in srgb, #000000 25%, transparent);
     --dropdown-bg-item-stroke: color-mix(in srgb, #000000 5%, transparent);
 

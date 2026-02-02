@@ -56,7 +56,7 @@ export function LabeledAdjustableInput({
     return (
         <div
             className={cn(
-                'flex h-[32px] min-h-[32px] flex-1 items-center rounded-[6px] border border-stroke-default bg-bg-weak py-2 ps-3 pe-1.5 shadow-none transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
+                'flex h-[32px] min-h-[32px] flex-1 items-center rounded-[6px] border border-stroke-default bg-bg-weak py-[6px] ps-3 pe-1.5 shadow-none transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
                 containerClassName,
             )}
         >
@@ -87,7 +87,7 @@ export function LabeledAdjustableInput({
                     )
                 }
                 size="sm"
-                className="flex items-center justify-center border-0 bg-transparent p-[3px] text-text-strong shadow-none transition-all hover:bg-bg-strong hover:[&_span]:opacity-100 active:[&_span]:opacity-100"
+                className="flex items-center justify-center rounded-[4px] border-0 bg-transparent p-[3px] text-text-strong shadow-none transition-all hover:bg-bg-strong dark:bg-transparent hover:[&_span]:opacity-100 active:[&_span]:opacity-100"
                 onClick={() =>
                     onTypeChange(
                         type === 'percentage' ? 'currency' : 'percentage',
@@ -97,8 +97,8 @@ export function LabeledAdjustableInput({
                     default: {
                         content:
                             type === 'percentage'
-                                ? 'Switch to currency.'
-                                : 'Switch to percentage.',
+                                ? 'Switch to currency'
+                                : 'Switch to percentage',
                     },
                 }}
             />
