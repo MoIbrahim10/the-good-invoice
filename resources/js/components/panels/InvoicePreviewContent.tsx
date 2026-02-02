@@ -107,7 +107,7 @@ export function InvoicePreviewContent({
             data-export-root={forExport ? 'true' : undefined}
         >
             <div className="relative h-full w-full overflow-visible rounded-[8px] bg-preview-stripes p-[14px] shadow-preview-frame">
-                <div className="flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-gray-100 bg-gray-0 inside-preview-frame">
+                <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-gray-100 bg-gray-0 inside-preview-frame">
                     <div className="flex min-h-0 flex-1 flex-col overflow-auto">
                         {/* Header */}
                         <div
