@@ -24,6 +24,17 @@ export function PreviewItemsTable({
     formatAmount,
     RowWrapper,
 }: PreviewItemsTableProps) {
+    const isDescriptionFilled = (i: InvoiceItem) => {
+        const t = i.description?.trim();
+        return Boolean(t && t !== placeholders.items.description);
+    };
+    const hasItemDescription = items.some(isDescriptionFilled);
+    const hasQuantity = items.some((i) => i.quantity !== 0);
+    const hasRate = items.some((i) => i.rate !== 0);
+    const hasAmount = items.some(
+        (i) => i.quantity * i.rate !== 0,
+    );
+
     return (
         <div>
             <table className="w-full table-fixed text-left">
@@ -50,14 +61,30 @@ export function PreviewItemsTable({
                     />
                 </colgroup>
                 <thead>
-                    <tr className="border-y border-preview-200 bg-preview-style-bg text-[12px] text-text-weak transition-colors duration-150 ease-in-out">
-                        <th className="py-2 ps-4">Item</th>
-                        <th className="py-2">QTY</th>
-                        <th className="py-2">Rate</th>
-                        <th className="py-2 pe-4 text-right">Amount</th>
+                    <tr className="border-y border-preview-200 bg-preview-style-bg text-[10px] text-preview-400 transition-colors duration-150 ease-in-out">
+                        <th
+                            className={`py-2 ps-4 ${hasItemDescription ? 'opacity-100' : 'opacity-50'}`}
+                        >
+                            Item
+                        </th>
+                        <th
+                            className={`py-2 ${hasQuantity ? 'opacity-100' : 'opacity-50'}`}
+                        >
+                            QTY
+                        </th>
+                        <th
+                            className={`py-2 ${hasRate ? 'opacity-100' : 'opacity-50'}`}
+                        >
+                            Rate
+                        </th>
+                        <th
+                            className={`py-2 pe-4 text-right ${hasAmount ? 'opacity-100' : 'opacity-50'}`}
+                        >
+                            Amount
+                        </th>
                     </tr>
                 </thead>
-                <tbody className="relative text-[12px] text-text-strong">
+                <tbody className="relative text-[10px] text-preview-700">
                     {items.length > 0 ? (
                         forExport ? (
                             items.map((item: InvoiceItem, index) => {
@@ -65,16 +92,20 @@ export function PreviewItemsTable({
                                 const isLast = index === items.length - 1;
                                 const rowPadding =
                                     isFirst && isLast
-                                        ? 'pt-4 pb-4'
+                                        ? 'pt-3 pb-3'
                                         : isFirst
-                                          ? 'pt-4 pb-1'
+                                          ? 'pt-3 pb-2'
                                           : isLast
-                                            ? 'pt-1 pb-4'
-                                            : 'py-1';
+                                            ? 'pt-2 pb-3'
+                                            : 'py-2';
+                                const descriptionEmpty =
+                                    !item.description?.trim() ||
+                                    item.description?.trim() ===
+                                        placeholders.items.description;
                                 return (
                                     <tr key={item.id}>
                                         <td
-                                            className={`${rowPadding} min-w-0 overflow-visible ps-4`}
+                                            className={`${rowPadding} min-w-0 overflow-visible ps-4 ${descriptionEmpty ? 'opacity-50' : ''}`}
                                         >
                                             <p
                                                 className={
@@ -89,47 +120,29 @@ export function PreviewItemsTable({
                                                         placeholders.items
                                                             .description
                                                     }
+                                                    suppressPlaceholderOpacity
                                                 />
                                             </p>
                                         </td>
                                         <td
-                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
+                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.quantity === 0 ? 'opacity-50' : ''}`}
                                         >
-                                            {item.quantity === 0 ? (
-                                                <span className="opacity-50">
-                                                    {
-                                                        placeholders.items
-                                                            .quantity
-                                                    }
-                                                </span>
-                                            ) : (
-                                                formatNumberForDisplay(
-                                                    item.quantity,
-                                                )
-                                            )}
+                                            {item.quantity === 0
+                                                ? placeholders.items.quantity
+                                                : formatNumberForDisplay(
+                                                      item.quantity,
+                                                  )}
                                         </td>
                                         <td
-                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
+                                            className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.rate === 0 ? 'opacity-50' : ''}`}
                                         >
-                                            {item.rate === 0 ? (
-                                                <span className="opacity-50">
-                                                    {formatAmount(0)}
-                                                </span>
-                                            ) : (
-                                                formatAmount(item.rate)
-                                            )}
+                                            {formatAmount(item.rate)}
                                         </td>
                                         <td
-                                            className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right`}
+                                            className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right ${item.quantity * item.rate === 0 ? 'opacity-50' : ''}`}
                                         >
-                                            {item.quantity * item.rate === 0 ? (
-                                                <span className="opacity-50">
-                                                    {formatAmount(0)}
-                                                </span>
-                                            ) : (
-                                                formatAmount(
-                                                    item.quantity * item.rate,
-                                                )
+                                            {formatAmount(
+                                                item.quantity * item.rate,
                                             )}
                                         </td>
                                     </tr>
@@ -144,12 +157,16 @@ export function PreviewItemsTable({
                                             index === items.length - 1;
                                         const rowPadding =
                                             isFirst && isLast
-                                                ? 'pt-4 pb-4'
+                                                ? 'pt-3 pb-3'
                                                 : isFirst
-                                                  ? 'pt-4 pb-1'
+                                                  ? 'pt-3 pb-2'
                                                   : isLast
-                                                    ? 'pt-1 pb-4'
-                                                    : 'py-1';
+                                                    ? 'pt-2 pb-3'
+                                                    : 'py-2';
+                                        const descriptionEmpty =
+                                            !item.description?.trim() ||
+                                            item.description?.trim() ===
+                                                placeholders.items.description;
                                         return (
                                             <RowWrapper
                                                 key={item.id}
@@ -166,7 +183,7 @@ export function PreviewItemsTable({
                                                 }
                                             >
                                                 <td
-                                                    className={`${rowPadding} min-w-0 overflow-hidden ps-4`}
+                                                    className={`${rowPadding} min-w-0 overflow-hidden ps-4 ${descriptionEmpty ? 'opacity-50' : ''}`}
                                                 >
                                                     <p className="truncate">
                                                         <PreviewText
@@ -178,63 +195,41 @@ export function PreviewItemsTable({
                                                                     .items
                                                                     .description
                                                             }
+                                                            suppressPlaceholderOpacity
                                                         />
                                                     </p>
                                                 </td>
                                                 <td
-                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
+                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.quantity === 0 ? 'opacity-50' : ''}`}
+                                                    title={
+                                                        item.quantity === 0
+                                                            ? placeholders
+                                                                  .items
+                                                                  .quantity
+                                                            : undefined
+                                                    }
                                                 >
-                                                    {item.quantity === 0 ? (
-                                                        <span
-                                                            className="opacity-50"
-                                                            title={
-                                                                placeholders
-                                                                    .items
-                                                                    .quantity
-                                                            }
-                                                        >
-                                                            {
-                                                                placeholders
-                                                                    .items
-                                                                    .quantity
-                                                            }
-                                                        </span>
-                                                    ) : (
-                                                        formatNumberForDisplay(
-                                                            item.quantity,
-                                                        )
-                                                    )}
+                                                    {item.quantity === 0
+                                                        ? placeholders.items
+                                                              .quantity
+                                                        : formatNumberForDisplay(
+                                                              item.quantity,
+                                                          )}
                                                 </td>
                                                 <td
-                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap`}
-                                                >
-                                                    {item.rate === 0 ? (
-                                                        <span
-                                                            className="opacity-50"
-                                                            title={formatAmount(
-                                                                0,
-                                                            )}
-                                                        >
-                                                            {formatAmount(0)}
-                                                        </span>
-                                                    ) : (
-                                                        formatAmount(item.rate)
+                                                    className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.rate === 0 ? 'opacity-50' : ''}`}
+                                                    title={formatAmount(
+                                                        item.rate,
                                                     )}
+                                                >
+                                                    {formatAmount(item.rate)}
                                                 </td>
                                                 <td
-                                                    className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right`}
+                                                    className={`${rowPadding} min-w-0 overflow-hidden pe-4 text-right ${item.quantity * item.rate === 0 ? 'opacity-50' : ''}`}
                                                 >
-                                                    {item.quantity *
-                                                        item.rate ===
-                                                    0 ? (
-                                                        <span className="opacity-50">
-                                                            {formatAmount(0)}
-                                                        </span>
-                                                    ) : (
-                                                        formatAmount(
-                                                            item.quantity *
-                                                                item.rate,
-                                                        )
+                                                    {formatAmount(
+                                                        item.quantity *
+                                                            item.rate,
                                                     )}
                                                 </td>
                                             </RowWrapper>
@@ -244,13 +239,13 @@ export function PreviewItemsTable({
                             </AnimatePresence>
                         )
                     ) : (
-                        <tr>
-                            <td className="ps-4 pt-4 pb-4">
+                        <tr className="opacity-50">
+                            <td className="ps-4 pt-3 pb-3">
                                 No items added yet...
                             </td>
-                            <td className="pt-4 pb-4">-</td>
-                            <td className="pt-4 pb-4">-</td>
-                            <td className="pe-4 pt-4 pb-4 text-right">-</td>
+                            <td className="pt-3 pb-3">-</td>
+                            <td className="pt-3 pb-3">-</td>
+                            <td className="pe-4 pt-3 pb-3 text-right">-</td>
                         </tr>
                     )}
                 </tbody>
