@@ -71,7 +71,8 @@ const PREVIEW_PALETTES: Record<
 };
 
 type PdfPalette = {
-    styleBg: string;
+    contentBg: string; /* page/main area: always preview-0 */
+    styleBg: string; /* header/table header: preview-0 or preview-25 when accent */
     logoBoxBg: string;
     border: string;
     textStrong: string;
@@ -87,8 +88,9 @@ function getPdfPalette(
 ): PdfPalette {
     const p = PREVIEW_PALETTES[color];
     return {
+        contentBg: p[0], /* main content area always white (preview-0) */
         styleBg: style === 'solid' ? p[0] : p[25],
-        logoBoxBg: p[0], /* logo box always uses preview-0 */
+        logoBoxBg: p[0],
         border: p[200],
         textStrong: p[700],
         textDefault: p[500],
@@ -102,7 +104,14 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         fontSize: 10,
-        padding: 28,
+    },
+    contentWrapper: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    notesSpacer: {
+        flexGrow: 1,
+        minHeight: 0,
     },
     header: {
         flexDirection: 'row',
@@ -301,9 +310,15 @@ export function InvoicePdfDocument({
         <Document>
             <Page
                 size="A4"
-                style={[styles.page, { backgroundColor: palette.styleBg }]}
+                style={[styles.page, { backgroundColor: palette.contentBg }]}
             >
-                {/* Header */}
+                <View
+                    style={[
+                        styles.contentWrapper,
+                        { backgroundColor: palette.contentBg },
+                    ]}
+                >
+                    {/* Header */}
                 <View
                     style={[
                         styles.header,
@@ -371,7 +386,12 @@ export function InvoicePdfDocument({
                 </View>
 
                 {/* Addresses */}
-                <View style={styles.addresses}>
+                <View
+                    style={[
+                        styles.addresses,
+                        { backgroundColor: palette.contentBg },
+                    ]}
+                >
                     <View style={styles.addressCol}>
                         <Text
                             style={[
@@ -500,7 +520,12 @@ export function InvoicePdfDocument({
                 </View>
 
                 {/* Items Table */}
-                <View style={styles.table}>
+                <View
+                    style={[
+                        styles.table,
+                        { backgroundColor: palette.contentBg },
+                    ]}
+                >
                     <View
                         style={[
                             styles.tableHeader,
@@ -679,6 +704,7 @@ export function InvoicePdfDocument({
                             style={[
                                 styles.summary,
                                 {
+                                    backgroundColor: palette.contentBg,
                                     color: palette.textWeak,
                                     ...(summaryAllZero ? { opacity: 0.5 } : {}),
                                 },
@@ -765,29 +791,45 @@ export function InvoicePdfDocument({
                     );
                 })()}
 
-                {/* Notes */}
-                <View
-                    style={[
-                        styles.notesContainer,
-                        !notes?.trim() ? { opacity: 0.5 } : {},
-                    ]}
-                >
-                    <Text
+                    {/* Spacer – pushes notes to bottom like preview mt-auto */}
+                    <View
                         style={[
-                            styles.notesTitle,
-                            { color: palette.textWeak },
+                            styles.notesSpacer,
+                            { backgroundColor: palette.contentBg },
+                        ]}
+                    />
+
+                    {/* Notes – preserves newlines like preview whitespace-pre-wrap */}
+                    <View
+                        style={[
+                            styles.notesContainer,
+                            {
+                                backgroundColor: palette.contentBg,
+                                ...(!notes?.trim() ? { opacity: 0.5 } : {}),
+                            },
                         ]}
                     >
-                        Notes
-                    </Text>
-                    <Text
-                        style={[
-                            styles.notesText,
-                            { color: palette.textDefault },
-                        ]}
-                    >
-                        {previewText(notes, placeholders.notes).text}
-                    </Text>
+                        <Text
+                            style={[
+                                styles.notesTitle,
+                                { color: palette.textWeak },
+                            ]}
+                        >
+                            Notes
+                        </Text>
+                        <Text
+                            style={[
+                                styles.notesText,
+                                { color: palette.textDefault },
+                            ]}
+                        >
+                            {previewText(notes, placeholders.notes).text
+                                .split('\n')
+                                .flatMap((line, i) =>
+                                    i > 0 ? ['\n', line] : [line],
+                                )}
+                        </Text>
+                    </View>
                 </View>
             </Page>
         </Document>
