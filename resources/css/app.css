@@ -103,15 +103,33 @@
     --color-bg-default: var(--bg-default);
     --color-bg-strong: var(--bg-strong);
     --color-bg-stronger: var(--bg-stronger);
+    --color-bg-strongest: var(--bg-strongest);
 
     /* Icon Color Utilities */
+    --color-icon-weaker: var(--icon-weaker);
     --color-icon-weak: var(--icon-weak);
     --color-icon-default: var(--icon-default);
     --color-icon-strong: var(--icon-strong);
 
     /* Stroke/Border Color Utilities */
+    --color-stroke-weaker: var(--stroke-weaker);
+    --color-stroke-weak: var(--stroke-weak);
     --color-stroke-default: var(--stroke-default);
     --color-stroke-strong: var(--stroke-strong);
+
+    /* Dropdown Color Utilities (from colors.css) */
+    --color-dropdown-bg-solid: var(--dropdown-bg-solid);
+    --color-dropdown-bg-overlay: var(--dropdown-bg-overlay);
+    --color-dropdown-bg-item-hover: var(--dropdown-bg-item-hover);
+    --color-dropdown-bg-item-stroke: var(--dropdown-bg-item-stroke);
+
+    /* Preview Color Utilities (from colors.css) */
+    --color-preview-border: var(--preview-border);
+    --color-preview-col-1: var(--preview-col-1);
+    --color-preview-col-2: var(--preview-col-2);
+
+    /* Button Color Utility (from colors.css) */
+    --color-button-default: var(--button-default);
 
     /* NG Hover Color Utility */
     --color-ng-hover: var(--ng-hover);
@@ -275,13 +293,8 @@
 }
 
 @utility bg-feedback-glass {
-    background:
-        linear-gradient(0deg, rgba(75, 85, 99, 0.4), rgba(75, 85, 99, 0.4)),
-        linear-gradient(
-            180deg,
-            rgba(167, 167, 167, 0.55) 0%,
-            rgba(125, 125, 125, 0.55) 100%
-        );
+    background:linear-gradient(0deg, var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.40)) 0%, var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.40)) 100%), linear-gradient(180deg, rgba(167, 167, 167, 0.30) 0%, rgba(125, 125, 125, 0.30) 100%);
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.03);
 }
 
 :root {

@@ -75,7 +75,7 @@ export function CurrencyDropdown({
                     sideOffset={6}
                     className={cn(
                         'flex w-(--radix-dropdown-menu-trigger-width) flex-col items-start p-[2px]',
-                        'border-stroke-weak rounded-[6px] shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] bg-feedback-glass',
+                        'border-stroke-weak rounded-[6px] backdrop-blur-[2px] bg-feedback-glass',
                     )}
                 >
                     {currencies.map((currency) => (

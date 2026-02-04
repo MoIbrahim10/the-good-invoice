@@ -22,7 +22,7 @@ function FeedbackItem({ avatar, username, href }: FeedbackItemProps) {
             rel="noopener noreferrer"
             className={cn(
                 'group flex w-full items-center justify-between rounded-[4px] border border-transparent py-[6px] pr-[6px] pl-[8px] transition-all',
-                'hover:border-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.25)]',
+                'hover:border-dropdown-bg-item-stroke hover:bg-dropdown-bg-item-hover',
             )}
         >
             <div className="flex items-center gap-2">
@@ -95,7 +95,7 @@ export function FeedbackPopover({
                 onMouseLeave={handleClose}
                 className={cn(
                     'flex w-[200px] flex-col items-start gap-1 p-1',
-                    'border-stroke-weak rounded-md shadow-[0px_3px_3px_rgba(0,0,0,0.05),0px_4px_4px_rgba(0,0,0,0.03)] backdrop-blur-[2px] bg-feedback-glass',
+                    'border-stroke-weak rounded-[4px] backdrop-blur-[2px] bg-feedback-glass',
                 )}
             >
                 <div className="py-[4px] pr-[6px] pl-[8px]">
