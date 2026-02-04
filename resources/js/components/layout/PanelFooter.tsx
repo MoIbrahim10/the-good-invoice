@@ -8,7 +8,7 @@ import {
 } from '@/hooks/use-appearance';
 import { useInvoiceValidation } from '@/hooks/use-invoice-validation';
 import { useTheme } from '@/hooks/use-theme';
-import { ExportIcon } from '../icons/ExportIcon';
+import { ExportButtonIcon } from '../icons/ExportButtonIcon';
 import { FeedbackIcon } from '../icons/FeedbackIcon';
 import { LightDarkIcon } from '../icons/LightDarkIcon';
 import { ThemeIcon } from '../icons/ThemeIcon';
@@ -84,7 +84,13 @@ export function PanelFooter() {
             </div>
             <CustomButton
                 onClick={handleExport}
-                icon={<ExportIcon size={18} />}
+                icon={
+                    <ExportButtonIcon
+                        size={18}
+                        isExporting={exportContext?.isExporting}
+                        exportSuccess={exportContext?.exportSuccess}
+                    />
+                }
                 text="Export"
                 disabled={!isValid || exportContext?.isExporting}
                 tooltips={{

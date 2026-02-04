@@ -434,3 +434,38 @@
 [data-theme-switching] *::after {
     transition: none !important;
 }
+
+/* Export button icon: loading wavy path animation */
+.export-icon-loading-path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: export-icon-loading 0.9s ease-in-out infinite;
+}
+
+@keyframes export-icon-loading {
+    0% {
+        stroke-dashoffset: 24;
+    }
+    50% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: -24;
+    }
+}
+
+/* Export button icon: success checkmark draw-in */
+.export-icon-success-path {
+    stroke-dasharray: 14;
+    stroke-dashoffset: 14;
+}
+
+.export-icon-success-path-visible {
+    animation: export-icon-success-draw 0.4s ease-out forwards;
+}
+
+@keyframes export-icon-success-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
