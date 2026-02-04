@@ -235,6 +235,19 @@ export function invoiceReducer(
             };
         }
 
+        case 'HYDRATE_DISPLAY': {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    display: {
+                        ...state.data.display,
+                        ...action.payload,
+                    },
+                },
+            };
+        }
+
         case 'RESET_INVOICE': {
             return initialInvoiceState;
         }

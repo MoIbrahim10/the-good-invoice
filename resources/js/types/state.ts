@@ -37,6 +37,7 @@ export type InvoiceAction =
           payload: { value?: number; type?: AmountType };
       }
     | { type: 'UPDATE_DISPLAY'; payload: Partial<DisplayOptions> }
+    | { type: 'HYDRATE_DISPLAY'; payload: Partial<DisplayOptions> }
     | { type: 'RESET_INVOICE' }
     | { type: 'LOAD_INVOICE'; payload: InvoiceData };
 
