@@ -2,7 +2,9 @@ import {
     Document,
     Image,
     Page,
+    Path,
     StyleSheet,
+    Svg,
     Text,
     View,
 } from '@react-pdf/renderer';
@@ -10,24 +12,95 @@ import { format } from 'date-fns';
 import { currencies } from '@/data/currencies';
 import { formatCurrencyForDisplay, formatNumberForDisplay } from '@/lib/utils';
 import type {
+    DisplayColorValue,
+    DisplayStyle,
     InvoiceData,
     InvoiceItem,
     InvoicePlaceholders,
 } from '@/types/invoice';
 
-const colors = {
-    border: '#e5e7eb',
-    textStrong: '#111827',
-    textDefault: '#374151',
-    textWeak: '#6b7280',
-    textWeaker: '#9ca3af',
-    bg: '#ffffff',
+/** Preview palettes – hex values from app.css/colors.css (preview-0, 25, 200, 350, 400, 500, 700) */
+const PREVIEW_PALETTES: Record<
+    DisplayColorValue,
+    {
+        0: string;
+        25: string;
+        200: string;
+        350: string;
+        400: string;
+        500: string;
+        700: string;
+    }
+> = {
+    gray: {
+        0: '#ffffff',
+        25: '#fafbfc',
+        200: '#e5e7eb',
+        350: '#bdc2ca',
+        400: '#9ca3af',
+        500: '#6b7280',
+        700: '#374151',
+    },
+    cream: {
+        0: '#ffffff',
+        25: '#fdfdfc',
+        200: '#e7e5e4',
+        350: '#c6c3c0',
+        400: '#a8a29e',
+        500: '#78716c',
+        700: '#44403c',
+    },
+    blue: {
+        0: '#ffffff',
+        25: '#F9FBFE',
+        200: '#E7F0FB',
+        350: '#B4C9E0',
+        400: '#7E90A6',
+        500: '#3B5682',
+        700: '#1A2D61',
+    },
+    green: {
+        0: '#ffffff',
+        25: '#FAFBF8',
+        200: '#E9EEDC',
+        350: '#CADBAB',
+        400: '#AABD8A',
+        500: '#859C5D',
+        700: '#2E4116',
+    },
 };
+
+type PdfPalette = {
+    styleBg: string;
+    logoBoxBg: string;
+    border: string;
+    textStrong: string;
+    textDefault: string;
+    textWeak: string;
+    textWeaker: string;
+    iconWeak: string;
+};
+
+function getPdfPalette(
+    color: DisplayColorValue = 'gray',
+    style: DisplayStyle = 'solid',
+): PdfPalette {
+    const p = PREVIEW_PALETTES[color];
+    return {
+        styleBg: style === 'solid' ? p[0] : p[25],
+        logoBoxBg: p[0], /* logo box always uses preview-0 */
+        border: p[200],
+        textStrong: p[700],
+        textDefault: p[500],
+        textWeak: p[400],
+        textWeaker: p[350],
+        iconWeak: p[350],
+    };
+}
 
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        backgroundColor: colors.bg,
         fontSize: 10,
         padding: 28,
     },
@@ -35,126 +108,119 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-        paddingBottom: 12,
+        paddingVertical: 16,
+        paddingHorizontal: 16,
         borderBottomWidth: 1,
-        borderBottomColor: colors.border,
-        marginBottom: 12,
     },
     logoBox: {
         width: 28,
         height: 28,
         borderWidth: 1,
-        borderColor: colors.border,
+        borderStyle: 'dashed',
         borderRadius: 4,
         alignItems: 'center',
         justifyContent: 'center',
     },
     logo: {
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 28,
     },
     headerText: {
         flex: 1,
         flexDirection: 'column',
         gap: 2,
     },
-    title: {
-        fontSize: 11,
-        fontWeight: 600,
-        color: colors.textStrong,
-    },
+    title: { fontSize: 10, fontWeight: 600 },
     headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    dueDate: {
-        fontSize: 10,
-        color: colors.textWeak,
-    },
-    invoiceNumber: {
-        fontSize: 10,
-        color: colors.textWeaker,
-    },
+    dueDate: { fontSize: 10 },
+    invoiceNumber: { fontSize: 10 },
     addresses: {
         flexDirection: 'row',
-        gap: 20,
-        marginBottom: 12,
+        gap: 10,
+        paddingVertical: 16,
+        paddingHorizontal: 16,
     },
     addressCol: {
         flex: 1,
         flexDirection: 'column',
         gap: 4,
     },
-    addressTitle: {
-        fontSize: 10,
-        color: colors.textDefault,
-        marginBottom: 2,
-    },
-    addressText: {
-        fontSize: 10,
-        color: colors.textStrong,
-    },
-    addressPlaceholder: {
-        color: colors.textWeaker,
-    },
+    addressTitle: { fontSize: 10, marginBottom: 2 },
+    addressText: { fontSize: 10 },
     table: {
-        marginBottom: 12,
+        paddingHorizontal: 16,
     },
     tableHeader: {
         flexDirection: 'row',
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor: colors.border,
         paddingVertical: 8,
-        paddingHorizontal: 12,
+        paddingHorizontal: 0,
         fontSize: 10,
-        color: colors.textWeak,
     },
     tableRow: {
         flexDirection: 'row',
-        paddingVertical: 6,
-        paddingHorizontal: 12,
+        paddingVertical: 8,
+        paddingHorizontal: 0,
         borderBottomWidth: 0,
         fontSize: 10,
-        color: colors.textStrong,
     },
-    colItem: { width: '54%' },
-    colQty: { width: '15%' },
-    colRate: { width: '15%' },
-    colAmount: { width: '16%', textAlign: 'right' },
+    colItem: { width: '54.2%' },
+    colQty: { width: '15.3%' },
+    colRate: { width: '15.3%' },
+    colAmount: { width: '15.2%', textAlign: 'right' },
     tableHeaderAmount: { textAlign: 'right' },
     summary: {
         alignSelf: 'flex-end',
-        width: 160,
+        width: 220,
         flexDirection: 'column',
-        gap: 6,
-        marginBottom: 12,
+        gap: 8,
+        paddingVertical: 12,
+        paddingRight: 16,
         fontSize: 10,
-        color: colors.textWeak,
     },
     summaryRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    summaryAmount: {
-        color: colors.textDefault,
+    summaryAmount: {},
+    summaryTotal: { fontWeight: 600 },
+    notesContainer: {
+        paddingHorizontal: 16,
+        paddingBottom: 12,
     },
-    summaryTotal: {
-        fontWeight: 600,
-        color: colors.textStrong,
-    },
-    notesTitle: {
-        fontSize: 9,
-        color: colors.textWeak,
-        marginBottom: 4,
-    },
-    notesText: {
-        fontSize: 9,
-        color: colors.textDefault,
-    },
+    notesTitle: { fontSize: 10, marginBottom: 4 },
+    notesText: { fontSize: 10 },
 });
+
+/** LogoIcon SVG placeholder – matches preview when no logo is set */
+function PdfLogoPlaceholder({ fill }: { fill: string }) {
+    return (
+        <Svg width={12} height={12} viewBox="0 0 18 18">
+            <Path
+                d="M9.79537 1.76505C9.35602 1.32571 8.64375 1.32571 8.2044 1.76505L6.26505 3.70439C5.82571 4.14373 5.82571 4.85604 6.26505 5.29538L8.2044 7.23472C8.64375 7.67407 9.35602 7.67407 9.79537 7.23472L11.7347 5.29538C12.1741 4.85604 12.1741 4.14373 11.7347 3.70439L9.79537 1.76505Z"
+                fill={fill}
+            />
+            <Path
+                d="M5.29538 6.26505C4.85604 5.82571 4.14373 5.82571 3.70439 6.26505L1.76505 8.2044C1.32571 8.64375 1.32571 9.35602 1.76505 9.79537L3.70439 11.7347C4.14373 12.1741 4.85604 12.1741 5.29538 11.7347L7.23472 9.79537C7.67407 9.35602 7.67407 8.64375 7.23472 8.2044L5.29538 6.26505Z"
+                fill={fill}
+            />
+            <Path
+                d="M14.2954 6.26505C13.856 5.82571 13.1438 5.82571 12.7044 6.26505L10.7651 8.2044C10.3257 8.64375 10.3257 9.35602 10.7651 9.79537L12.7044 11.7347C13.1438 12.1741 13.856 12.1741 14.2954 11.7347L16.2347 9.79537C16.6741 9.35602 16.6741 8.64375 16.2347 8.2044L14.2954 6.26505Z"
+                fill={fill}
+            />
+            <Path
+                d="M9.79537 10.7651C9.35602 10.3257 8.64375 10.3257 8.2044 10.7651L6.26505 12.7044C5.82571 13.1438 5.82571 13.856 6.26505 14.2954L8.2044 16.2347C8.64375 16.6741 9.35602 16.6741 9.79537 16.2347L11.7347 14.2954C12.1741 13.856 12.1741 13.1438 11.7347 12.7044L9.79537 10.7651Z"
+                fill={fill}
+            />
+        </Svg>
+    );
+}
 
 function previewText(
     value: string | number,
@@ -189,7 +255,13 @@ export function InvoicePdfDocument({
         discount,
         discountType,
         notes,
+        display,
     } = data;
+
+    const palette = getPdfPalette(
+        display?.color ?? 'gray',
+        display?.style ?? 'solid',
+    );
 
     const currency =
         currencies.find((c) => c.code === details.currency) || currencies[0];
@@ -227,32 +299,69 @@ export function InvoicePdfDocument({
 
     return (
         <Document>
-            <Page size="A4" style={styles.page}>
+            <Page
+                size="A4"
+                style={[styles.page, { backgroundColor: palette.styleBg }]}
+            >
                 {/* Header */}
-                <View style={styles.header}>
+                <View
+                    style={[
+                        styles.header,
+                        {
+                            backgroundColor: palette.styleBg,
+                            borderBottomColor: palette.border,
+                        },
+                    ]}
+                >
                     {issuer.includeLogo !== false && (
-                        <View style={styles.logoBox}>
+                        <View
+                            style={[
+                                styles.logoBox,
+                                {
+                                    backgroundColor: palette.logoBoxBg,
+                                    borderColor: palette.border,
+                                },
+                            ]}
+                        >
                             {issuer.logo ? (
                                 <Image src={issuer.logo} style={styles.logo} />
                             ) : (
-                                <Text style={styles.addressText}>—</Text>
+                                <PdfLogoPlaceholder fill={palette.iconWeak} />
                             )}
                         </View>
                     )}
                     <View style={styles.headerText}>
-                        <Text style={styles.title}>
+                        <Text
+                            style={[
+                                styles.title,
+                                {
+                                    color: palette.textStrong,
+                                    ...(issuerName.placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
+                            ]}
+                        >
                             Invoice from {issuerName.text}
                         </Text>
                         <View style={styles.headerRow}>
-                            <Text style={styles.dueDate}>
+                            <Text
+                                style={[
+                                    styles.dueDate,
+                                    { color: palette.textWeak },
+                                ]}
+                            >
                                 Due {dueDateText}
                             </Text>
                             <Text
                                 style={[
                                     styles.invoiceNumber,
-                                    ...(invoiceNo.placeholder
-                                        ? [styles.addressPlaceholder]
-                                        : []),
+                                    {
+                                        color: palette.textWeaker,
+                                        ...(invoiceNo.placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
                                 ]}
                             >
                                 {invoiceNo.text}
@@ -264,8 +373,28 @@ export function InvoicePdfDocument({
                 {/* Addresses */}
                 <View style={styles.addresses}>
                     <View style={styles.addressCol}>
-                        <Text style={styles.addressTitle}>Bill from</Text>
-                        <Text style={styles.addressText}>
+                        <Text
+                            style={[
+                                styles.addressTitle,
+                                { color: palette.textDefault },
+                            ]}
+                        >
+                            Bill from
+                        </Text>
+                        <Text
+                            style={[
+                                styles.addressText,
+                                {
+                                    color: palette.textStrong,
+                                    ...(previewText(
+                                        issuer.name,
+                                        placeholders.issuer.name,
+                                    ).placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
+                            ]}
+                        >
                             {
                                 previewText(
                                     issuer.name,
@@ -276,12 +405,15 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(
-                                    issuer.address,
-                                    placeholders.issuer.address,
-                                ).placeholder
-                                    ? [styles.addressPlaceholder]
-                                    : []),
+                                {
+                                    color: palette.textStrong,
+                                    ...(previewText(
+                                        issuer.address,
+                                        placeholders.issuer.address,
+                                    ).placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
                             ]}
                         >
                             {
@@ -294,12 +426,15 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(
-                                    issuer.email,
-                                    placeholders.issuer.email,
-                                ).placeholder
-                                    ? [styles.addressPlaceholder]
-                                    : []),
+                                {
+                                    color: palette.textStrong,
+                                    ...(previewText(
+                                        issuer.email,
+                                        placeholders.issuer.email,
+                                    ).placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
                             ]}
                         >
                             {
@@ -311,16 +446,26 @@ export function InvoicePdfDocument({
                         </Text>
                     </View>
                     <View style={styles.addressCol}>
-                        <Text style={styles.addressTitle}>Bill to</Text>
+                        <Text
+                            style={[
+                                styles.addressTitle,
+                                { color: palette.textDefault },
+                            ]}
+                        >
+                            Bill to
+                        </Text>
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(
-                                    billTo.name,
-                                    placeholders.billTo.name,
-                                ).placeholder
-                                    ? [styles.addressPlaceholder]
-                                    : []),
+                                {
+                                    color: palette.textStrong,
+                                    ...(previewText(
+                                        billTo.name,
+                                        placeholders.billTo.name,
+                                    ).placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
                             ]}
                         >
                             {
@@ -333,12 +478,15 @@ export function InvoicePdfDocument({
                         <Text
                             style={[
                                 styles.addressText,
-                                ...(previewText(
-                                    billTo.address,
-                                    placeholders.billTo.address,
-                                ).placeholder
-                                    ? [styles.addressPlaceholder]
-                                    : []),
+                                {
+                                    color: palette.textStrong,
+                                    ...(previewText(
+                                        billTo.address,
+                                        placeholders.billTo.address,
+                                    ).placeholder
+                                        ? { opacity: 0.5 }
+                                        : {}),
+                                },
                             ]}
                         >
                             {
@@ -353,94 +501,291 @@ export function InvoicePdfDocument({
 
                 {/* Items Table */}
                 <View style={styles.table}>
-                    <View style={styles.tableHeader}>
-                        <Text style={styles.colItem}>Item</Text>
-                        <Text style={styles.colQty}>QTY</Text>
-                        <Text style={styles.colRate}>Rate</Text>
+                    <View
+                        style={[
+                            styles.tableHeader,
+                            {
+                                backgroundColor: palette.styleBg,
+                                borderColor: palette.border,
+                            },
+                        ]}
+                    >
                         <Text
-                            style={[styles.colAmount, styles.tableHeaderAmount]}
+                            style={[
+                                styles.colItem,
+                                { color: palette.textWeak },
+                            ]}
+                        >
+                            Item
+                        </Text>
+                        <Text
+                            style={[styles.colQty, { color: palette.textWeak }]}
+                        >
+                            QTY
+                        </Text>
+                        <Text
+                            style={[
+                                styles.colRate,
+                                { color: palette.textWeak },
+                            ]}
+                        >
+                            Rate
+                        </Text>
+                        <Text
+                            style={[
+                                styles.colAmount,
+                                styles.tableHeaderAmount,
+                                { color: palette.textWeak },
+                            ]}
                         >
                             Amount
                         </Text>
                     </View>
                     {items.length > 0 ? (
-                        items.map((item: InvoiceItem) => (
-                            <View key={item.id} style={styles.tableRow}>
-                                <Text style={styles.colItem}>
-                                    {
-                                        previewText(
-                                            item.description,
-                                            placeholders.items.description,
-                                        ).text
-                                    }
-                                </Text>
-                                <Text style={styles.colQty}>
-                                    {item.quantity === 0
-                                        ? placeholders.items.quantity
-                                        : formatNumberForDisplay(item.quantity)}
-                                </Text>
-                                <Text style={styles.colRate}>
-                                    {item.rate === 0
-                                        ? formatAmount(0)
-                                        : formatAmount(item.rate)}
-                                </Text>
-                                <Text style={styles.colAmount}>
-                                    {item.quantity * item.rate === 0
-                                        ? formatAmount(0)
-                                        : formatAmount(
-                                              item.quantity * item.rate,
-                                          )}
-                                </Text>
-                            </View>
-                        ))
+                        items.map((item: InvoiceItem) => {
+                            const descEmpty =
+                                !item.description?.trim() ||
+                                item.description?.trim() ===
+                                    placeholders.items.description;
+                            return (
+                                <View key={item.id} style={styles.tableRow}>
+                                    <Text
+                                        style={[
+                                            styles.colItem,
+                                            {
+                                                color: palette.textStrong,
+                                                ...(descEmpty
+                                                    ? { opacity: 0.5 }
+                                                    : {}),
+                                            },
+                                        ]}
+                                    >
+                                        {
+                                            previewText(
+                                                item.description,
+                                                placeholders.items.description,
+                                            ).text
+                                        }
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.colQty,
+                                            {
+                                                color: palette.textStrong,
+                                                ...(item.quantity === 0
+                                                    ? { opacity: 0.5 }
+                                                    : {}),
+                                            },
+                                        ]}
+                                    >
+                                        {item.quantity === 0
+                                            ? placeholders.items.quantity
+                                            : formatNumberForDisplay(
+                                                  item.quantity,
+                                              )}
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.colRate,
+                                            {
+                                                color: palette.textStrong,
+                                                ...(item.rate === 0
+                                                    ? { opacity: 0.5 }
+                                                    : {}),
+                                            },
+                                        ]}
+                                    >
+                                        {item.rate === 0
+                                            ? formatAmount(0)
+                                            : formatAmount(item.rate)}
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.colAmount,
+                                            {
+                                                color: palette.textStrong,
+                                                ...(item.quantity * item.rate ===
+                                                0
+                                                    ? { opacity: 0.5 }
+                                                    : {}),
+                                            },
+                                        ]}
+                                    >
+                                        {item.quantity * item.rate === 0
+                                            ? formatAmount(0)
+                                            : formatAmount(
+                                                  item.quantity * item.rate,
+                                              )}
+                                    </Text>
+                                </View>
+                            );
+                        })
                     ) : (
                         <View style={styles.tableRow}>
-                            <Text style={styles.colItem}>
+                            <Text
+                                style={[
+                                    styles.colItem,
+                                    {
+                                        color: palette.textStrong,
+                                        opacity: 0.5,
+                                    },
+                                ]}
+                            >
                                 No items added yet...
                             </Text>
-                            <Text style={styles.colQty}>-</Text>
-                            <Text style={styles.colRate}>-</Text>
-                            <Text style={styles.colAmount}>-</Text>
+                            <Text
+                                style={[
+                                    styles.colQty,
+                                    {
+                                        color: palette.textStrong,
+                                        opacity: 0.5,
+                                    },
+                                ]}
+                            >
+                                -
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.colRate,
+                                    {
+                                        color: palette.textStrong,
+                                        opacity: 0.5,
+                                    },
+                                ]}
+                            >
+                                -
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.colAmount,
+                                    {
+                                        color: palette.textStrong,
+                                        opacity: 0.5,
+                                    },
+                                ]}
+                            >
+                                -
+                            </Text>
                         </View>
                     )}
                 </View>
 
                 {/* Summary */}
-                <View style={styles.summary}>
-                    <View style={styles.summaryRow}>
-                        <Text>Subtotal</Text>
-                        <Text style={styles.summaryAmount}>
-                            {formatAmount(subtotal)}
-                        </Text>
-                    </View>
-                    <View style={styles.summaryRow}>
-                        <Text>
-                            Discount
-                            {discountType === 'percentage' && ` (${discount}%)`}
-                        </Text>
-                        <Text style={styles.summaryAmount}>
-                            {formatAmount(-discountAmount)}
-                        </Text>
-                    </View>
-                    <View style={styles.summaryRow}>
-                        <Text>
-                            Tax
-                            {taxType === 'percentage' && ` (${tax}%)`}
-                        </Text>
-                        <Text style={styles.summaryAmount}>
-                            {formatAmount(taxAmount)}
-                        </Text>
-                    </View>
-                    <View style={[styles.summaryRow, styles.summaryTotal]}>
-                        <Text>Total</Text>
-                        <Text>{formatAmount(total)}</Text>
-                    </View>
-                </View>
+                {(() => {
+                    const summaryAllZero =
+                        subtotal === 0 && discountAmount === 0 && taxAmount === 0;
+                    return (
+                        <View
+                            style={[
+                                styles.summary,
+                                {
+                                    color: palette.textWeak,
+                                    ...(summaryAllZero ? { opacity: 0.5 } : {}),
+                                },
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    styles.summaryRow,
+                                    subtotal === 0 && !summaryAllZero
+                                        ? { opacity: 0.5 }
+                                        : {},
+                                ]}
+                            >
+                                <Text>Subtotal</Text>
+                                <Text
+                                    style={[
+                                        styles.summaryAmount,
+                                        { color: palette.textDefault },
+                                    ]}
+                                >
+                                    {formatAmount(subtotal)}
+                                </Text>
+                            </View>
+                            <View
+                                style={[
+                                    styles.summaryRow,
+                                    discountAmount === 0 && !summaryAllZero
+                                        ? { opacity: 0.5 }
+                                        : {},
+                                ]}
+                            >
+                                <Text>
+                                    Discount
+                                    {discountType === 'percentage' &&
+                                        ` (${discount}%)`}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.summaryAmount,
+                                        { color: palette.textDefault },
+                                    ]}
+                                >
+                                    {formatAmount(-discountAmount)}
+                                </Text>
+                            </View>
+                            <View
+                                style={[
+                                    styles.summaryRow,
+                                    taxAmount === 0 && !summaryAllZero
+                                        ? { opacity: 0.5 }
+                                        : {},
+                                ]}
+                            >
+                                <Text>
+                                    Tax
+                                    {taxType === 'percentage' &&
+                                        ` (${tax}%)`}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.summaryAmount,
+                                        { color: palette.textDefault },
+                                    ]}
+                                >
+                                    {formatAmount(taxAmount)}
+                                </Text>
+                            </View>
+                            <View
+                                style={[
+                                    styles.summaryRow,
+                                    styles.summaryTotal,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(total === 0 && !summaryAllZero
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                <Text>Total</Text>
+                                <Text>{formatAmount(total)}</Text>
+                            </View>
+                        </View>
+                    );
+                })()}
 
                 {/* Notes */}
-                <View>
-                    <Text style={styles.notesTitle}>Notes</Text>
-                    <Text style={styles.notesText}>
+                <View
+                    style={[
+                        styles.notesContainer,
+                        !notes?.trim() ? { opacity: 0.5 } : {},
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.notesTitle,
+                            { color: palette.textWeak },
+                        ]}
+                    >
+                        Notes
+                    </Text>
+                    <Text
+                        style={[
+                            styles.notesText,
+                            { color: palette.textDefault },
+                        ]}
+                    >
                         {previewText(notes, placeholders.notes).text}
                     </Text>
                 </View>
