@@ -128,7 +128,6 @@ export function PreviewItemsTableBody({
         return (
             <RowWrapper
                 key={item.id}
-                layout
                 initial={itemRowAnimation.initial}
                 animate={itemRowAnimation.animate}
                 exit={itemRowAnimation.exit}
@@ -144,7 +143,7 @@ export function PreviewItemsTableBody({
     }
 
     return (
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence initial={false} mode="sync">
             {items.map((item, index) => renderRow(item, index))}
         </AnimatePresence>
     );

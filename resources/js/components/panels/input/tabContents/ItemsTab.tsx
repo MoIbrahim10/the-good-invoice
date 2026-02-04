@@ -74,11 +74,10 @@ export function ItemsTab() {
                     </tr>
                 </thead>
                 <tbody className="relative">
-                    <AnimatePresence initial={false} mode="popLayout">
+                    <AnimatePresence initial={false} mode="sync">
                         {items.map((item, index) => (
                             <motion.tr
                                 key={item.id}
-                                layout
                                 initial={itemRowAnimation.initial}
                                 animate={itemRowAnimation.animate}
                                 exit={itemRowAnimation.exit}

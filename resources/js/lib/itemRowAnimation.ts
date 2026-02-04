@@ -1,7 +1,7 @@
 /**
  * Shared animation config for invoice item rows in ItemsTab and PreviewPanel.
  * Use with motion.tr and AnimatePresence; key must be item.id for correct exit tracking.
- * AnimatePresence mode="popLayout" lets the exiting row pop out so layout reflows smoothly.
+ * AnimatePresence mode="sync" keeps remaining rows visible while the exiting row blurs in place.
  */
 export const itemRowAnimation = {
     initial: {
@@ -17,10 +17,12 @@ export const itemRowAnimation = {
     exit: {
         opacity: 0,
         y: 0,
-        filter: 'blur(4px)',
+        filter: 'blur(3px)',
         transition: {
-            duration: 0.25,
-            ease: [0.32, 0.72, 0, 1] as const,
+            duration: 0.45,
+            ease: [0.4, 0, 0.2, 1] as const,
+            opacity: { duration: 0.3, delay: 0.15 },
+            filter: { duration: 0.35 },
         },
     },
     transition: {
