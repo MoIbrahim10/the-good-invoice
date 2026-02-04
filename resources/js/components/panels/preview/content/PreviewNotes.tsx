@@ -11,7 +11,7 @@ export function PreviewNotes({ notes, placeholder }: PreviewNotesProps) {
         <div
             className={`mt-auto px-4 pb-3 text-[10px] ${isEmpty ? 'opacity-50' : ''}`}
         >
-            <h4 className="mb-1  text-preview-400">Notes</h4>
+            <h4 className="mb-1 text-preview-400">Notes</h4>
             <p className="min-w-0 wrap-break-word whitespace-pre-wrap text-preview-500">
                 <PreviewText
                     value={notes}

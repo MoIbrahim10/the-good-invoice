@@ -21,8 +21,7 @@ export function PreviewAddresses({
         !issuer.name?.trim() &&
         !issuer.address?.trim() &&
         !issuer.email?.trim();
-    const billToAllEmpty =
-        !billTo.name?.trim() && !billTo.address?.trim();
+    const billToAllEmpty = !billTo.name?.trim() && !billTo.address?.trim();
 
     return (
         <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4 text-[10px] text-preview-700">

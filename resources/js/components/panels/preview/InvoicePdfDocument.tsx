@@ -1,5 +1,6 @@
 import {
     Document,
+    Font,
     Image,
     Page,
     Path,
@@ -11,6 +12,33 @@ import {
 import { format } from 'date-fns';
 import { currencies } from '@/data/currencies';
 import { formatCurrencyForDisplay, formatNumberForDisplay } from '@/lib/utils';
+import type { Currency } from '@/types/currency';
+
+/* Inter – main PDF font */
+Font.register({
+    family: 'Inter',
+    fonts: [
+        { src: 'https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff' },
+        { src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-400-normal.woff' },
+        { src: 'https://fonts.bunny.net/inter/files/inter-latin-500-normal.woff', fontWeight: 500 },
+        { src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-500-normal.woff', fontWeight: 500 },
+    ],
+});
+
+/* Noto Sans – fallback for ₹ ₽ only (devanagari + latin-ext have these glyphs) */
+Font.register({
+    family: 'PdfCurrency',
+    fonts: [
+        { src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-devanagari-400-normal.woff' },
+        { src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-latin-ext-400-normal.woff' },
+    ],
+});
+
+/** Use symbol for all currencies; RUB/INR amounts use PdfCurrency font for ₹ ₽ */
+function formatCurrencyForPdf(amount: number, currency: Currency): string {
+    return formatCurrencyForDisplay(amount, currency.symbol);
+}
+
 import type {
     DisplayColorValue,
     DisplayStyle,
@@ -71,8 +99,8 @@ const PREVIEW_PALETTES: Record<
 };
 
 type PdfPalette = {
-    contentBg: string; /* page/main area: always preview-0 */
-    styleBg: string; /* header/table header: preview-0 or preview-25 when accent */
+    contentBg: string /* page/main area: always preview-0 */;
+    styleBg: string /* header/table header: preview-0 or preview-25 when accent */;
     logoBoxBg: string;
     border: string;
     textStrong: string;
@@ -88,7 +116,7 @@ function getPdfPalette(
 ): PdfPalette {
     const p = PREVIEW_PALETTES[color];
     return {
-        contentBg: p[0], /* main content area always white (preview-0) */
+        contentBg: p[0] /* main content area always white (preview-0) */,
         styleBg: style === 'solid' ? p[0] : p[25],
         logoBoxBg: p[0],
         border: p[200],
@@ -104,6 +132,7 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         fontSize: 10,
+        fontFamily: 'Inter',
     },
     contentWrapper: {
         flex: 1,
@@ -161,7 +190,7 @@ const styles = StyleSheet.create({
     addressTitle: { fontSize: 10, marginBottom: 2 },
     addressText: { fontSize: 10 },
     table: {
-        paddingHorizontal: 16,
+        width: '100%',
     },
     tableHeader: {
         flexDirection: 'row',
@@ -178,10 +207,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
         fontSize: 10,
     },
-    colItem: { width: '54.2%' },
+    colItem: { width: '54.2%', paddingLeft: 16 },
     colQty: { width: '15.3%' },
     colRate: { width: '15.3%' },
-    colAmount: { width: '15.2%', textAlign: 'right' },
+    colAmount: { width: '15.2%', textAlign: 'right', paddingRight: 16 },
     tableHeaderAmount: { textAlign: 'right' },
     summary: {
         alignSelf: 'flex-end',
@@ -275,7 +304,11 @@ export function InvoicePdfDocument({
     const currency =
         currencies.find((c) => c.code === details.currency) || currencies[0];
     const formatAmount = (amount: number) =>
-        formatCurrencyForDisplay(amount, currency.symbol);
+        formatCurrencyForPdf(amount, currency);
+    const currencyAmountFont =
+        currency.code === 'INR' || currency.code === 'RUB'
+            ? { fontFamily: 'PdfCurrency' as const }
+            : {};
 
     const subtotal = items.reduce(
         (sum: number, item: InvoiceItem) => sum + item.quantity * item.rate,
@@ -319,477 +352,509 @@ export function InvoicePdfDocument({
                     ]}
                 >
                     {/* Header */}
-                <View
-                    style={[
-                        styles.header,
-                        {
-                            backgroundColor: palette.styleBg,
-                            borderBottomColor: palette.border,
-                        },
-                    ]}
-                >
-                    {issuer.includeLogo !== false && (
+                    <View
+                        style={[
+                            styles.header,
+                            {
+                                backgroundColor: palette.styleBg,
+                                borderBottomColor: palette.border,
+                            },
+                        ]}
+                    >
+                        {issuer.includeLogo !== false && (
+                            <View
+                                style={[
+                                    styles.logoBox,
+                                    {
+                                        backgroundColor: palette.logoBoxBg,
+                                        borderColor: palette.border,
+                                    },
+                                ]}
+                            >
+                                {issuer.logo ? (
+                                    <Image
+                                        src={issuer.logo}
+                                        style={styles.logo}
+                                    />
+                                ) : (
+                                    <PdfLogoPlaceholder
+                                        fill={palette.iconWeak}
+                                    />
+                                )}
+                            </View>
+                        )}
+                        <View style={styles.headerText}>
+                            <Text
+                                style={[
+                                    styles.title,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(issuerName.placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                Invoice from {issuerName.text}
+                            </Text>
+                            <View style={styles.headerRow}>
+                                <Text
+                                    style={[
+                                        styles.dueDate,
+                                        { color: palette.textWeak },
+                                    ]}
+                                >
+                                    Due {dueDateText}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.invoiceNumber,
+                                        {
+                                            color: palette.textWeaker,
+                                            ...(invoiceNo.placeholder
+                                                ? { opacity: 0.5 }
+                                                : {}),
+                                        },
+                                    ]}
+                                >
+                                    {invoiceNo.text}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Addresses */}
+                    <View
+                        style={[
+                            styles.addresses,
+                            { backgroundColor: palette.contentBg },
+                        ]}
+                    >
+                        <View style={styles.addressCol}>
+                            <Text
+                                style={[
+                                    styles.addressTitle,
+                                    { color: palette.textDefault },
+                                ]}
+                            >
+                                Bill from
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.addressText,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(previewText(
+                                            issuer.name,
+                                            placeholders.issuer.name,
+                                        ).placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                {
+                                    previewText(
+                                        issuer.name,
+                                        placeholders.issuer.name,
+                                    ).text
+                                }
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.addressText,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(previewText(
+                                            issuer.address,
+                                            placeholders.issuer.address,
+                                        ).placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                {
+                                    previewText(
+                                        issuer.address,
+                                        placeholders.issuer.address,
+                                    ).text
+                                }
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.addressText,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(previewText(
+                                            issuer.email,
+                                            placeholders.issuer.email,
+                                        ).placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                {
+                                    previewText(
+                                        issuer.email,
+                                        placeholders.issuer.email,
+                                    ).text
+                                }
+                            </Text>
+                        </View>
+                        <View style={styles.addressCol}>
+                            <Text
+                                style={[
+                                    styles.addressTitle,
+                                    { color: palette.textDefault },
+                                ]}
+                            >
+                                Bill to
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.addressText,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(previewText(
+                                            billTo.name,
+                                            placeholders.billTo.name,
+                                        ).placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                {
+                                    previewText(
+                                        billTo.name,
+                                        placeholders.billTo.name,
+                                    ).text
+                                }
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.addressText,
+                                    {
+                                        color: palette.textStrong,
+                                        ...(previewText(
+                                            billTo.address,
+                                            placeholders.billTo.address,
+                                        ).placeholder
+                                            ? { opacity: 0.5 }
+                                            : {}),
+                                    },
+                                ]}
+                            >
+                                {
+                                    previewText(
+                                        billTo.address,
+                                        placeholders.billTo.address,
+                                    ).text
+                                }
+                            </Text>
+                        </View>
+                    </View>
+
+                    {/* Items Table */}
+                    <View
+                        style={[
+                            styles.table,
+                            { backgroundColor: palette.contentBg },
+                        ]}
+                    >
                         <View
                             style={[
-                                styles.logoBox,
+                                styles.tableHeader,
                                 {
-                                    backgroundColor: palette.logoBoxBg,
+                                    backgroundColor: palette.styleBg,
                                     borderColor: palette.border,
                                 },
                             ]}
                         >
-                            {issuer.logo ? (
-                                <Image src={issuer.logo} style={styles.logo} />
-                            ) : (
-                                <PdfLogoPlaceholder fill={palette.iconWeak} />
-                            )}
-                        </View>
-                    )}
-                    <View style={styles.headerText}>
-                        <Text
-                            style={[
-                                styles.title,
-                                {
-                                    color: palette.textStrong,
-                                    ...(issuerName.placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            Invoice from {issuerName.text}
-                        </Text>
-                        <View style={styles.headerRow}>
-                            <Text
-                                style={[
-                                    styles.dueDate,
-                                    { color: palette.textWeak },
-                                ]}
-                            >
-                                Due {dueDateText}
-                            </Text>
-                            <Text
-                                style={[
-                                    styles.invoiceNumber,
-                                    {
-                                        color: palette.textWeaker,
-                                        ...(invoiceNo.placeholder
-                                            ? { opacity: 0.5 }
-                                            : {}),
-                                    },
-                                ]}
-                            >
-                                {invoiceNo.text}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Addresses */}
-                <View
-                    style={[
-                        styles.addresses,
-                        { backgroundColor: palette.contentBg },
-                    ]}
-                >
-                    <View style={styles.addressCol}>
-                        <Text
-                            style={[
-                                styles.addressTitle,
-                                { color: palette.textDefault },
-                            ]}
-                        >
-                            Bill from
-                        </Text>
-                        <Text
-                            style={[
-                                styles.addressText,
-                                {
-                                    color: palette.textStrong,
-                                    ...(previewText(
-                                        issuer.name,
-                                        placeholders.issuer.name,
-                                    ).placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            {
-                                previewText(
-                                    issuer.name,
-                                    placeholders.issuer.name,
-                                ).text
-                            }
-                        </Text>
-                        <Text
-                            style={[
-                                styles.addressText,
-                                {
-                                    color: palette.textStrong,
-                                    ...(previewText(
-                                        issuer.address,
-                                        placeholders.issuer.address,
-                                    ).placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            {
-                                previewText(
-                                    issuer.address,
-                                    placeholders.issuer.address,
-                                ).text
-                            }
-                        </Text>
-                        <Text
-                            style={[
-                                styles.addressText,
-                                {
-                                    color: palette.textStrong,
-                                    ...(previewText(
-                                        issuer.email,
-                                        placeholders.issuer.email,
-                                    ).placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            {
-                                previewText(
-                                    issuer.email,
-                                    placeholders.issuer.email,
-                                ).text
-                            }
-                        </Text>
-                    </View>
-                    <View style={styles.addressCol}>
-                        <Text
-                            style={[
-                                styles.addressTitle,
-                                { color: palette.textDefault },
-                            ]}
-                        >
-                            Bill to
-                        </Text>
-                        <Text
-                            style={[
-                                styles.addressText,
-                                {
-                                    color: palette.textStrong,
-                                    ...(previewText(
-                                        billTo.name,
-                                        placeholders.billTo.name,
-                                    ).placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            {
-                                previewText(
-                                    billTo.name,
-                                    placeholders.billTo.name,
-                                ).text
-                            }
-                        </Text>
-                        <Text
-                            style={[
-                                styles.addressText,
-                                {
-                                    color: palette.textStrong,
-                                    ...(previewText(
-                                        billTo.address,
-                                        placeholders.billTo.address,
-                                    ).placeholder
-                                        ? { opacity: 0.5 }
-                                        : {}),
-                                },
-                            ]}
-                        >
-                            {
-                                previewText(
-                                    billTo.address,
-                                    placeholders.billTo.address,
-                                ).text
-                            }
-                        </Text>
-                    </View>
-                </View>
-
-                {/* Items Table */}
-                <View
-                    style={[
-                        styles.table,
-                        { backgroundColor: palette.contentBg },
-                    ]}
-                >
-                    <View
-                        style={[
-                            styles.tableHeader,
-                            {
-                                backgroundColor: palette.styleBg,
-                                borderColor: palette.border,
-                            },
-                        ]}
-                    >
-                        <Text
-                            style={[
-                                styles.colItem,
-                                { color: palette.textWeak },
-                            ]}
-                        >
-                            Item
-                        </Text>
-                        <Text
-                            style={[styles.colQty, { color: palette.textWeak }]}
-                        >
-                            QTY
-                        </Text>
-                        <Text
-                            style={[
-                                styles.colRate,
-                                { color: palette.textWeak },
-                            ]}
-                        >
-                            Rate
-                        </Text>
-                        <Text
-                            style={[
-                                styles.colAmount,
-                                styles.tableHeaderAmount,
-                                { color: palette.textWeak },
-                            ]}
-                        >
-                            Amount
-                        </Text>
-                    </View>
-                    {items.length > 0 ? (
-                        items.map((item: InvoiceItem) => {
-                            const descEmpty =
-                                !item.description?.trim() ||
-                                item.description?.trim() ===
-                                    placeholders.items.description;
-                            return (
-                                <View key={item.id} style={styles.tableRow}>
-                                    <Text
-                                        style={[
-                                            styles.colItem,
-                                            {
-                                                color: palette.textStrong,
-                                                ...(descEmpty
-                                                    ? { opacity: 0.5 }
-                                                    : {}),
-                                            },
-                                        ]}
-                                    >
-                                        {
-                                            previewText(
-                                                item.description,
-                                                placeholders.items.description,
-                                            ).text
-                                        }
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.colQty,
-                                            {
-                                                color: palette.textStrong,
-                                                ...(item.quantity === 0
-                                                    ? { opacity: 0.5 }
-                                                    : {}),
-                                            },
-                                        ]}
-                                    >
-                                        {item.quantity === 0
-                                            ? placeholders.items.quantity
-                                            : formatNumberForDisplay(
-                                                  item.quantity,
-                                              )}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.colRate,
-                                            {
-                                                color: palette.textStrong,
-                                                ...(item.rate === 0
-                                                    ? { opacity: 0.5 }
-                                                    : {}),
-                                            },
-                                        ]}
-                                    >
-                                        {item.rate === 0
-                                            ? formatAmount(0)
-                                            : formatAmount(item.rate)}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.colAmount,
-                                            {
-                                                color: palette.textStrong,
-                                                ...(item.quantity * item.rate ===
-                                                0
-                                                    ? { opacity: 0.5 }
-                                                    : {}),
-                                            },
-                                        ]}
-                                    >
-                                        {item.quantity * item.rate === 0
-                                            ? formatAmount(0)
-                                            : formatAmount(
-                                                  item.quantity * item.rate,
-                                              )}
-                                    </Text>
-                                </View>
-                            );
-                        })
-                    ) : (
-                        <View style={styles.tableRow}>
                             <Text
                                 style={[
                                     styles.colItem,
-                                    {
-                                        color: palette.textStrong,
-                                        opacity: 0.5,
-                                    },
+                                    { color: palette.textWeak },
                                 ]}
                             >
-                                No items added yet...
+                                Item
                             </Text>
                             <Text
                                 style={[
                                     styles.colQty,
-                                    {
-                                        color: palette.textStrong,
-                                        opacity: 0.5,
-                                    },
+                                    { color: palette.textWeak },
                                 ]}
                             >
-                                -
+                                QTY
                             </Text>
                             <Text
                                 style={[
                                     styles.colRate,
-                                    {
-                                        color: palette.textStrong,
-                                        opacity: 0.5,
-                                    },
+                                    { color: palette.textWeak },
                                 ]}
                             >
-                                -
+                                Rate
                             </Text>
                             <Text
                                 style={[
                                     styles.colAmount,
-                                    {
-                                        color: palette.textStrong,
-                                        opacity: 0.5,
-                                    },
+                                    styles.tableHeaderAmount,
+                                    { color: palette.textWeak },
                                 ]}
                             >
-                                -
+                                Amount
                             </Text>
                         </View>
-                    )}
-                </View>
+                        {items.length > 0 ? (
+                            items.map((item: InvoiceItem) => {
+                                const descEmpty =
+                                    !item.description?.trim() ||
+                                    item.description?.trim() ===
+                                        placeholders.items.description;
+                                return (
+                                    <View key={item.id} style={styles.tableRow}>
+                                        <Text
+                                            style={[
+                                                styles.colItem,
+                                                {
+                                                    color: palette.textStrong,
+                                                    ...(descEmpty
+                                                        ? { opacity: 0.5 }
+                                                        : {}),
+                                                },
+                                            ]}
+                                        >
+                                            {
+                                                previewText(
+                                                    item.description,
+                                                    placeholders.items
+                                                        .description,
+                                                ).text
+                                            }
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.colQty,
+                                                {
+                                                    color: palette.textStrong,
+                                                    ...(item.quantity === 0
+                                                        ? { opacity: 0.5 }
+                                                        : {}),
+                                                },
+                                            ]}
+                                        >
+                                            {item.quantity === 0
+                                                ? placeholders.items.quantity
+                                                : formatNumberForDisplay(
+                                                      item.quantity,
+                                                  )}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.colRate,
+                                                {
+                                                    ...currencyAmountFont,
+                                                    color: palette.textStrong,
+                                                    ...(item.rate === 0
+                                                        ? { opacity: 0.5 }
+                                                        : {}),
+                                                },
+                                            ]}
+                                        >
+                                            {item.rate === 0
+                                                ? formatAmount(0)
+                                                : formatAmount(item.rate)}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.colAmount,
+                                                {
+                                                    ...currencyAmountFont,
+                                                    color: palette.textStrong,
+                                                    ...(item.quantity *
+                                                        item.rate ===
+                                                    0
+                                                        ? { opacity: 0.5 }
+                                                        : {}),
+                                                },
+                                            ]}
+                                        >
+                                            {item.quantity * item.rate === 0
+                                                ? formatAmount(0)
+                                                : formatAmount(
+                                                      item.quantity * item.rate,
+                                                  )}
+                                        </Text>
+                                    </View>
+                                );
+                            })
+                        ) : (
+                            <View style={styles.tableRow}>
+                                <Text
+                                    style={[
+                                        styles.colItem,
+                                        {
+                                            color: palette.textStrong,
+                                            opacity: 0.5,
+                                        },
+                                    ]}
+                                >
+                                    No items added yet...
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.colQty,
+                                        {
+                                            color: palette.textStrong,
+                                            opacity: 0.5,
+                                        },
+                                    ]}
+                                >
+                                    -
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.colRate,
+                                        {
+                                            color: palette.textStrong,
+                                            opacity: 0.5,
+                                        },
+                                    ]}
+                                >
+                                    -
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.colAmount,
+                                        {
+                                            color: palette.textStrong,
+                                            opacity: 0.5,
+                                        },
+                                    ]}
+                                >
+                                    -
+                                </Text>
+                            </View>
+                        )}
+                    </View>
 
-                {/* Summary */}
-                {(() => {
-                    const summaryAllZero =
-                        subtotal === 0 && discountAmount === 0 && taxAmount === 0;
-                    return (
-                        <View
-                            style={[
-                                styles.summary,
-                                {
-                                    backgroundColor: palette.contentBg,
-                                    color: palette.textWeak,
-                                    ...(summaryAllZero ? { opacity: 0.5 } : {}),
-                                },
-                            ]}
-                        >
+                    {/* Summary */}
+                    {(() => {
+                        const summaryAllZero =
+                            subtotal === 0 &&
+                            discountAmount === 0 &&
+                            taxAmount === 0;
+                        return (
                             <View
                                 style={[
-                                    styles.summaryRow,
-                                    subtotal === 0 && !summaryAllZero
-                                        ? { opacity: 0.5 }
-                                        : {},
-                                ]}
-                            >
-                                <Text>Subtotal</Text>
-                                <Text
-                                    style={[
-                                        styles.summaryAmount,
-                                        { color: palette.textDefault },
-                                    ]}
-                                >
-                                    {formatAmount(subtotal)}
-                                </Text>
-                            </View>
-                            <View
-                                style={[
-                                    styles.summaryRow,
-                                    discountAmount === 0 && !summaryAllZero
-                                        ? { opacity: 0.5 }
-                                        : {},
-                                ]}
-                            >
-                                <Text>
-                                    Discount
-                                    {discountType === 'percentage' &&
-                                        ` (${discount}%)`}
-                                </Text>
-                                <Text
-                                    style={[
-                                        styles.summaryAmount,
-                                        { color: palette.textDefault },
-                                    ]}
-                                >
-                                    {formatAmount(-discountAmount)}
-                                </Text>
-                            </View>
-                            <View
-                                style={[
-                                    styles.summaryRow,
-                                    taxAmount === 0 && !summaryAllZero
-                                        ? { opacity: 0.5 }
-                                        : {},
-                                ]}
-                            >
-                                <Text>
-                                    Tax
-                                    {taxType === 'percentage' &&
-                                        ` (${tax}%)`}
-                                </Text>
-                                <Text
-                                    style={[
-                                        styles.summaryAmount,
-                                        { color: palette.textDefault },
-                                    ]}
-                                >
-                                    {formatAmount(taxAmount)}
-                                </Text>
-                            </View>
-                            <View
-                                style={[
-                                    styles.summaryRow,
-                                    styles.summaryTotal,
+                                    styles.summary,
                                     {
-                                        color: palette.textStrong,
-                                        ...(total === 0 && !summaryAllZero
+                                        backgroundColor: palette.contentBg,
+                                        color: palette.textWeak,
+                                        ...(summaryAllZero
                                             ? { opacity: 0.5 }
                                             : {}),
                                     },
                                 ]}
                             >
-                                <Text>Total</Text>
-                                <Text>{formatAmount(total)}</Text>
+                                <View
+                                    style={[
+                                        styles.summaryRow,
+                                        subtotal === 0 && !summaryAllZero
+                                            ? { opacity: 0.5 }
+                                            : {},
+                                    ]}
+                                >
+                                    <Text>Subtotal</Text>
+                                    <Text
+                                        style={[
+                                            styles.summaryAmount,
+                                            {
+                                                ...currencyAmountFont,
+                                                color: palette.textDefault,
+                                            },
+                                        ]}
+                                    >
+                                        {formatAmount(subtotal)}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.summaryRow,
+                                        discountAmount === 0 && !summaryAllZero
+                                            ? { opacity: 0.5 }
+                                            : {},
+                                    ]}
+                                >
+                                    <Text>
+                                        Discount
+                                        {discountType === 'percentage' &&
+                                            ` (${discount}%)`}
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.summaryAmount,
+                                            {
+                                                ...currencyAmountFont,
+                                                color: palette.textDefault,
+                                            },
+                                        ]}
+                                    >
+                                        {formatAmount(-discountAmount)}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.summaryRow,
+                                        taxAmount === 0 && !summaryAllZero
+                                            ? { opacity: 0.5 }
+                                            : {},
+                                    ]}
+                                >
+                                    <Text>
+                                        Tax
+                                        {taxType === 'percentage' &&
+                                            ` (${tax}%)`}
+                                    </Text>
+                                    <Text
+                                        style={[
+                                            styles.summaryAmount,
+                                            {
+                                                ...currencyAmountFont,
+                                                color: palette.textDefault,
+                                            },
+                                        ]}
+                                    >
+                                        {formatAmount(taxAmount)}
+                                    </Text>
+                                </View>
+                                <View
+                                    style={[
+                                        styles.summaryRow,
+                                        styles.summaryTotal,
+                                        {
+                                            color: palette.textStrong,
+                                            ...(total === 0 && !summaryAllZero
+                                                ? { opacity: 0.5 }
+                                                : {}),
+                                        },
+                                    ]}
+                                >
+                                    <Text>Total</Text>
+                                    <Text
+                                        style={[
+                                            styles.summaryTotal,
+                                            currencyAmountFont,
+                                        ]}
+                                    >
+                                        {formatAmount(total)}
+                                    </Text>
+                                </View>
                             </View>
-                        </View>
-                    );
-                })()}
+                        );
+                    })()}
 
                     {/* Spacer – pushes notes to bottom like preview mt-auto */}
                     <View
@@ -823,8 +888,8 @@ export function InvoicePdfDocument({
                                 { color: palette.textDefault },
                             ]}
                         >
-                            {previewText(notes, placeholders.notes).text
-                                .split('\n')
+                            {previewText(notes, placeholders.notes)
+                                .text.split('\n')
                                 .flatMap((line, i) =>
                                     i > 0 ? ['\n', line] : [line],
                                 )}

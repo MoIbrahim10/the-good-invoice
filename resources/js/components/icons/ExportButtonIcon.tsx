@@ -38,8 +38,7 @@ const downloadPaths = (
 );
 
 /** Wavy "downloading" path in 18x18 — smooth curve. */
-const wavyPathD =
-    'M3 9.5 Q6 5.5 9 9.5 T15 9.5';
+const wavyPathD = 'M3 9.5 Q6 5.5 9 9.5 T15 9.5';
 
 /** Checkmark path in 18x18. */
 const checkPathD = 'M5 9.5 L8 12.5 L13 7';
@@ -62,11 +61,7 @@ export function ExportButtonIcon({
             xmlns="http://www.w3.org/2000/svg"
             className={cn('overflow-visible', className)}
             aria-label={
-                success
-                    ? 'Downloaded'
-                    : loading
-                      ? 'Preparing PDF…'
-                      : 'Export'
+                success ? 'Downloaded' : loading ? 'Preparing PDF…' : 'Export'
             }
             role="img"
         >

@@ -31,9 +31,7 @@ export function PreviewItemsTable({
     const hasItemDescription = items.some(isDescriptionFilled);
     const hasQuantity = items.some((i) => i.quantity !== 0);
     const hasRate = items.some((i) => i.rate !== 0);
-    const hasAmount = items.some(
-        (i) => i.quantity * i.rate !== 0,
-    );
+    const hasAmount = items.some((i) => i.quantity * i.rate !== 0);
 
     return (
         <div>
@@ -203,8 +201,7 @@ export function PreviewItemsTable({
                                                     className={`${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.quantity === 0 ? 'opacity-50' : ''}`}
                                                     title={
                                                         item.quantity === 0
-                                                            ? placeholders
-                                                                  .items
+                                                            ? placeholders.items
                                                                   .quantity
                                                             : undefined
                                                     }

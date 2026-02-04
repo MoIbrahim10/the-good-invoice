@@ -26,7 +26,7 @@ export function PreviewHeader({
     LogoWrapper,
 }: PreviewHeaderProps) {
     return (
-        <div className="flex items-center rounded-t-[6px] p-4 border-b border-preview-200 bg-preview-style-bg transition-colors duration-150 ease-in-out">
+        <div className="flex items-center rounded-t-[6px] border-b border-preview-200 bg-preview-style-bg p-4 transition-colors duration-150 ease-in-out">
             {forExport ? (
                 issuer.includeLogo !== false && (
                     <div className="flex shrink-0 items-center gap-2.5">

@@ -62,9 +62,12 @@ export function InvoicePreviewContent({
 
     const logoBox = (
         <div className="shrink-0 overflow-hidden">
-            <div className="flex aspect-square! size-[28px] items-center justify-center rounded-[4px] border border-dashed  bg-preview-0" style={{
-                borderColor: 'var(--preview-200)',
-            }}>
+            <div
+                className="flex aspect-square! size-[28px] items-center justify-center rounded-[4px] border border-dashed bg-preview-0"
+                style={{
+                    borderColor: 'var(--preview-200)',
+                }}
+            >
                 {issuer.logo ? (
                     <img
                         src={issuer.logo}

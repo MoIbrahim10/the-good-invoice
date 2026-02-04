@@ -54,35 +54,35 @@
 
     /* Blue scale (preview palette) */
     --color-blue-0: #ffffff;
-    --color-blue-25: #F9FBFE;
-    --color-blue-50: #F7F9FD;
-    --color-blue-100: #F4F5F9;
-    --color-blue-200: #E7F0FB;
-    --color-blue-300: #D3DCE9;
-    --color-blue-350: #B4C9E0;
-    --color-blue-400: #7E90A6;
-    --color-blue-500: #3B5682;
-    --color-blue-600: #2B4377;
-    --color-blue-700: #1A2D61;
-    --color-blue-800: #1B2752;
-    --color-blue-900: #1B2543;
-    --color-blue-950: #181D2F;
+    --color-blue-25: #f9fbfe;
+    --color-blue-50: #f7f9fd;
+    --color-blue-100: #f4f5f9;
+    --color-blue-200: #e7f0fb;
+    --color-blue-300: #d3dce9;
+    --color-blue-350: #b4c9e0;
+    --color-blue-400: #7e90a6;
+    --color-blue-500: #3b5682;
+    --color-blue-600: #2b4377;
+    --color-blue-700: #1a2d61;
+    --color-blue-800: #1b2752;
+    --color-blue-900: #1b2543;
+    --color-blue-950: #181d2f;
 
     /* Green scale (preview palette) */
     --color-green-0: #ffffff;
-    --color-green-25: #FAFBF8;
-    --color-green-50: #FAFDF4;
-    --color-green-100: #F3F7E9;
-    --color-green-200: #E9EEDC;
-    --color-green-300: #C5D1AF;
-    --color-green-350: #CADBAB;
-    --color-green-400: #AABD8A;
-    --color-green-500: #859C5D;
+    --color-green-25: #fafbf8;
+    --color-green-50: #fafdf4;
+    --color-green-100: #f3f7e9;
+    --color-green-200: #e9eedc;
+    --color-green-300: #c5d1af;
+    --color-green-350: #cadbab;
+    --color-green-400: #aabd8a;
+    --color-green-500: #859c5d;
     --color-green-600: #476024;
-    --color-green-700: #2E4116;
+    --color-green-700: #2e4116;
     --color-green-800: #293717;
     --color-green-900: #253118;
-    --color-green-950: #1A2212;
+    --color-green-950: #1a2212;
 
     /* Brown Scale Overrides */
     --color-brown-500: #2c2a29;
