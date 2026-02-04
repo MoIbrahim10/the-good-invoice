@@ -9,16 +9,16 @@ import {
     RATE_MAX,
 } from '@/lib/invoiceLimits';
 import { itemRowAnimation } from '@/lib/itemRowAnimation';
-import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
-import { useInvoiceState } from '../../../hooks/use-invoice-state';
-import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
-import { CustomButton } from '../../custom/button';
-import { LabeledAdjustableInput } from '../../custom/labeled-adjustable-input';
-import { DeleteIcon } from '../../icons/DeleteIcon';
-import { ErrorIconWithTooltip } from '../../icons/ErrorIconWithTooltip';
-import { PlusIcon } from '../../icons/PlusIcon';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
-import { Input } from '../../ui/input';
+import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
+import { CustomButton } from '../../../custom/button';
+import { LabeledAdjustableInput } from '../../../custom/labeled-adjustable-input';
+import { DeleteIcon } from '../../../icons/DeleteIcon';
+import { ErrorIconWithTooltip } from '../../../icons/ErrorIconWithTooltip';
+import { PlusIcon } from '../../../icons/PlusIcon';
+import { useInvoiceTouched } from '../../../providers/InvoiceTouchedProvider';
+import { Input } from '../../../ui/input';
 
 const QUANTITY_MIN = 0;
 const RATE_MIN = 0;

@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import type React from 'react';
 import { createElement, useCallback, useRef, useState } from 'react';
-import { InvoicePdfDocument } from '@/components/panels/InvoicePdfDocument';
+import { InvoicePdfDocument } from '@/components/panels/preview/InvoicePdfDocument';
 import { useInvoiceState } from './use-invoice-state';
 
 const A4_WIDTH_PX = 794;

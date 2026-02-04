@@ -54,35 +54,35 @@
 
     /* Blue scale (preview palette) */
     --color-blue-0: #ffffff;
-    --color-blue-25: #f5f9ff;
-    --color-blue-50: #eff6ff;
-    --color-blue-100: #dbeafe;
-    --color-blue-200: #bfdbfe;
-    --color-blue-300: #93c5fd;
-    --color-blue-350: #7ab3fc;
-    --color-blue-400: #60a5fa;
-    --color-blue-500: #3b82f6;
-    --color-blue-600: #2563eb;
-    --color-blue-700: #1d4ed8;
-    --color-blue-800: #1e40af;
-    --color-blue-900: #1e3a8a;
-    --color-blue-950: #172554;
+    --color-blue-25: #F9FBFE;
+    --color-blue-50: #F7F9FD;
+    --color-blue-100: #F4F5F9;
+    --color-blue-200: #E7F0FB;
+    --color-blue-300: #D3DCE9;
+    --color-blue-350: #B4C9E0;
+    --color-blue-400: #7E90A6;
+    --color-blue-500: #3B5682;
+    --color-blue-600: #2B4377;
+    --color-blue-700: #1A2D61;
+    --color-blue-800: #1B2752;
+    --color-blue-900: #1B2543;
+    --color-blue-950: #181D2F;
 
     /* Green scale (preview palette) */
     --color-green-0: #ffffff;
-    --color-green-25: #f4fdf5;
-    --color-green-50: #f0fdf4;
-    --color-green-100: #dcfce7;
-    --color-green-200: #bbf7d0;
-    --color-green-300: #86efac;
-    --color-green-350: #6ee79e;
-    --color-green-400: #4ade80;
-    --color-green-500: #22c55e;
-    --color-green-600: #16a34a;
-    --color-green-700: #15803d;
-    --color-green-800: #166534;
-    --color-green-900: #14532d;
-    --color-green-950: #052e16;
+    --color-green-25: #FAFBF8;
+    --color-green-50: #FAFDF4;
+    --color-green-100: #F3F7E9;
+    --color-green-200: #E9EEDC;
+    --color-green-300: #C5D1AF;
+    --color-green-350: #CADBAB;
+    --color-green-400: #AABD8A;
+    --color-green-500: #859C5D;
+    --color-green-600: #476024;
+    --color-green-700: #2E4116;
+    --color-green-800: #293717;
+    --color-green-900: #253118;
+    --color-green-950: #1A2212;
 
     /* Brown Scale Overrides */
     --color-brown-500: #2c2a29;
@@ -127,6 +127,21 @@
     --color-preview-border: var(--preview-border);
     --color-preview-col-1: var(--preview-col-1);
     --color-preview-col-2: var(--preview-col-2);
+    --color-preview-0: var(--preview-0);
+    --color-preview-25: var(--preview-25);
+    --color-preview-50: var(--preview-50);
+    --color-preview-100: var(--preview-100);
+    --color-preview-200: var(--preview-200);
+    --color-preview-300: var(--preview-300);
+    --color-preview-350: var(--preview-350);
+    --color-preview-400: var(--preview-400);
+    --color-preview-500: var(--preview-500);
+    --color-preview-600: var(--preview-600);
+    --color-preview-700: var(--preview-700);
+    --color-preview-800: var(--preview-800);
+    --color-preview-900: var(--preview-900);
+    --color-preview-950: var(--preview-950);
+    --color-preview-style-bg: var(--preview-style-bg);
 
     /* Button Color Utility (from colors.css) */
     --color-button-default: var(--button-default);
@@ -293,8 +308,20 @@
 }
 
 @utility bg-feedback-glass {
-    background:linear-gradient(0deg, var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.40)) 0%, var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.40)) 100%), linear-gradient(180deg, rgba(167, 167, 167, 0.30) 0%, rgba(125, 125, 125, 0.30) 100%);
-        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05), 0 4px 4px 0 rgba(0, 0, 0, 0.03);
+    background:
+        linear-gradient(
+            0deg,
+            var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.4)) 0%,
+            var(--dropdown-bg-overlay, rgba(67, 51, 42, 0.4)) 100%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(167, 167, 167, 0.3) 0%,
+            rgba(125, 125, 125, 0.3) 100%
+        );
+    box-shadow:
+        0 3px 3px 0 rgba(0, 0, 0, 0.05),
+        0 4px 4px 0 rgba(0, 0, 0, 0.03);
 }
 
 :root {

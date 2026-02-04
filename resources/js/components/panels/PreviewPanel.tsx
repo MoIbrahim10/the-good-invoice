@@ -1,4 +1,4 @@
-import { InvoicePreviewContent } from './InvoicePreviewContent';
+import { InvoicePreviewContent } from './preview/InvoicePreviewContent';
 
 export function PreviewPanel() {
     return (

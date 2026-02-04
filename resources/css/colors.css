@@ -1,8 +1,3 @@
-/* 4 Theme Modes powered by Tailwind's gray & stone palettes
-   Preview display palettes: gray (--color-gray-*), cream (--color-stone-*),
-   blue (--color-blue-*), green (--color-green-*) – gray & stone in app.css @theme,
-   blue & green in app.css @theme. */
-
 /* Cool Light Theme (Default) – uses Tailwind gray scale */
 :root,
 [data-theme='cool-light'] {
@@ -186,4 +181,222 @@
 
     /* NG Hover - black with 50% opacity */
     --ng-hover: color-mix(in srgb, #000000 50%, transparent);
+}
+
+/* Preview palette variables – use in PreviewPanel; switch via data-preview-color in DisplayTab */
+:root {
+    /* Gray scale (preview-gray-*) */
+    --preview-gray-0: var(--color-gray-0);
+    --preview-gray-25: var(--color-gray-25);
+    --preview-gray-50: var(--color-gray-50);
+    --preview-gray-100: var(--color-gray-100);
+    --preview-gray-200: var(--color-gray-200);
+    --preview-gray-300: var(--color-gray-300);
+    --preview-gray-350: var(--color-gray-350);
+    --preview-gray-400: var(--color-gray-400);
+    --preview-gray-500: var(--color-gray-500);
+    --preview-gray-600: var(--color-gray-600);
+    --preview-gray-700: var(--color-gray-700);
+    --preview-gray-800: var(--color-gray-800);
+    --preview-gray-900: var(--color-gray-900);
+    --preview-gray-950: var(--color-gray-950);
+
+    /* Cream scale (preview-cream-*), maps to stone */
+    --preview-cream-0: var(--color-white);
+    --preview-cream-25: var(--color-stone-25);
+    --preview-cream-50: var(--color-stone-50);
+    --preview-cream-100: var(--color-stone-100);
+    --preview-cream-200: var(--color-stone-200);
+    --preview-cream-300: var(--color-stone-300);
+    --preview-cream-350: var(--color-stone-350);
+    --preview-cream-400: var(--color-stone-400);
+    --preview-cream-500: var(--color-stone-500);
+    --preview-cream-600: var(--color-stone-600);
+    --preview-cream-700: var(--color-stone-700);
+    --preview-cream-800: var(--color-stone-800);
+    --preview-cream-900: var(--color-stone-900);
+    --preview-cream-950: var(--color-stone-950);
+
+    /* Blue scale (preview-blue-*) */
+    --preview-blue-0: var(--color-blue-0);
+    --preview-blue-25: var(--color-blue-25);
+    --preview-blue-50: var(--color-blue-50);
+    --preview-blue-100: var(--color-blue-100);
+    --preview-blue-200: var(--color-blue-200);
+    --preview-blue-300: var(--color-blue-300);
+    --preview-blue-350: var(--color-blue-350);
+    --preview-blue-400: var(--color-blue-400);
+    --preview-blue-500: var(--color-blue-500);
+    --preview-blue-600: var(--color-blue-600);
+    --preview-blue-700: var(--color-blue-700);
+    --preview-blue-800: var(--color-blue-800);
+    --preview-blue-900: var(--color-blue-900);
+    --preview-blue-950: var(--color-blue-950);
+
+    /* Green scale (preview-green-*) */
+    --preview-green-0: var(--color-green-0);
+    --preview-green-25: var(--color-green-25);
+    --preview-green-50: var(--color-green-50);
+    --preview-green-100: var(--color-green-100);
+    --preview-green-200: var(--color-green-200);
+    --preview-green-300: var(--color-green-300);
+    --preview-green-350: var(--color-green-350);
+    --preview-green-400: var(--color-green-400);
+    --preview-green-500: var(--color-green-500);
+    --preview-green-600: var(--color-green-600);
+    --preview-green-700: var(--color-green-700);
+    --preview-green-800: var(--color-green-800);
+    --preview-green-900: var(--color-green-900);
+    --preview-green-950: var(--color-green-950);
+
+    /* Default shorthand (gray) when data-preview-color not set */
+    --preview-0: var(--preview-gray-0);
+    --preview-25: var(--preview-gray-25);
+    --preview-50: var(--preview-gray-50);
+    --preview-100: var(--preview-gray-100);
+    --preview-200: var(--preview-gray-200);
+    --preview-300: var(--preview-gray-300);
+    --preview-350: var(--preview-gray-350);
+    --preview-400: var(--preview-gray-400);
+    --preview-500: var(--preview-gray-500);
+    --preview-600: var(--preview-gray-600);
+    --preview-700: var(--preview-gray-700);
+    --preview-800: var(--preview-gray-800);
+    --preview-900: var(--preview-gray-900);
+    --preview-950: var(--preview-gray-950);
+
+    /* Style-based background: solid = preview-0, accent = preview-25 */
+    --preview-style-bg: var(--preview-0);
+}
+
+/* Solid / accent style – background shade via data-preview-style */
+[data-preview-style='solid'] {
+    --preview-style-bg: var(--preview-0);
+    --color-preview-style-bg: var(--preview-style-bg);
+}
+[data-preview-style='accent'] {
+    --preview-style-bg: var(--preview-25);
+    --color-preview-style-bg: var(--preview-style-bg);
+}
+
+/* Shorthand --preview-* and --color-preview-* so Tailwind utilities work inside the preview */
+[data-preview-color='gray'] {
+    --preview-0: var(--preview-gray-0);
+    --preview-25: var(--preview-gray-25);
+    --preview-50: var(--preview-gray-50);
+    --preview-100: var(--preview-gray-100);
+    --preview-200: var(--preview-gray-200);
+    --preview-300: var(--preview-gray-300);
+    --preview-350: var(--preview-gray-350);
+    --preview-400: var(--preview-gray-400);
+    --preview-500: var(--preview-gray-500);
+    --preview-600: var(--preview-gray-600);
+    --preview-700: var(--preview-gray-700);
+    --preview-800: var(--preview-gray-800);
+    --preview-900: var(--preview-gray-900);
+    --preview-950: var(--preview-gray-950);
+    --color-preview-0: var(--preview-0);
+    --color-preview-25: var(--preview-25);
+    --color-preview-50: var(--preview-50);
+    --color-preview-100: var(--preview-100);
+    --color-preview-200: var(--preview-200);
+    --color-preview-300: var(--preview-300);
+    --color-preview-350: var(--preview-350);
+    --color-preview-400: var(--preview-400);
+    --color-preview-500: var(--preview-500);
+    --color-preview-600: var(--preview-600);
+    --color-preview-700: var(--preview-700);
+    --color-preview-800: var(--preview-800);
+    --color-preview-900: var(--preview-900);
+    --color-preview-950: var(--preview-950);
+}
+[data-preview-color='cream'] {
+    --preview-0: var(--preview-cream-0);
+    --preview-25: var(--preview-cream-25);
+    --preview-50: var(--preview-cream-50);
+    --preview-100: var(--preview-cream-100);
+    --preview-200: var(--preview-cream-200);
+    --preview-300: var(--preview-cream-300);
+    --preview-350: var(--preview-cream-350);
+    --preview-400: var(--preview-cream-400);
+    --preview-500: var(--preview-cream-500);
+    --preview-600: var(--preview-cream-600);
+    --preview-700: var(--preview-cream-700);
+    --preview-800: var(--preview-cream-800);
+    --preview-900: var(--preview-cream-900);
+    --preview-950: var(--preview-cream-950);
+    --color-preview-0: var(--preview-0);
+    --color-preview-25: var(--preview-25);
+    --color-preview-50: var(--preview-50);
+    --color-preview-100: var(--preview-100);
+    --color-preview-200: var(--preview-200);
+    --color-preview-300: var(--preview-300);
+    --color-preview-350: var(--preview-350);
+    --color-preview-400: var(--preview-400);
+    --color-preview-500: var(--preview-500);
+    --color-preview-600: var(--preview-600);
+    --color-preview-700: var(--preview-700);
+    --color-preview-800: var(--preview-800);
+    --color-preview-900: var(--preview-900);
+    --color-preview-950: var(--preview-950);
+}
+[data-preview-color='blue'] {
+    --preview-0: var(--preview-blue-0);
+    --preview-25: var(--preview-blue-25);
+    --preview-50: var(--preview-blue-50);
+    --preview-100: var(--preview-blue-100);
+    --preview-200: var(--preview-blue-200);
+    --preview-300: var(--preview-blue-300);
+    --preview-350: var(--preview-blue-350);
+    --preview-400: var(--preview-blue-400);
+    --preview-500: var(--preview-blue-500);
+    --preview-600: var(--preview-blue-600);
+    --preview-700: var(--preview-blue-700);
+    --preview-800: var(--preview-blue-800);
+    --preview-900: var(--preview-blue-900);
+    --preview-950: var(--preview-blue-950);
+    --color-preview-0: var(--preview-0);
+    --color-preview-25: var(--preview-25);
+    --color-preview-50: var(--preview-50);
+    --color-preview-100: var(--preview-100);
+    --color-preview-200: var(--preview-200);
+    --color-preview-300: var(--preview-300);
+    --color-preview-350: var(--preview-350);
+    --color-preview-400: var(--preview-400);
+    --color-preview-500: var(--preview-500);
+    --color-preview-600: var(--preview-600);
+    --color-preview-700: var(--preview-700);
+    --color-preview-800: var(--preview-800);
+    --color-preview-900: var(--preview-900);
+    --color-preview-950: var(--preview-950);
+}
+[data-preview-color='green'] {
+    --preview-0: var(--preview-green-0);
+    --preview-25: var(--preview-green-25);
+    --preview-50: var(--preview-green-50);
+    --preview-100: var(--preview-green-100);
+    --preview-200: var(--preview-green-200);
+    --preview-300: var(--preview-green-300);
+    --preview-350: var(--preview-green-350);
+    --preview-400: var(--preview-green-400);
+    --preview-500: var(--preview-green-500);
+    --preview-600: var(--preview-green-600);
+    --preview-700: var(--preview-green-700);
+    --preview-800: var(--preview-green-800);
+    --preview-900: var(--preview-green-900);
+    --preview-950: var(--preview-green-950);
+    --color-preview-0: var(--preview-0);
+    --color-preview-25: var(--preview-25);
+    --color-preview-50: var(--preview-50);
+    --color-preview-100: var(--preview-100);
+    --color-preview-200: var(--preview-200);
+    --color-preview-300: var(--preview-300);
+    --color-preview-350: var(--preview-350);
+    --color-preview-400: var(--preview-400);
+    --color-preview-500: var(--preview-500);
+    --color-preview-600: var(--preview-600);
+    --color-preview-700: var(--preview-700);
+    --color-preview-800: var(--preview-800);
+    --color-preview-900: var(--preview-900);
+    --color-preview-950: var(--preview-950);
 }

@@ -1,8 +1,8 @@
 import { useId } from 'react';
 import { NOTES_MAX_LENGTH } from '@/lib/invoiceLimits';
-import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
-import { useInvoiceState } from '../../../hooks/use-invoice-state';
-import { LabeledTextarea } from '../../custom/labeled-textarea';
+import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../../hooks/use-invoice-state';
+import { LabeledTextarea } from '../../../custom/labeled-textarea';
 
 export function NotesTab() {
     const { state } = useInvoiceState();

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { createContext, type ReactNode, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { InvoicePreviewContent } from '@/components/panels/InvoicePreviewContent';
+import { InvoicePreviewContent } from '@/components/panels/preview/InvoicePreviewContent';
 import { useExportPdf } from '@/hooks/use-export-pdf';
 
 const A4_WIDTH_PX = 794;

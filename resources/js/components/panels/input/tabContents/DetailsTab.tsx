@@ -1,13 +1,13 @@
 import { useEffect, useId, useState } from 'react';
 import { INVOICE_NUMBER_MAX_LENGTH } from '@/lib/invoiceLimits';
-import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
-import { useInvoiceState } from '../../../hooks/use-invoice-state';
-import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
-import { CurrencyDropdown } from '../../custom/currency-dropdown';
-import { LabeledDatePicker } from '../../custom/labeled-datepicker';
-import { LabeledInput } from '../../custom/labeled-input';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
-import { formatDate, parseDateString } from '../../ui/datepicker';
+import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
+import { CurrencyDropdown } from '../../../custom/currency-dropdown';
+import { LabeledDatePicker } from '../../../custom/labeled-datepicker';
+import { LabeledInput } from '../../../custom/labeled-input';
+import { useInvoiceTouched } from '../../../providers/InvoiceTouchedProvider';
+import { formatDate, parseDateString } from '../../../ui/datepicker';
 
 export function DetailsTab() {
     const { state } = useInvoiceState();

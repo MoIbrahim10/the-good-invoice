@@ -1,11 +1,11 @@
 import { usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { cn } from '../../lib/utils';
-import type { SharedData } from '../../types';
-import type { TabId, TabState } from '../../types/tabs';
-import { PanelSection } from '../layout/PanelSection';
-import { useTabNavigation } from '../providers/TabNavigationProvider';
+import { cn } from '../../../lib/utils';
+import type { SharedData } from '../../../types';
+import type { TabId, TabState } from '../../../types/tabs';
+import { PanelSection } from '../../layout/PanelSection';
+import { useTabNavigation } from '../../providers/TabNavigationProvider';
 import { TabButton } from './TabButton';
 
 const springTransition = {

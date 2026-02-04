@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
-import { cn } from '../../lib/utils';
-import type { TabState } from '../../types/tabs';
+import { cn } from '../../../lib/utils';
+import type { TabState } from '../../../types/tabs';
 import type { GroupSegment } from './TabNavigation';
 
 type TabButtonProps = {

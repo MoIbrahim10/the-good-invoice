@@ -4,13 +4,13 @@ import {
     EMAIL_MAX_LENGTH,
     NAME_MAX_LENGTH,
 } from '@/lib/invoiceLimits';
-import { useInvoiceActions } from '../../../hooks/use-invoice-actions';
-import { useInvoiceState } from '../../../hooks/use-invoice-state';
-import { useInvoiceValidation } from '../../../hooks/use-invoice-validation';
-import { LabeledInput } from '../../custom/labeled-input';
-import { LabeledTextarea } from '../../custom/labeled-textarea';
-import { useInvoiceTouched } from '../../providers/InvoiceTouchedProvider';
-import { LogoUpload } from '../components/LogoUpload';
+import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
+import { useInvoiceState } from '../../../../hooks/use-invoice-state';
+import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
+import { LabeledInput } from '../../../custom/labeled-input';
+import { LabeledTextarea } from '../../../custom/labeled-textarea';
+import { useInvoiceTouched } from '../../../providers/InvoiceTouchedProvider';
+import { LogoUpload } from '../LogoUpload';
 
 export function IssuedByTab() {
     const { state } = useInvoiceState();
