@@ -58,7 +58,7 @@ const LabeledDatePicker = React.forwardRef<
                     ref={ref}
                     dateFormat={format}
                     className={cn(
-                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent',
+                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 text-[14px] dark:bg-transparent',
                         className,
                     )}
                     placeholder={placeholder || defaultPlaceholder}
