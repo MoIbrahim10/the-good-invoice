@@ -43,10 +43,8 @@ function RowCells({
     placeholders,
     formatAmount,
 }: RowCellsProps) {
-    const descriptionCellClass = `${rowPadding} min-w-0 ${forExport ? 'overflow-visible' : 'overflow-hidden'} ps-4 ${descriptionEmpty ? 'opacity-50' : ''}`;
-    const descriptionParagraphClass = forExport
-        ? 'wrap-break-word'
-        : 'truncate';
+    const descriptionCellClass = `${rowPadding} min-w-0 overflow-visible ps-4 pe-4 ${descriptionEmpty ? 'opacity-50' : ''}`;
+    const descriptionParagraphClass = 'min-w-0 wrap-break-word';
     const quantityCellClass = `${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.quantity === 0 ? 'opacity-50' : ''}`;
     const rateCellClass = `${rowPadding} min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${item.rate === 0 ? 'opacity-50' : ''}`;
     const amountCellClass = `${rowPadding} min-w-0 overflow-hidden pe-4 text-right ${item.quantity * item.rate === 0 ? 'opacity-50' : ''}`;

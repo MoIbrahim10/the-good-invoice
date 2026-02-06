@@ -54,7 +54,7 @@ const initialInvoiceData: InvoiceData = {
     discountType: 'percentage',
     notes: '',
     display: {
-        style: 'solid',
+        style: 'accent',
         color: 'gray',
     },
 };
