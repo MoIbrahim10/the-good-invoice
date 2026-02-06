@@ -50,6 +50,7 @@ export function BillToTab() {
                 name="billto-address"
                 label="Address"
                 labelClassName="w-14 shrink-0"
+                className='leading-tight'
                 maxLength={ADDRESS_MAX_LENGTH}
                 value={billTo.address}
                 onChange={(e) => {

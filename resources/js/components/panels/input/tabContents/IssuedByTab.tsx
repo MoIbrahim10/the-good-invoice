@@ -89,6 +89,7 @@ export function IssuedByTab() {
                     name="issuer-address"
                     label="Address"
                     labelClassName="w-14 shrink-0"
+                    className="leading-tight"
                     maxLength={ADDRESS_MAX_LENGTH}
                     value={issuer.address}
                     onChange={(e) => {
