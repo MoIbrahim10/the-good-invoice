@@ -101,7 +101,7 @@ export function ItemsTab() {
                                             value={item.description}
                                             onChange={(e) => {
                                                 markDirty(
-                                                    `items.${index}.description`,
+                                                    `items.${item.id}.description`,
                                                 );
                                                 updateItem(item.id, {
                                                     description: e.target.value,
@@ -109,12 +109,12 @@ export function ItemsTab() {
                                             }}
                                             onFocus={() =>
                                                 clearTouched(
-                                                    `items.${index}.description`,
+                                                    `items.${item.id}.description`,
                                                 )
                                             }
                                             onBlur={() =>
                                                 touchField(
-                                                    `items.${index}.description`,
+                                                    `items.${item.id}.description`,
                                                 )
                                             }
                                             placeholder={
@@ -123,29 +123,29 @@ export function ItemsTab() {
                                             aria-invalid={
                                                 !!(
                                                     isTouched(
-                                                        `items.${index}.description`,
+                                                        `items.${item.id}.description`,
                                                     ) &&
                                                     isDirty(
-                                                        `items.${index}.description`,
+                                                        `items.${item.id}.description`,
                                                     ) &&
                                                     fieldErrors[
-                                                        `items.${index}.description`
+                                                        `items.${item.id}.description`
                                                     ]
                                                 )
                                             }
                                             className="min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 text-[14px] font-normal whitespace-nowrap text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent"
                                         />
                                         {isTouched(
-                                            `items.${index}.description`,
+                                            `items.${item.id}.description`,
                                         ) &&
-                                        isDirty(`items.${index}.description`) &&
+                                        isDirty(`items.${item.id}.description`) &&
                                         fieldErrors[
-                                            `items.${index}.description`
+                                            `items.${item.id}.description`
                                         ] ? (
                                             <ErrorIconWithTooltip
                                                 message={
                                                     fieldErrors[
-                                                        `items.${index}.description`
+                                                        `items.${item.id}.description`
                                                     ]
                                                 }
                                             />
@@ -175,7 +175,7 @@ export function ItemsTab() {
                                             }
                                             onChange={(e) => {
                                                 markDirty(
-                                                    `items.${index}.quantity`,
+                                                    `items.${item.id}.quantity`,
                                                 );
                                                 const val =
                                                     e.target.value.slice(
@@ -198,39 +198,39 @@ export function ItemsTab() {
                                             }}
                                             onFocus={() =>
                                                 clearTouched(
-                                                    `items.${index}.quantity`,
+                                                    `items.${item.id}.quantity`,
                                                 )
                                             }
                                             onBlur={() =>
                                                 touchField(
-                                                    `items.${index}.quantity`,
+                                                    `items.${item.id}.quantity`,
                                                 )
                                             }
                                             placeholder={placeholders.quantity}
                                             aria-invalid={
                                                 !!(
                                                     isTouched(
-                                                        `items.${index}.quantity`,
+                                                        `items.${item.id}.quantity`,
                                                     ) &&
                                                     isDirty(
-                                                        `items.${index}.quantity`,
+                                                        `items.${item.id}.quantity`,
                                                     ) &&
                                                     fieldErrors[
-                                                        `items.${index}.quantity`
+                                                        `items.${item.id}.quantity`
                                                     ]
                                                 )
                                             }
                                             className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
-                                        {isTouched(`items.${index}.quantity`) &&
-                                        isDirty(`items.${index}.quantity`) &&
+                                        {isTouched(`items.${item.id}.quantity`) &&
+                                        isDirty(`items.${item.id}.quantity`) &&
                                         fieldErrors[
-                                            `items.${index}.quantity`
+                                            `items.${item.id}.quantity`
                                         ] ? (
                                             <ErrorIconWithTooltip
                                                 message={
                                                     fieldErrors[
-                                                        `items.${index}.quantity`
+                                                        `items.${item.id}.quantity`
                                                     ]
                                                 }
                                             />
@@ -265,7 +265,7 @@ export function ItemsTab() {
                                             }
                                             onChange={(e) => {
                                                 markDirty(
-                                                    `items.${index}.rate`,
+                                                    `items.${item.id}.rate`,
                                                 );
                                                 const val =
                                                     e.target.value.slice(
@@ -288,37 +288,37 @@ export function ItemsTab() {
                                             }}
                                             onFocus={() =>
                                                 clearTouched(
-                                                    `items.${index}.rate`,
+                                                    `items.${item.id}.rate`,
                                                 )
                                             }
                                             onBlur={() =>
                                                 touchField(
-                                                    `items.${index}.rate`,
+                                                    `items.${item.id}.rate`,
                                                 )
                                             }
                                             placeholder={placeholders.rate}
                                             aria-invalid={
                                                 !!(
                                                     isTouched(
-                                                        `items.${index}.rate`,
+                                                        `items.${item.id}.rate`,
                                                     ) &&
                                                     isDirty(
-                                                        `items.${index}.rate`,
+                                                        `items.${item.id}.rate`,
                                                     ) &&
                                                     fieldErrors[
-                                                        `items.${index}.rate`
+                                                        `items.${item.id}.rate`
                                                     ]
                                                 )
                                             }
                                             className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
-                                        {isTouched(`items.${index}.rate`) &&
-                                        isDirty(`items.${index}.rate`) &&
-                                        fieldErrors[`items.${index}.rate`] ? (
+                                        {isTouched(`items.${item.id}.rate`) &&
+                                        isDirty(`items.${item.id}.rate`) &&
+                                        fieldErrors[`items.${item.id}.rate`] ? (
                                             <ErrorIconWithTooltip
                                                 message={
                                                     fieldErrors[
-                                                        `items.${index}.rate`
+                                                        `items.${item.id}.rate`
                                                     ]
                                                 }
                                             />

@@ -124,16 +124,36 @@ export const invoiceDataSchema = z.object({
     display: displaySchema,
 });
 
+const ITEMS_PATH_PREFIX = 'items.';
+
+function isItemFieldPath(path: string): boolean {
+    const match = path.match(/^items\.(\d+)\./);
+    return Boolean(match);
+}
+
+function toItemIdPath(path: string, items: InvoiceData['items']): string {
+    const match = path.match(/^items\.(\d+)\.(.+)$/);
+    if (!match) return path;
+    const index = Number.parseInt(match[1], 10);
+    const field = match[2];
+    const item = items[index];
+    if (!item) return path;
+    return `${ITEMS_PATH_PREFIX}${item.id}.${field}`;
+}
+
 export function getFieldErrors(data: InvoiceData): Record<string, string> {
     const parsed = invoiceDataSchema.safeParse(data);
 
     const errors: Record<string, string> = {};
     if (!parsed.success) {
         for (const issue of parsed.error.issues) {
-            const path =
+            const rawPath =
                 issue.path.length > 0
                     ? (issue.path as (string | number)[]).join('.')
                     : 'root';
+            const path = isItemFieldPath(rawPath)
+                ? toItemIdPath(rawPath, data.items)
+                : rawPath;
             if (!errors[path]) {
                 errors[path] = issue.message;
             }
