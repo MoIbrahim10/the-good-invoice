@@ -16,13 +16,13 @@ export const itemRowAnimation = {
     },
     exit: {
         opacity: 0,
-        y: 0,
+        y: -8,
         filter: 'blur(3px)',
         transition: {
-            duration: 0.45,
+            duration: 0.2,
             ease: [0.4, 0, 0.2, 1] as const,
-            opacity: { duration: 0.3, delay: 0.15 },
-            filter: { duration: 0.35 },
+            opacity: { duration: 0.15, delay: 0.05 },
+            filter: { duration: 0.15 },
         },
     },
     transition: {
