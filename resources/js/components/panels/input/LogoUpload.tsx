@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useId, useRef } from 'react';
+import { useId, useRef, useState } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { RectangularSwitch } from '@/components/custom/rectangular-switch';
 import { Field, FieldLabel } from '@/components/ui/field';
+import { ErrorIconWithTooltip } from '../../icons/ErrorIconWithTooltip';
 import { LogoIcon } from '../../icons/LogoIcon';
 
 type LogoUploadProps = {
@@ -21,17 +22,36 @@ export function LogoUpload({
     const switchId = useId();
     const logoUploadId = useId();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [uploadError, setUploadError] = useState<string | null>(null);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const result = reader.result as string;
-                onUpload(result);
+        if (!file) return;
+
+        setUploadError(null);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const result = reader.result as string;
+            const img = new Image();
+            img.onload = () => {
+                const { naturalWidth: w, naturalHeight: h } = img;
+                const isSquare =
+                    w > 0 && h > 0 && w === h;
+                if (isSquare) {
+                    setUploadError(null);
+                    onUpload(result);
+                } else {
+                    setUploadError(
+                        'Please upload a square image (1:1 aspect ratio).',
+                    );
+                    if (fileInputRef.current) fileInputRef.current.value = '';
+                }
             };
-            reader.readAsDataURL(file);
-        }
+            img.onerror = () => setUploadError('Failed to load image.');
+            img.src = result;
+        };
+        reader.readAsDataURL(file);
     };
 
     return (
@@ -66,7 +86,12 @@ export function LogoUpload({
                         <div className="flex w-full items-stretch gap-2.5 pt-3">
                             {/* Logo Placeholder */}
                             <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-dashed border-stroke-strong bg-bg-strong p-1">
-                                {logo ? (
+                                {uploadError ? (
+                                    <ErrorIconWithTooltip
+                                        message={uploadError}
+                                        id={`${logoUploadId}-error`}
+                                    />
+                                ) : logo ? (
                                     <img
                                         src={logo}
                                         alt="Logo"

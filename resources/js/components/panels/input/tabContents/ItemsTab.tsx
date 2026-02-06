@@ -336,7 +336,7 @@ export function ItemsTab() {
                                                 onClick={handleAddItem}
                                                 disabled={items.length >= 5}
                                                 className="aspect-square h-[32px] w-[32px] p-[7px]"
-                                                ariaLabel="Add item."
+                                                ariaLabel="Add item"
                                             />
                                         ) : (
                                             <CustomButton
@@ -346,7 +346,7 @@ export function ItemsTab() {
                                                     removeItem(item.id)
                                                 }
                                                 className="aspect-square h-[32px] w-[32px] p-[7px]"
-                                                ariaLabel="Remove item."
+                                                ariaLabel="Remove item"
                                             />
                                         )}
                                     </div>
