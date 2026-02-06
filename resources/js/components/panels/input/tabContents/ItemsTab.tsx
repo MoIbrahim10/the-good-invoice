@@ -362,28 +362,39 @@ export function ItemsTab() {
                 </tbody>
             </table>
 
-            {/* Global Tax & Discount */}
-            <div className="flex gap-2 p-3 border-y-layered">
-                <LabeledAdjustableInput
-                    label="Tax"
-                    name="invoice-tax"
-                    value={state.data.tax}
-                    type={state.data.taxType}
-                    onValueChange={(value) => updateTax({ value })}
-                    onTypeChange={(type) => updateTax({ type })}
-                    currencyIcon={selectedCurrency.symbolIcon}
-                    containerClassName="flex-none w-[calc(207/398*100%)]"
-                />
-
-                <LabeledAdjustableInput
-                    label="Discount"
-                    name="invoice-discount"
-                    value={state.data.discount}
-                    type={state.data.discountType}
-                    onValueChange={(value) => updateDiscount({ value })}
-                    onTypeChange={(type) => updateDiscount({ type })}
-                    currencyIcon={selectedCurrency.symbolIcon}
-                />
+            {/* Global Tax & Discount - same grid as table so Tax aligns with description column, Discount fills remaining */}
+            <div
+                className="grid p-3 border-y-layered"
+                style={{
+                    gridTemplateColumns: `${(207 / 398) * 100}% ${(66 / 398) * 100}% ${(93 / 398) * 100}% ${(32 / 398) * 100}%`,
+                }}
+            >
+                <div className="pe-2">
+                    <LabeledAdjustableInput
+                        label="Tax"
+                        name="invoice-tax"
+                        value={state.data.tax}
+                        type={state.data.taxType}
+                        onValueChange={(value) => updateTax({ value })}
+                        onTypeChange={(type) => updateTax({ type })}
+                        currencyIcon={selectedCurrency.symbolIcon}
+                    />
+                </div>
+                <div className="col-span-3 min-w-0">
+                    <LabeledAdjustableInput
+                        label="Discount"
+                        name="invoice-discount"
+                        value={state.data.discount}
+                        type={state.data.discountType}
+                        onValueChange={(value) =>
+                            updateDiscount({ value })
+                        }
+                        onTypeChange={(type) =>
+                            updateDiscount({ type })
+                        }
+                        currencyIcon={selectedCurrency.symbolIcon}
+                    />
+                </div>
             </div>
         </div>
     );
