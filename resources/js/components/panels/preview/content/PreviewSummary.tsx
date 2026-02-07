@@ -37,7 +37,7 @@ export function PreviewSummary({
 
     return (
         <div
-            className={`${forExport ? 'ml-auto flex w-[220px] flex-col gap-2 py-3 pe-4 text-[10px] text-preview-400' : 'ml-auto flex w-[190px] flex-col gap-2 py-3 pe-4 text-[10px] text-preview-400'} ${summaryAllZero ? 'opacity-50' : ''}`}
+            className={`${forExport ? 'ml-auto flex w-[220px] flex-col gap-2 py-3 pe-4 text-preview-400' : 'ml-auto flex w-[190px] flex-col gap-2 py-3 pe-4 text-preview-400'} ${summaryAllZero ? 'opacity-50' : ''}`}
         >
             <div
                 className={`flex min-w-0 justify-between gap-2 ${subtotal === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
@@ -85,7 +85,7 @@ export function PreviewSummary({
             </div>
 
             <div
-                className={`flex min-w-0 justify-between gap-2 font-medium text-preview-700 ${total === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
+                className={`flex min-w-0 justify-between gap-2 font-semibold text-preview-700 ${total === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
             >
                 <span className="shrink-0">Total</span>
                 <span

@@ -57,7 +57,7 @@ export function PreviewItemsTable({
                     />
                 </colgroup>
                 <thead>
-                    <tr className="border-y border-preview-200 bg-preview-style-bg text-[10px] text-preview-400 transition-colors duration-150 ease-in-out">
+                    <tr className="border-y border-preview-200 bg-preview-style-bg text-preview-400 transition-colors duration-150 ease-in-out">
                         <th
                             className={`py-2 ps-4 ${hasItemDescription ? 'opacity-100' : 'opacity-50'}`}
                         >
@@ -80,7 +80,7 @@ export function PreviewItemsTable({
                         </th>
                     </tr>
                 </thead>
-                <tbody className="relative text-[10px] text-preview-700">
+                <tbody className="relative text-preview-700">
                     {items.length > 0 ? (
                         <PreviewItemsTableBody
                             forExport={forExport}

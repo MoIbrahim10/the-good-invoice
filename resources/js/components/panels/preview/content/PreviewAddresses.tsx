@@ -24,7 +24,7 @@ export function PreviewAddresses({
     const billToAllEmpty = !billTo.name?.trim() && !billTo.address?.trim();
 
     return (
-        <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4 text-[10px] text-preview-700">
+        <div className="grid min-w-0 grid-cols-2 gap-2.5 p-4 text-preview-700">
             <div
                 className={`flex min-w-0 flex-col gap-1 overflow-visible ${issuerAllEmpty ? 'opacity-50' : ''}`}
             >

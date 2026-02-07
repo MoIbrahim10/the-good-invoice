@@ -95,7 +95,7 @@ export function InvoicePreviewContent({
         >
             <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[14px] shadow-preview-frame">
                 <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
-                    <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+                    <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
                         <PreviewHeader
                             forExport={forExport}
                             issuer={issuer}

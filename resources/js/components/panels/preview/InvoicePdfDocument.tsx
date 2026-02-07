@@ -128,10 +128,22 @@ function getPdfPalette(
     };
 }
 
+/** Preview content size: 444×626 px; PDF scaled to A4 using same ratio. */
+const PREVIEW_WIDTH = 444;
+/** A4 width in pt (210mm at 72pt/in). */
+const A4_WIDTH_PT = (210 * 72) / 25.4;
+/** Scale from preview px to PDF pt so layout matches preview at A4 proportions. */
+const PDF_SCALE = A4_WIDTH_PT / PREVIEW_WIDTH;
+
+/** Scale a preview px value to PDF pt; rounded to 2 decimals for exact padding/gap/font match. */
+function scale(v: number): number {
+    return Math.round(v * PDF_SCALE * 100) / 100;
+}
+
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        fontSize: 10,
+        fontSize: scale(10),
         fontFamily: 'Inter',
     },
     contentWrapper: {
@@ -145,101 +157,116 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        borderBottomWidth: 1,
+        gap: scale(10),
+        paddingVertical: scale(16),
+        paddingHorizontal: scale(16),
+        borderBottomWidth: scale(1),
     },
     logoBox: {
-        width: 28,
-        height: 28,
-        borderWidth: 1,
+        width: scale(28),
+        height: scale(28),
+        borderWidth: scale(1),
         borderStyle: 'dashed',
-        borderRadius: 4,
+        borderRadius: scale(4),
         alignItems: 'center',
         justifyContent: 'center',
     },
     logo: {
-        width: 28,
-        height: 28,
+        width: scale(28),
+        height: scale(28),
     },
     headerText: {
         flex: 1,
         flexDirection: 'column',
-        gap: 2,
+        gap: scale(4),
     },
-    title: { fontSize: 10, fontWeight: 600 },
+    title: { fontSize: scale(10), fontWeight: 600 },
     headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    dueDate: { fontSize: 10 },
-    invoiceNumber: { fontSize: 10 },
+    dueDate: { fontSize: scale(10) },
+    invoiceNumber: { fontSize: scale(10) },
     addresses: {
         flexDirection: 'row',
-        gap: 10,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
+        gap: scale(10),
+        paddingVertical: scale(16),
+        paddingHorizontal: scale(16),
     },
     addressCol: {
         flex: 1,
         flexDirection: 'column',
-        gap: 4,
+        gap: scale(4),
     },
-    addressTitle: { fontSize: 10, marginBottom: 2 },
-    addressText: { fontSize: 10 },
+    addressTitle: { fontSize: scale(10) },
+    addressText: { fontSize: scale(10) },
     table: {
         width: '100%',
     },
     tableHeader: {
         flexDirection: 'row',
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        paddingVertical: 8,
+        borderTopWidth: scale(1),
+        borderBottomWidth: scale(1),
+        paddingVertical: scale(8),
         paddingHorizontal: 0,
-        fontSize: 10,
+        fontSize: scale(10),
     },
     tableRow: {
         flexDirection: 'row',
-        paddingVertical: 8,
         paddingHorizontal: 0,
         borderBottomWidth: 0,
-        fontSize: 10,
+        fontSize: scale(10),
     },
-    colItem: { width: '54.2%', paddingLeft: 16 },
+    tableRowFirst: {
+        paddingTop: scale(12),
+        paddingBottom: scale(8),
+    },
+    tableRowMiddle: {
+        paddingVertical: scale(8),
+    },
+    tableRowLast: {
+        paddingTop: scale(8),
+        paddingBottom: scale(12),
+    },
+    tableRowEmpty: {
+        paddingVertical: scale(12),
+    },
+    colItem: { width: '54.2%', paddingLeft: scale(16) },
     colQty: { width: '15.3%' },
     colRate: { width: '15.3%' },
-    colAmount: { width: '15.2%', textAlign: 'right', paddingRight: 16 },
+    colAmount: { width: '15.2%', textAlign: 'right', paddingRight: scale(16) },
     tableHeaderAmount: { textAlign: 'right' },
     summary: {
         alignSelf: 'flex-end',
-        width: 220,
+        width: scale(220),
         flexDirection: 'column',
-        gap: 8,
-        paddingVertical: 12,
-        paddingRight: 16,
-        fontSize: 10,
+        gap: scale(8),
+        paddingVertical: scale(12),
+        paddingRight: scale(16),
+        fontSize: scale(10),
     },
     summaryRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        gap: scale(8),
     },
     summaryAmount: {},
     summaryTotal: { fontWeight: 600 },
     notesContainer: {
-        paddingHorizontal: 16,
-        paddingBottom: 12,
+        paddingHorizontal: scale(16),
+        paddingBottom: scale(12),
     },
-    notesTitle: { fontSize: 10, marginBottom: 4 },
-    notesText: { fontSize: 10 },
+    notesTitle: { fontSize: scale(10), marginBottom: scale(4) },
+    notesText: { fontSize: scale(10) },
 });
 
 /** LogoIcon SVG placeholder – matches preview when no logo is set */
 function PdfLogoPlaceholder({ fill }: { fill: string }) {
+    const size = scale(12);
     return (
-        <Svg width={12} height={12} viewBox="0 0 18 18">
+        <Svg width={size} height={size} viewBox="0 0 18 18">
             <Path
                 d="M9.79537 1.76505C9.35602 1.32571 8.64375 1.32571 8.2044 1.76505L6.26505 3.70439C5.82571 4.14373 5.82571 4.85604 6.26505 5.29538L8.2044 7.23472C8.64375 7.67407 9.35602 7.67407 9.79537 7.23472L11.7347 5.29538C12.1741 4.85604 12.1741 4.14373 11.7347 3.70439L9.79537 1.76505Z"
                 fill={fill}
@@ -608,13 +635,25 @@ export function InvoicePdfDocument({
                             </Text>
                         </View>
                         {items.length > 0 ? (
-                            items.map((item: InvoiceItem) => {
+                            items.map((item: InvoiceItem, index: number) => {
                                 const descEmpty =
                                     !item.description?.trim() ||
                                     item.description?.trim() ===
                                         placeholders.items.description;
+                                const rowPaddingStyle =
+                                    index === 0
+                                        ? styles.tableRowFirst
+                                        : index === items.length - 1
+                                          ? styles.tableRowLast
+                                          : styles.tableRowMiddle;
                                 return (
-                                    <View key={item.id} style={styles.tableRow}>
+                                    <View
+                                        key={item.id}
+                                        style={[
+                                            styles.tableRow,
+                                            rowPaddingStyle,
+                                        ]}
+                                    >
                                         <Text
                                             style={[
                                                 styles.colItem,
@@ -691,7 +730,12 @@ export function InvoicePdfDocument({
                                 );
                             })
                         ) : (
-                            <View style={styles.tableRow}>
+                            <View
+                                style={[
+                                    styles.tableRow,
+                                    styles.tableRowEmpty,
+                                ]}
+                            >
                                 <Text
                                     style={[
                                         styles.colItem,

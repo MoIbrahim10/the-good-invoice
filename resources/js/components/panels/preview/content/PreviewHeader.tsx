@@ -92,7 +92,7 @@ export function PreviewHeader({
 
             <div className="flex w-full min-w-0 flex-col justify-center gap-[4px]">
                 <h1
-                    className={`min-w-0 text-[10px] wrap-break-word text-preview-700 ${!issuer.name?.trim() ? 'opacity-50' : ''}`}
+                    className={`min-w-0 font-semibold wrap-break-word text-preview-700 ${!issuer.name?.trim() ? 'opacity-50' : ''}`}
                 >
                     Invoice from{' '}
                     <PreviewText
@@ -102,7 +102,7 @@ export function PreviewHeader({
                     />
                 </h1>
                 <div className="flex items-center justify-between">
-                    <p className="text-[10px] text-preview-400">
+                    <p className="text-preview-400">
                         Due{' '}
                         {details.dueDateInput?.trim() ? (
                             <span className="opacity-100">
@@ -124,7 +124,7 @@ export function PreviewHeader({
                         )}
                     </p>
                     <p
-                        className={`text-[10px] text-preview-350 ${!details.invoiceNumber?.trim() ? 'opacity-50' : ''}`}
+                        className={`text-preview-350 ${!details.invoiceNumber?.trim() ? 'opacity-50' : ''}`}
                     >
                         <PreviewText
                             value={details.invoiceNumber}
