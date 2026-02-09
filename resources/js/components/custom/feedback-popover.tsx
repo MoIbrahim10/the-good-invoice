@@ -95,7 +95,7 @@ export function FeedbackPopover({
                 onMouseLeave={handleClose}
                 className={cn(
                     'flex w-[200px] flex-col items-start gap-1 p-1',
-                    'rounded-[4px] border-stroke-weak bg-feedback-glass backdrop-blur-[2px]',
+                    'rounded-[6px] border-stroke-weak bg-feedback-glass backdrop-blur-[2px]',
                 )}
             >
                 <div className="py-[4px] pr-[6px] pl-[8px]">
