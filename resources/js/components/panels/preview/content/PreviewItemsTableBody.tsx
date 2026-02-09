@@ -1,5 +1,4 @@
-import type { motion } from 'motion/react';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { itemRowAnimation } from '@/lib/itemRowAnimation';
 import { formatNumberForDisplay } from '@/lib/utils';
 import type { InvoiceItem } from '@/types/invoice';
@@ -30,7 +29,6 @@ type RowCellsProps = {
     item: InvoiceItem;
     rowPadding: string;
     descriptionEmpty: boolean;
-    forExport: boolean;
     placeholders: Placeholders;
     formatAmount: (amount: number) => string;
 };
@@ -39,7 +37,6 @@ function RowCells({
     item,
     rowPadding,
     descriptionEmpty,
-    forExport,
     placeholders,
     formatAmount,
 }: RowCellsProps) {
@@ -63,11 +60,9 @@ function RowCells({
             <td
                 className={quantityCellClass}
                 title={
-                    forExport
-                        ? undefined
-                        : item.quantity === 0
-                          ? placeholders.items.quantity
-                          : undefined
+                    item.quantity === 0
+                        ? placeholders.items.quantity
+                        : undefined
                 }
             >
                 {item.quantity === 0
@@ -76,7 +71,7 @@ function RowCells({
             </td>
             <td
                 className={rateCellClass}
-                title={forExport ? undefined : formatAmount(item.rate)}
+                title={formatAmount(item.rate)}
             >
                 {formatAmount(item.rate)}
             </td>
@@ -88,19 +83,15 @@ function RowCells({
 }
 
 type PreviewItemsTableBodyProps = {
-    forExport: boolean;
     items: InvoiceItem[];
     placeholders: Placeholders;
     formatAmount: (amount: number) => string;
-    RowWrapper: 'tr' | typeof motion.tr;
 };
 
 export function PreviewItemsTableBody({
-    forExport,
     items,
     placeholders,
     formatAmount,
-    RowWrapper,
 }: PreviewItemsTableBodyProps) {
     const renderRow = (item: InvoiceItem, index: number) => {
         const rowPadding = getRowPadding(index, items.length);
@@ -113,18 +104,13 @@ export function PreviewItemsTableBody({
                 item={item}
                 rowPadding={rowPadding}
                 descriptionEmpty={descriptionEmpty}
-                forExport={forExport}
                 placeholders={placeholders}
                 formatAmount={formatAmount}
             />
         );
 
-        if (forExport) {
-            return <tr key={item.id}>{cells}</tr>;
-        }
-
         return (
-            <RowWrapper
+            <motion.tr
                 key={item.id}
                 layout
                 initial={itemRowAnimation.initial}
@@ -133,13 +119,9 @@ export function PreviewItemsTableBody({
                 transition={itemRowAnimation.transition}
             >
                 {cells}
-            </RowWrapper>
+            </motion.tr>
         );
     };
-
-    if (forExport) {
-        return <>{items.map((item, index) => renderRow(item, index))}</>;
-    }
 
     return (
         <AnimatePresence initial={false} mode="sync">

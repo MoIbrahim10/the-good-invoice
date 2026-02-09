@@ -1,4 +1,3 @@
-import type { motion } from 'motion/react';
 import type { InvoiceItem } from '@/types/invoice';
 import { PreviewItemsTableBody } from './PreviewItemsTableBody';
 import { PreviewItemsTableEmptyState } from './PreviewItemsTableEmptyState';
@@ -8,19 +7,15 @@ type Placeholders = {
 };
 
 type PreviewItemsTableProps = {
-    forExport: boolean;
     items: InvoiceItem[];
     placeholders: Placeholders;
     formatAmount: (amount: number) => string;
-    RowWrapper: 'tr' | typeof motion.tr;
 };
 
 export function PreviewItemsTable({
-    forExport,
     items,
     placeholders,
     formatAmount,
-    RowWrapper,
 }: PreviewItemsTableProps) {
     const isDescriptionFilled = (i: InvoiceItem) => {
         const t = i.description?.trim();
@@ -67,11 +62,9 @@ export function PreviewItemsTable({
                 <tbody className="relative text-preview-700">
                     {items.length > 0 ? (
                         <PreviewItemsTableBody
-                            forExport={forExport}
                             items={items}
                             placeholders={placeholders}
                             formatAmount={formatAmount}
-                            RowWrapper={RowWrapper}
                         />
                     ) : (
                         <PreviewItemsTableEmptyState />
