@@ -429,6 +429,14 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    /*
+     * Ensure `html` background follows our theme tokens even when the `.dark`
+     * class is present (some base styles set `html.dark { background-color: oklch(...) }`).
+     */
+    html.dark {
+        background-color: var(--color-background);
+    }
 }
 
 @layer utilities {

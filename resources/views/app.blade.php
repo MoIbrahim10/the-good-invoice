@@ -19,14 +19,10 @@
             })();
         </script>
 
-        {{-- Inline style to set the HTML background color based on our theme in app.css --}}
+        {{-- Inline style: use theme token so html and body match (warm-dark, etc.). --}}
         <style>
-            html {
-                background-color: oklch(1 0 0);
-            }
-
-            html.dark {
-                background-color: oklch(0.145 0 0);
+            html, html.dark {
+                background-color: var(--color-background);
             }
         </style>
 
