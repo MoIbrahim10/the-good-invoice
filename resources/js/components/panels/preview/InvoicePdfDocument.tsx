@@ -232,10 +232,19 @@ const styles = StyleSheet.create({
     tableRowEmpty: {
         paddingVertical: scale(12),
     },
-    colItem: { width: '54.2%', paddingLeft: scale(16) },
-    colQty: { width: '15.3%' },
-    colRate: { width: '15.3%' },
-    colAmount: { width: '15.2%', textAlign: 'right', paddingRight: scale(16) },
+    colItem: {
+        width: '50.5%',
+        paddingLeft: scale(16),
+        paddingRight: scale(2),
+    },
+    colQty: { width: '14.5%', paddingHorizontal: scale(2) },
+    colRate: { width: '17.5%', paddingHorizontal: scale(2) },
+    colAmount: {
+        width: '17.5%',
+        textAlign: 'right',
+        paddingLeft: scale(2),
+        paddingRight: scale(16),
+    },
     tableHeaderAmount: { textAlign: 'right' },
     summary: {
         alignSelf: 'flex-end',

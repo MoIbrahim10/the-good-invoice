@@ -35,46 +35,30 @@ export function PreviewItemsTable({
         <div>
             <table className="w-full table-fixed text-left">
                 <colgroup>
-                    <col
-                        style={{
-                            width: `${(220 / 406) * 100}%`,
-                        }}
-                    />
-                    <col
-                        style={{
-                            width: `${(62 / 406) * 100}%`,
-                        }}
-                    />
-                    <col
-                        style={{
-                            width: `${(62 / 406) * 100}%`,
-                        }}
-                    />
-                    <col
-                        style={{
-                            width: `${(62 / 406) * 100}%`,
-                        }}
-                    />
+                    <col style={{ width: '50.5%' }} />
+                    <col style={{ width: '14.5%' }} />
+                    <col style={{ width: '17.5%' }} />
+                    <col style={{ width: '17.5%' }} />
                 </colgroup>
                 <thead>
                     <tr className="border-y border-preview-200 bg-preview-style-bg text-preview-400 transition-colors duration-150 ease-in-out">
                         <th
-                            className={`py-2 ps-4 ${hasItemDescription ? 'opacity-100' : 'opacity-50'}`}
+                            className={`py-2 ps-4 pe-[2px] ${hasItemDescription ? 'opacity-100' : 'opacity-50'}`}
                         >
                             Item
                         </th>
                         <th
-                            className={`py-2 ${hasQuantity ? 'opacity-100' : 'opacity-50'}`}
+                            className={`py-2 px-[2px] ${hasQuantity ? 'opacity-100' : 'opacity-50'}`}
                         >
                             QTY
                         </th>
                         <th
-                            className={`py-2 ${hasRate ? 'opacity-100' : 'opacity-50'}`}
+                            className={`py-2 px-[2px] ${hasRate ? 'opacity-100' : 'opacity-50'}`}
                         >
                             Rate
                         </th>
                         <th
-                            className={`py-2 pe-4 text-right ${hasAmount ? 'opacity-100' : 'opacity-50'}`}
+                            className={`py-2 ps-[2px] pe-4 text-right ${hasAmount ? 'opacity-100' : 'opacity-50'}`}
                         >
                             Amount
                         </th>
