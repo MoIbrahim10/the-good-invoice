@@ -9,6 +9,7 @@ import {
     RATE_MAX,
 } from '@/lib/invoiceLimits';
 import { itemRowAnimation } from '@/lib/itemRowAnimation';
+import { cn } from '@/lib/utils';
 import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
@@ -85,7 +86,16 @@ export function ItemsTab() {
                             >
                                 {/* Description */}
                                 <td className="pe-2 pb-2">
-                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                    <div
+                                        className={cn(
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
+                                            isTouched(`items.${item.id}.description`) &&
+                                                isDirty(`items.${item.id}.description`) &&
+                                                fieldErrors[`items.${item.id}.description`]
+                                                ? 'pr-[6px]'
+                                                : 'pr-3',
+                                        )}
+                                    >
                                         <label
                                             className="sr-only"
                                             htmlFor={`item-${item.id}-description`}
@@ -155,7 +165,16 @@ export function ItemsTab() {
 
                                 {/* QTY */}
                                 <td className="pe-2 pb-2">
-                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0">
+                                    <div
+                                        className={cn(
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
+                                            isTouched(`items.${item.id}.quantity`) &&
+                                                isDirty(`items.${item.id}.quantity`) &&
+                                                fieldErrors[`items.${item.id}.quantity`]
+                                                ? 'pr-[6px]'
+                                                : 'pr-3',
+                                        )}
+                                    >
                                         <label
                                             className="sr-only"
                                             htmlFor={`item-${item.id}-quantity`}
@@ -240,7 +259,16 @@ export function ItemsTab() {
 
                                 {/* Rate */}
                                 <td className="pe-2 pb-2">
-                                    <div className="flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong">
+                                    <div
+                                        className={cn(
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
+                                            isTouched(`items.${item.id}.rate`) &&
+                                                isDirty(`items.${item.id}.rate`) &&
+                                                fieldErrors[`items.${item.id}.rate`]
+                                                ? 'pr-[6px]'
+                                                : 'pr-3',
+                                        )}
+                                    >
                                         <label
                                             className="sr-only"
                                             htmlFor={`item-${item.id}-rate`}

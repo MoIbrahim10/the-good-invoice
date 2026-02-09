@@ -33,7 +33,8 @@ const LabeledTextarea = React.forwardRef<
         return (
             <div
                 className={cn(
-                    'flex flex-row items-start gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak px-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
+                    'flex flex-row items-start gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
+                    error ? 'pr-[6px]' : 'pr-3',
                     containerClassName,
                 )}
             >
