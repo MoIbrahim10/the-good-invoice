@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: scale(4),
     },
-    title: { fontSize: scale(10), fontWeight: 600 },
+    title: { fontSize: scale(10), fontWeight: 400 },
     headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
         gap: scale(8),
     },
     summaryAmount: {},
-    summaryTotal: { fontWeight: 600 },
+    summaryTotal: { fontWeight: 500 },
     notesContainer: {
         paddingHorizontal: scale(16),
         paddingBottom: scale(12),
