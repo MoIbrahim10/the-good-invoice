@@ -1,16 +1,12 @@
 import { motion } from 'motion/react';
 import { cn } from '../../../lib/utils';
 import type { TabState } from '../../../types/tabs';
-import type { GroupSegment } from './TabNavigation';
 
 type TabButtonProps = {
     tab: TabState;
     onClick: () => void;
     isEnabled: boolean;
-    groupSegment: GroupSegment;
     tabsAnimation: boolean;
-    /** Used when tabsAnimation: register button element for shared bubble positioning. */
-    buttonRef?: (el: HTMLButtonElement | null) => void;
 };
 
 const joinTransition = {
@@ -22,23 +18,14 @@ export function TabButton({
     tab,
     onClick,
     isEnabled,
-    groupSegment,
     tabsAnimation,
-    buttonRef,
 }: TabButtonProps) {
     const baseClasses =
         'px-[9px] py-[6px] text-[14px] font-normal whitespace-nowrap relative rounded-[6px]';
 
     const isUnvisited = !tab.isVisited;
 
-    const roundedClasses =
-        groupSegment === 'first'
-            ? 'rounded-l-[6px] rounded-r-none'
-            : groupSegment === 'last'
-              ? 'rounded-r-[6px] rounded-l-none'
-              : groupSegment === 'middle'
-                ? 'rounded-none'
-                : 'rounded-[6px]';
+    const roundedClasses = 'rounded-[6px]';
 
     const disabledClasses =
         !isEnabled && !tab.isActive
@@ -61,7 +48,10 @@ export function TabButton({
 
     const labelClasses = cn(
         'relative z-30',
-        tabsAnimation && 'invisible',
+        // In tabsAnimation mode, labels are rendered in a separate overlay layer
+        // (so they never get occluded by the moving bubble). Keep this text in the
+        // DOM for sizing + accessibility, but hide it visually.
+        tabsAnimation && 'opacity-0',
         tab.isActive && 'text-text-strong',
         !tab.isActive && tab.isVisited && 'text-text-default',
         isUnvisited && 'text-text-default',
@@ -76,6 +66,7 @@ export function TabButton({
             'border border-dashed',
             roundedClasses,
             disabledClasses,
+            tabsAnimation && 'z-10',
         ),
         'aria-current': tab.isActive ? ('page' as const) : undefined,
         style: {
@@ -87,7 +78,6 @@ export function TabButton({
         return (
             <button
                 {...commonButtonProps}
-                ref={buttonRef}
                 style={{
                     ...commonButtonProps.style,
                     borderColor,
@@ -108,7 +98,7 @@ export function TabButton({
     return (
         <motion.button
             {...commonButtonProps}
-            ref={buttonRef}
+            layout="position"
             initial={false}
             animate={{
                 borderColor,

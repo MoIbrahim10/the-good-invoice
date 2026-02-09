@@ -69,7 +69,7 @@ export function InvoicePreviewContent({
         <div className="shrink-0 overflow-hidden">
                 {issuer.logo ? (
                                 <div
-                                className="flex aspect-square! size-[36px] items-center justify-center rounded-[4px] border  bg-preview-0"
+                                className="flex aspect-square! size-[36px] items-center justify-center rounded-[4px]  bg-preview-0"
                                 style={{
                                     borderColor: 'var(--preview-200)',
                                 }}

@@ -85,22 +85,24 @@ export function LogoUpload({
                     >
                         <div className="flex w-full items-stretch gap-2.5 pt-3">
                             {/* Logo Placeholder */}
-                            <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-dashed border-stroke-strong bg-bg-strong p-1">
                                 {uploadError ? (
                                     <ErrorIconWithTooltip
                                         message={uploadError}
                                         id={`${logoUploadId}-error`}
                                     />
                                 ) : logo ? (
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-bg-strong">
                                     <img
                                         src={logo}
                                         alt="Logo"
                                         className="h-full w-full rounded-sm object-contain"
                                     />
+                                    </div>
                                 ) : (
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-dashed border-stroke-strong bg-bg-strong p-1">
                                     <LogoIcon size={18} />
+                                    </div>
                                 )}
-                            </div>
 
                             {/* Logo Info and Upload */}
                             <div className="flex h-fit w-full items-end justify-between gap-2.5">
@@ -108,7 +110,7 @@ export function LogoUpload({
                                     <h3 className="flex items-center text-[14px] font-normal text-text-default">
                                         Your logo
                                     </h3>
-                                    <p className="flex items-center text-[14px] font-normal text-text-weaker">
+                                    <p className="flex items-center text-[14px] font-normal text-text-weak dark:text-text-weaker ">
                                         Square (1:1) format only.
                                     </p>
                                 </div>
