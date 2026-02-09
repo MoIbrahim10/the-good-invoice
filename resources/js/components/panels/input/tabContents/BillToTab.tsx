@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { ADDRESS_MAX_LENGTH, NAME_MAX_LENGTH } from '@/lib/invoiceLimits';
+import { limitToTwoLines } from '@/lib/utils';
 import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
@@ -50,12 +51,14 @@ export function BillToTab() {
                 name="billto-address"
                 label="Address"
                 labelClassName="w-14 shrink-0"
-                className='leading-tight'
+                className="leading-tight"
                 maxLength={ADDRESS_MAX_LENGTH}
                 value={billTo.address}
                 onChange={(e) => {
                     markDirty('billTo.address');
-                    updateBillTo({ address: e.target.value });
+                    updateBillTo({
+                        address: limitToTwoLines(e.target.value),
+                    });
                 }}
                 onFocus={() => clearTouched('billTo.address')}
                 onBlur={() => touchField('billTo.address')}
@@ -69,3 +72,4 @@ export function BillToTab() {
         </div>
     );
 }
+

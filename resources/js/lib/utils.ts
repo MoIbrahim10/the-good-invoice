@@ -69,3 +69,23 @@ export function formatCurrencyForDisplay(
     });
     return `${sign}${symbol}${formatted}`;
 }
+
+/**
+ * Normalises line endings and ensures a string contains at most two lines.
+ * Useful for textarea fields where we want to preserve a single manual line
+ * break but avoid unbounded growth.
+ */
+export function limitToTwoLines(value: string | null | undefined): string {
+    if (!value) {
+        return '';
+    }
+
+    const normalised = value.replace(/\r\n/g, '\n');
+    const parts = normalised.split('\n');
+
+    if (parts.length <= 2) {
+        return normalised;
+    }
+
+    return `${parts[0]}\n${parts[1]}`;
+}

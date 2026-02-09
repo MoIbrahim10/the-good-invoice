@@ -4,6 +4,7 @@ import {
     EMAIL_MAX_LENGTH,
     NAME_MAX_LENGTH,
 } from '@/lib/invoiceLimits';
+import { limitToTwoLines } from '@/lib/utils';
 import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../../hooks/use-invoice-state';
 import { useInvoiceValidation } from '../../../../hooks/use-invoice-validation';
@@ -94,7 +95,9 @@ export function IssuedByTab() {
                     value={issuer.address}
                     onChange={(e) => {
                         markDirty('issuer.address');
-                        updateIssuer({ address: e.target.value });
+                        updateIssuer({
+                            address: limitToTwoLines(e.target.value),
+                        });
                     }}
                     onFocus={() => clearTouched('issuer.address')}
                     onBlur={() => touchField('issuer.address')}
@@ -109,3 +112,4 @@ export function IssuedByTab() {
         </div>
     );
 }
+

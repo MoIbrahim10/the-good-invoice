@@ -3,7 +3,7 @@
  * so schema and UI stay in sync.
  */
 export const NAME_MAX_LENGTH = 50;
-export const ADDRESS_MAX_LENGTH = 100;
+export const ADDRESS_MAX_LENGTH = 60;
 export const EMAIL_MAX_LENGTH = 30;
 export const INVOICE_NUMBER_MAX_LENGTH = 25;
 export const ITEM_DESCRIPTION_MAX_LENGTH = 50;

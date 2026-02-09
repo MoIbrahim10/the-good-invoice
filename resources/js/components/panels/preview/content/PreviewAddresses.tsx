@@ -1,4 +1,5 @@
 import type { BillToData, IssuerData } from '@/types/invoice';
+import { limitToTwoLines } from '@/lib/utils';
 import { PreviewText } from './PreviewText';
 
 type Placeholders = {
@@ -39,10 +40,10 @@ export function PreviewAddresses({
                     />
                 </p>
                 <p
-                    className={`min-w-0 wrap-break-word ${!issuer.address?.trim() && !issuerAllEmpty ? 'opacity-50' : ''}`}
+                    className={`min-w-0 wrap-break-word whitespace-pre-line ${!issuer.address?.trim() && !issuerAllEmpty ? 'opacity-50' : ''}`}
                 >
                     <PreviewText
-                        value={issuer.address}
+                        value={limitToTwoLines(issuer.address)}
                         placeholder={placeholders.issuer.address}
                         suppressPlaceholderOpacity
                     />
@@ -71,10 +72,10 @@ export function PreviewAddresses({
                     />
                 </p>
                 <p
-                    className={`min-w-0 wrap-break-word ${!billTo.address?.trim() && !billToAllEmpty ? 'opacity-50' : ''}`}
+                    className={`min-w-0 wrap-break-word whitespace-pre-line ${!billTo.address?.trim() && !billToAllEmpty ? 'opacity-50' : ''}`}
                 >
                     <PreviewText
-                        value={billTo.address}
+                        value={limitToTwoLines(billTo.address)}
                         placeholder={placeholders.billTo.address}
                         suppressPlaceholderOpacity
                     />
@@ -83,3 +84,4 @@ export function PreviewAddresses({
         </div>
     );
 }
+
