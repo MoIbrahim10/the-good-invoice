@@ -1,6 +1,6 @@
 import { usePage } from '@inertiajs/react';
 import { motion } from 'motion/react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { cn } from '../../../lib/utils';
 import type { SharedData } from '../../../types';
 import type { TabId, TabState } from '../../../types/tabs';
@@ -87,6 +87,7 @@ export function TabNavigation() {
     const [labelRects, setLabelRects] = useState<
         Partial<Record<TabId, BubbleStyle>>
     >({});
+    const [measurementTick, setMeasurementTick] = useState(0);
 
     useLayoutEffect(() => {
         if (!tabsAnimation || !containerRef.current) return;
@@ -97,16 +98,27 @@ export function TabNavigation() {
             if (!el) return null;
             const cr = container.getBoundingClientRect();
             const br = el.getBoundingClientRect();
+            const paddingLeft = container.clientLeft;
+            const paddingTop = container.clientTop;
             return {
-                left: br.left - cr.left,
-                top: br.top - cr.top,
-                width: br.width,
-                height: br.height,
+                left: Math.round(br.left - cr.left - paddingLeft),
+                top: Math.round(br.top - cr.top - paddingTop),
+                width: Math.round(br.width),
+                height: Math.round(br.height),
             };
         };
 
         const currentRect = getRect(activeTabId);
-        if (!currentRect) return;
+        if (!currentRect) {
+            if (measurementTick < 10) {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() =>
+                        setMeasurementTick((t) => t + 1),
+                    );
+                });
+            }
+            return;
+        }
 
         const previousId = previousActiveIdRef.current;
         if (previousId !== activeTabId) {
@@ -130,12 +142,25 @@ export function TabNavigation() {
             if (rect) rects[tab.id] = rect;
         }
         setLabelRects(rects);
-    }, [activeTabId, tabsAnimation, tabs]);
+    }, [activeTabId, tabsAnimation, tabs, measurementTick]);
 
-    const registerButtonRef =
+    const scheduleMeasureAfterPaint = useCallback(() => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() =>
+                setMeasurementTick((t) => t + 1),
+            );
+        });
+    }, []);
+
+    const registerButtonRef = useCallback(
         (tabId: TabId) => (el: HTMLButtonElement | null) => {
             tabRefs.current[tabId] = el;
-        };
+            if (el && tabsAnimation && tabId === activeTabId) {
+                scheduleMeasureAfterPaint();
+            }
+        },
+        [tabsAnimation, activeTabId, scheduleMeasureAfterPaint],
+    );
 
     const content = segments.map((indices) => {
         const segmentKey =
@@ -188,6 +213,7 @@ export function TabNavigation() {
                     layout
                     transition={springTransition}
                     initial={false}
+                    onLayoutAnimationComplete={scheduleMeasureAfterPaint}
                 >
                     {content}
                     {bubbleStyle && (
