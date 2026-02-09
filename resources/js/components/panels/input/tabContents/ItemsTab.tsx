@@ -79,6 +79,7 @@ export function ItemsTab() {
                         {items.map((item, index) => (
                             <motion.tr
                                 key={item.id}
+                                layout
                                 initial={itemRowAnimation.initial}
                                 animate={itemRowAnimation.animate}
                                 exit={itemRowAnimation.exit}

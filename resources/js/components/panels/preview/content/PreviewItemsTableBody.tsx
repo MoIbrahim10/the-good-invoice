@@ -126,6 +126,7 @@ export function PreviewItemsTableBody({
         return (
             <RowWrapper
                 key={item.id}
+                layout
                 initial={itemRowAnimation.initial}
                 animate={itemRowAnimation.animate}
                 exit={itemRowAnimation.exit}
