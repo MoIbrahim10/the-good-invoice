@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     tableHeaderAmount: { textAlign: 'right' },
     summary: {
         alignSelf: 'flex-end',
-        width: scale(220),
+        width: scale(218),
         flexDirection: 'column',
         gap: scale(8),
         paddingVertical: scale(12),
