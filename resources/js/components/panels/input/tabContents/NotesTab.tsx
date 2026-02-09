@@ -3,6 +3,8 @@ import { NOTES_MAX_LENGTH } from '@/lib/invoiceLimits';
 import { useInvoiceActions } from '../../../../hooks/use-invoice-actions';
 import { useInvoiceState } from '../../../../hooks/use-invoice-state';
 import { LabeledTextarea } from '../../../custom/labeled-textarea';
+import { limitToLines } from '@/lib/utils';
+
 
 export function NotesTab() {
     const { state } = useInvoiceState();
@@ -23,7 +25,7 @@ export function NotesTab() {
                 labelClassName="w-14 shrink-0"
                 maxLength={NOTES_MAX_LENGTH}
                 value={notes}
-                onChange={(e) => updateNotes(e.target.value)}
+                onChange={(e) => updateNotes(limitToLines(e.target.value, 5))}
                 placeholder={placeholder}
             />
         </div>

@@ -86,11 +86,17 @@ export function formatCurrencyFull(amount: number, symbol: string): string {
 }
 
 /**
- * Normalises line endings and ensures a string contains at most two lines.
- * Useful for textarea fields where we want to preserve a single manual line
- * break but avoid unbounded growth.
+ * Normalises line endings and ensures a string contains at most `maxLines` lines.
+ * Useful for textarea fields where we want to preserve manual line breaks but
+ * avoid unbounded growth.
+ *
+ * @param value - The string to limit (null/undefined returns '').
+ * @param maxLines - Maximum number of lines to allow (default: 2).
  */
-export function limitToTwoLines(value: string | null | undefined): string {
+export function limitToLines(
+    value: string | null | undefined,
+    maxLines = 2,
+): string {
     if (!value) {
         return '';
     }
@@ -98,9 +104,9 @@ export function limitToTwoLines(value: string | null | undefined): string {
     const normalised = value.replace(/\r\n/g, '\n');
     const parts = normalised.split('\n');
 
-    if (parts.length <= 2) {
+    if (parts.length <= maxLines) {
         return normalised;
     }
 
-    return `${parts[0]}\n${parts[1]}`;
+    return parts.slice(0, maxLines).join('\n');
 }

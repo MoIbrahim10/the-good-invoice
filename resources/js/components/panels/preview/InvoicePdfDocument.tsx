@@ -839,56 +839,48 @@ export function InvoicePdfDocument({
                                         {formatSummaryAmount(subtotal)}
                                     </Text>
                                 </View>
-                                <View
-                                    style={[
-                                        styles.summaryRow,
-                                        discountAmount === 0 && !summaryAllZero
-                                            ? { opacity: 0.5 }
-                                            : {},
-                                    ]}
-                                >
-                                    <Text>
-                                        Discount
-                                        {discountType === 'percentage' &&
-                                            ` (${discount}%)`}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.summaryAmount,
-                                            {
-                                                ...currencyAmountFont,
-                                                color: palette.textDefault,
-                                            },
-                                        ]}
-                                    >
-                                        {formatSummaryAmount(-discountAmount)}
-                                    </Text>
-                                </View>
-                                <View
-                                    style={[
-                                        styles.summaryRow,
-                                        taxAmount === 0 && !summaryAllZero
-                                            ? { opacity: 0.5 }
-                                            : {},
-                                    ]}
-                                >
-                                    <Text>
-                                        Tax
-                                        {taxType === 'percentage' &&
-                                            ` (${tax}%)`}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.summaryAmount,
-                                            {
-                                                ...currencyAmountFont,
-                                                color: palette.textDefault,
-                                            },
-                                        ]}
-                                    >
-                                        {formatSummaryAmount(taxAmount)}
-                                    </Text>
-                                </View>
+                                {discountAmount !== 0 && (
+                                    <View style={styles.summaryRow}>
+                                        <Text>
+                                            Discount
+                                            {discountType === 'percentage' &&
+                                                ` (${discount}%)`}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.summaryAmount,
+                                                {
+                                                    ...currencyAmountFont,
+                                                    color: palette.textDefault,
+                                                },
+                                            ]}
+                                        >
+                                            {formatSummaryAmount(
+                                                -discountAmount,
+                                            )}
+                                        </Text>
+                                    </View>
+                                )}
+                                {taxAmount !== 0 && (
+                                    <View style={styles.summaryRow}>
+                                        <Text>
+                                            Tax
+                                            {taxType === 'percentage' &&
+                                                ` (${tax}%)`}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.summaryAmount,
+                                                {
+                                                    ...currencyAmountFont,
+                                                    color: palette.textDefault,
+                                                },
+                                            ]}
+                                        >
+                                            {formatSummaryAmount(taxAmount)}
+                                        </Text>
+                                    </View>
+                                )}
                                 <View
                                     style={[
                                         styles.summaryRow,
@@ -923,37 +915,38 @@ export function InvoicePdfDocument({
                         ]}
                     />
 
-                    {/* Notes – preserves newlines like preview whitespace-pre-wrap */}
-                    <View
-                        style={[
-                            styles.notesContainer,
-                            {
-                                backgroundColor: palette.contentBg,
-                                ...(!notes?.trim() ? { opacity: 0.5 } : {}),
-                            },
-                        ]}
-                    >
-                        <Text
+                    {/* Notes – only show on PDF when filled */}
+                    {notes?.trim() && (
+                        <View
                             style={[
-                                styles.notesTitle,
-                                { color: palette.textWeak },
+                                styles.notesContainer,
+                                {
+                                    backgroundColor: palette.contentBg,
+                                },
                             ]}
                         >
-                            Notes
-                        </Text>
-                        <Text
-                            style={[
-                                styles.notesText,
-                                { color: palette.textDefault },
-                            ]}
-                        >
-                            {previewText(notes, placeholders.notes)
-                                .text.split('\n')
-                                .flatMap((line, i) =>
-                                    i > 0 ? ['\n', line] : [line],
-                                )}
-                        </Text>
-                    </View>
+                            <Text
+                                style={[
+                                    styles.notesTitle,
+                                    { color: palette.textWeak },
+                                ]}
+                            >
+                                Notes
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.notesText,
+                                    { color: palette.textDefault },
+                                ]}
+                            >
+                                {previewText(notes, placeholders.notes)
+                                    .text.split('\n')
+                                    .flatMap((line, i) =>
+                                        i > 0 ? ['\n', line] : [line],
+                                    )}
+                            </Text>
+                        </View>
+                    )}
                 </View>
             </Page>
         </Document>

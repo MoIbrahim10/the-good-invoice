@@ -52,37 +52,38 @@ export function PreviewSummary({
                 </span>
             </div>
 
-            <div
-                className={`flex min-w-0 justify-between gap-2 ${discountAmount === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
-            >
-                <span className="shrink-0">
-                    Discount
-                    {discountType === 'percentage' && ` (${discount}%)`}
-                </span>
-                <span
-                    className={amountClass}
-                    dir="ltr"
-                    title={formatAmount(-discountAmount)}
-                >
-                    {formatAmount(-discountAmount)}
-                </span>
-            </div>
+            {discountAmount !== 0 && (
+                <div className="flex min-w-0 justify-between gap-2">
+                    <span className="shrink-0">
+                        Discount
+                        {discountType === 'percentage' &&
+                            ` (${discount}%)`}
+                    </span>
+                    <span
+                        className={amountClass}
+                        dir="ltr"
+                        title={formatAmount(-discountAmount)}
+                    >
+                        {formatAmount(-discountAmount)}
+                    </span>
+                </div>
+            )}
 
-            <div
-                className={`flex min-w-0 justify-between gap-2 ${taxAmount === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
-            >
-                <span className="shrink-0">
-                    Tax
-                    {taxType === 'percentage' && ` (${tax}%)`}
-                </span>
-                <span
-                    className={amountClass}
-                    dir="ltr"
-                    title={formatAmount(taxAmount)}
-                >
-                    {formatAmount(taxAmount)}
-                </span>
-            </div>
+            {taxAmount !== 0 && (
+                <div className="flex min-w-0 justify-between gap-2">
+                    <span className="shrink-0">
+                        Tax
+                        {taxType === 'percentage' && ` (${tax}%)`}
+                    </span>
+                    <span
+                        className={amountClass}
+                        dir="ltr"
+                        title={formatAmount(taxAmount)}
+                    >
+                        {formatAmount(taxAmount)}
+                    </span>
+                </div>
+            )}
 
             <div
                 className={`flex min-w-0 justify-between gap-2 font-semibold text-preview-700 ${total === 0 && !summaryAllZero ? 'opacity-50' : ''}`}
