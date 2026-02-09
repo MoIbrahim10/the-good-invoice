@@ -249,36 +249,6 @@
     );
 }
 
-/* Sides layer: opposite-direction stripes, full width, height minus 2×14px, above background, below content */
-.bg-preview-stripes::before {
-    content: '';
-    position: absolute;
-    top: 14px;
-    right: 0;
-    bottom: 14px;
-    left: 0;
-    z-index: 1;
-    background-position: var(--preview-stripe-offset)
-        var(--preview-stripe-offset);
-    background-image: repeating-linear-gradient(
-        45deg,
-        var(--preview-col-1) 0,
-        var(--preview-col-1) var(--preview-stripe-bar),
-        var(--preview-border) var(--preview-stripe-bar),
-        var(--preview-border)
-            calc(var(--preview-stripe-bar) + var(--preview-stripe-gap)),
-        var(--preview-col-2)
-            calc(var(--preview-stripe-bar) + var(--preview-stripe-gap)),
-        var(--preview-col-2)
-            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap)),
-        var(--preview-border)
-            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap)),
-        var(--preview-border)
-            calc(var(--preview-stripe-bar) * 2 + var(--preview-stripe-gap) * 2)
-    );
-    pointer-events: none;
-}
-
 @utility shadow-preview-frame {
     box-shadow:
         0 3px 3px 0 rgba(0, 0, 0, 0.05),
