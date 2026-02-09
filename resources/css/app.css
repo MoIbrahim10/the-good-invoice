@@ -197,7 +197,7 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Layered borders: strong first (closer to content), weak second (further out) */
+/* Layered borders: strong first (closer to content), weak second (further out)
 @utility border-b-layered {
     position: relative;
     border-bottom: 1px solid var(--stroke-weaker);
@@ -252,7 +252,7 @@
         height: 1px;
         background-color: var(--stroke-strong);
     }
-}
+} */
 
 @utility bg-preview-stripes {
     position: relative;
