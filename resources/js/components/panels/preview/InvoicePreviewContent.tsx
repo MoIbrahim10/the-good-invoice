@@ -4,11 +4,11 @@ import { useInvoiceState } from '@/hooks/use-invoice-state';
 import { formatCurrencyForDisplay } from '@/lib/utils';
 import type { InvoiceItem } from '@/types/invoice';
 import { LogoIcon } from '../../icons/LogoIcon';
-import { PreviewAddresses } from './content/PreviewAddresses';
 import { PreviewHeader } from './content/PreviewHeader';
 import { PreviewItemsTable } from './content/PreviewItemsTable';
 import { PreviewNotes } from './content/PreviewNotes';
 import { PreviewSummary } from './content/PreviewSummary';
+import { PreviewAddresses } from './content/PreviewAddresses';
 
 type InvoicePreviewContentProps = {
     forExport?: boolean;
@@ -93,7 +93,7 @@ export function InvoicePreviewContent({
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
-            <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[14px] shadow-preview-frame">
+            <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
                 <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
                     <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
                         <PreviewHeader
