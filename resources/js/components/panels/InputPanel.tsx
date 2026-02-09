@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'motion/react';
 import type { SharedData } from '../../types';
 import type { TabId } from '../../types/tabs';
+import { useIsLg } from '../../hooks/use-is-lg';
 import { PanelFooter } from '../layout/PanelFooter';
 import { PanelHeader } from '../layout/PanelHeader';
 import { useTabNavigation } from '../providers/TabNavigationProvider';
@@ -83,13 +84,14 @@ export function InputPanel() {
     const { activeTabId } = useTabNavigation();
     const tabsContentAnimation =
         usePage<SharedData>().props.tabsContentAnimation;
+    const isLg = useIsLg();
 
     return (
-        <div className="mx-auto flex min-h-0 w-full max-w-[446px] shrink-0 flex-col overflow-hidden max-lg:min-h-0 max-lg:flex-1 lg:mx-0 lg:h-full lg:max-h-[626px] lg:max-w-none lg:min-w-[446px] lg:py-2">
-            <div className="flex min-h-0 flex-1 flex-col">
+        <div className="mx-auto flex min-h-0 w-full max-w-[446px] shrink-0 flex-col overflow-hidden max-lg:flex-none max-lg:overflow-visible lg:mx-0 lg:h-full lg:max-h-[626px] lg:max-w-none lg:min-w-[446px] lg:py-2">
+            <div className="flex min-h-0 flex-1 flex-col max-lg:min-h-0">
                 <PanelHeader />
                 <TabNavigation />
-                <div className="relative flex-1 overflow-x-hidden overflow-y-auto">
+                <div className="relative flex-1 overflow-x-hidden overflow-y-auto max-lg:min-h-[40vh]">
                     {tabsContentAnimation ? (
                         <AnimatePresence mode="wait" initial={false}>
                             <TabContentPanelAnimated
@@ -101,7 +103,7 @@ export function InputPanel() {
                         <TabContentPanelStatic tabId={activeTabId} />
                     )}
                 </div>
-                <PanelFooter />
+                {isLg && <PanelFooter />}
             </div>
         </div>
     );
