@@ -452,7 +452,7 @@ export function InvoicePdfDocument({
                                     style={[
                                         styles.invoiceNumber,
                                         {
-                                            color: palette.textWeaker,
+                                            color: palette.textWeak,
                                             ...(invoiceNo.placeholder
                                                 ? { opacity: 0.5 }
                                                 : {}),

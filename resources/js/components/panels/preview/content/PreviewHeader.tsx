@@ -124,7 +124,7 @@ export function PreviewHeader({
                         )}
                     </p>
                     <p
-                        className={`text-preview-350 ${!details.invoiceNumber?.trim() ? 'opacity-50' : ''}`}
+                        className={`text-preview-400 ${!details.invoiceNumber?.trim() ? 'opacity-50' : ''}`}
                     >
                         <PreviewText
                             value={details.invoiceNumber}
