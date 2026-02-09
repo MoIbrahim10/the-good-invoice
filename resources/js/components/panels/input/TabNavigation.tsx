@@ -184,7 +184,7 @@ export function TabNavigation() {
             {tabsAnimation ? (
                 <motion.div
                     ref={containerRef}
-                    className="relative flex gap-1.5"
+                    className="relative flex gap-1.5 w-full"
                     layout
                     transition={springTransition}
                     initial={false}
@@ -214,7 +214,7 @@ export function TabNavigation() {
                                 if (!rect) return null;
                                 const isUnvisited = !tab.isVisited;
                                 const labelClasses = cn(
-                                    'flex items-center justify-center px-[10px] py-[6px] text-[14px] font-normal whitespace-nowrap',
+                                    'flex items-center justify-center px-[9px] py-[6px] text-[14px] font-normal whitespace-nowrap',
                                     tab.isActive && 'text-text-strong',
                                     (!tab.isActive && tab.isVisited) ||
                                         isUnvisited
@@ -231,6 +231,7 @@ export function TabNavigation() {
                                             top: rect.top,
                                             width: rect.width,
                                             height: rect.height,
+                                            lineHeight: 'auto',
                                         }}
                                     >
                                         {tab.label}
