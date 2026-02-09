@@ -93,7 +93,7 @@ export function ItemsTab() {
                                             isTouched(`items.${item.id}.description`) &&
                                                 isDirty(`items.${item.id}.description`) &&
                                                 fieldErrors[`items.${item.id}.description`]
-                                                ? 'pr-[6px]'
+                                                ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
                                     >
@@ -172,7 +172,7 @@ export function ItemsTab() {
                                             isTouched(`items.${item.id}.quantity`) &&
                                                 isDirty(`items.${item.id}.quantity`) &&
                                                 fieldErrors[`items.${item.id}.quantity`]
-                                                ? 'pr-[6px]'
+                                                ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
                                     >
@@ -266,7 +266,7 @@ export function ItemsTab() {
                                             isTouched(`items.${item.id}.rate`) &&
                                                 isDirty(`items.${item.id}.rate`) &&
                                                 fieldErrors[`items.${item.id}.rate`]
-                                                ? 'pr-[6px]'
+                                                ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
                                     >

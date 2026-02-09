@@ -35,12 +35,12 @@ export function ErrorIconWithTooltip({
                         damping: 28,
                     }}
                     className={cn(
-                        'flex size-5 shrink-0 items-center justify-center rounded-[4px] bg-[#FFEFEF] p-[3px]',
+                        'flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#FFEFEF] dark:bg-[#401B1D] p-[5px]',
                         className,
                     )}
                     style={{
-                        width: 20,
-                        height: 20,
+                        width: 24,
+                        height: 24,
                     }}
                     role="img"
                     aria-label={`Error: ${displayMessage}`}
