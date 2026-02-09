@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: scale(1),
     },
     logoBox: {
-        width: scale(28),
-        height: scale(28),
+        width: scale(36),
+        height: scale(36),
         borderWidth: scale(1),
         borderStyle: 'dashed',
         borderRadius: scale(4),
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     logo: {
-        width: scale(28),
-        height: scale(28),
+        width: scale(36),
+        height: scale(36),
     },
     headerText: {
         flex: 1,
