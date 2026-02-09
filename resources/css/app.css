@@ -198,6 +198,7 @@
 }
 
 /* Layered borders: strong first (closer to content), weak second (further out)
+*/
 @utility border-b-layered {
     position: relative;
     border-bottom: 1px solid var(--stroke-weaker);
@@ -252,7 +253,7 @@
         height: 1px;
         background-color: var(--stroke-strong);
     }
-} */
+} 
 
 @utility bg-preview-stripes {
     position: relative;
@@ -424,6 +425,7 @@
         @apply border-border;
     }
 
+    html,
     body {
         @apply bg-background text-foreground;
     }
