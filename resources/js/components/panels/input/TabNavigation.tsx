@@ -72,7 +72,7 @@ function getSegments(tabs: TabState[]): number[][] {
 }
 
 export function TabNavigation() {
-    const { tabs, navigateToTab, canNavigateToTab } = useTabNavigation();
+    const { tabs, navigateToTab } = useTabNavigation();
     const tabsAnimation = usePage<SharedData>().props.tabsAnimation;
     const segments = getSegments(tabs);
     const activeTabId = tabs.find((t) => t.isActive)?.id ?? tabs[0].id;
@@ -153,7 +153,7 @@ export function TabNavigation() {
                     key={tab.id}
                     tab={tab}
                     onClick={() => navigateToTab(tab.id)}
-                    isEnabled={canNavigateToTab(tab.id)}
+                    isEnabled
                     groupSegment={getGroupSegment(tabs, index)}
                     tabsAnimation={tabsAnimation}
                     buttonRef={

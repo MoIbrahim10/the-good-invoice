@@ -110,37 +110,12 @@ export function TabNavigationProvider({
         return TAB_ORDER.indexOf(activeTabId);
     }, [activeTabId]);
 
-    const canNavigateToTab = useCallback(
-        (targetTabId: TabId) => {
-            const targetIndex = TAB_ORDER.indexOf(targetTabId);
-            const activeIndex = getActiveTabIndex();
-
-            // Can always navigate to already visited tabs (backward)
-            const targetTab = tabs.find((t) => t.id === targetTabId);
-            if (targetTab?.isVisited) {
-                return true;
-            }
-
-            // Can navigate to next tab if current tab is visited
-            if (
-                targetIndex === activeIndex + 1 &&
-                tabs[activeIndex]?.isVisited
-            ) {
-                return true;
-            }
-
-            // Cannot skip to unvisited tabs
-            return false;
-        },
-        [tabs, getActiveTabIndex],
-    );
+    const canNavigateToTab = useCallback(() => {
+        return true;
+    }, []);
 
     const navigateToTab = useCallback(
         (tabId: TabId) => {
-            if (!canNavigateToTab(tabId)) {
-                return;
-            }
-
             setTabs((prevTabs) =>
                 prevTabs.map((tab) => ({
                     ...tab,
@@ -150,29 +125,24 @@ export function TabNavigationProvider({
             );
             setActiveTabId(tabId);
         },
-        [canNavigateToTab, setActiveTabId],
+        [setActiveTabId],
     );
 
     const navigateToPreviousTab = useCallback(() => {
         const activeIndex = getActiveTabIndex();
         if (activeIndex > 0) {
             const previousTabId = TAB_ORDER[activeIndex - 1];
-            if (tabs[activeIndex - 1]?.isVisited) {
-                navigateToTab(previousTabId);
-            }
+            navigateToTab(previousTabId);
         }
-    }, [getActiveTabIndex, tabs, navigateToTab]);
+    }, [getActiveTabIndex, navigateToTab]);
 
     const navigateToNextTab = useCallback(() => {
         const activeIndex = getActiveTabIndex();
         if (activeIndex < TAB_ORDER.length - 1) {
-            const currentTab = tabs[activeIndex];
-            if (currentTab?.isVisited) {
-                const nextTabId = TAB_ORDER[activeIndex + 1];
-                navigateToTab(nextTabId);
-            }
+            const nextTabId = TAB_ORDER[activeIndex + 1];
+            navigateToTab(nextTabId);
         }
-    }, [getActiveTabIndex, tabs, navigateToTab]);
+    }, [getActiveTabIndex, navigateToTab]);
 
     const markTabCompleted = useCallback((tabId: TabId) => {
         setTabs((prevTabs) =>
