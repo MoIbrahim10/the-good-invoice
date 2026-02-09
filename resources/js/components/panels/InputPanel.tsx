@@ -6,12 +6,13 @@ import { PanelFooter } from '../layout/PanelFooter';
 import { PanelHeader } from '../layout/PanelHeader';
 import { useTabNavigation } from '../providers/TabNavigationProvider';
 import { TabNavigation } from './input/TabNavigation';
-import { BillToTab } from './input/tabContents/BillToTab';
 import { DetailsTab } from './input/tabContents/DetailsTab';
 import { DisplayTab } from './input/tabContents/DisplayTab';
-import { IssuedByTab } from './input/tabContents/IssuedByTab';
+
 import { ItemsTab } from './input/tabContents/ItemsTab';
 import { NotesTab } from './input/tabContents/NotesTab';
+import { IssuedByTab } from './input/tabContents/IssuedByTab';
+import { BillToTab } from './input/tabContents/BillToTab';
 
 const SLIDE_PX = 18;
 const BLUR_PX = 3;

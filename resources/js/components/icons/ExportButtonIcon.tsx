@@ -86,7 +86,7 @@ export function ExportButtonIcon({
                 <path
                     d={wavyPathD}
                     stroke="currentColor"
-                    strokeWidth="1.5"
+                    strokeWidth="1"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     fill="none"
@@ -105,7 +105,7 @@ export function ExportButtonIcon({
                 <path
                     d={checkPathD}
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="1"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     fill="none"
