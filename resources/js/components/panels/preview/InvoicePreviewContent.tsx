@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
 import { currencies } from '@/data/currencies';
 import { useInvoiceState } from '@/hooks/use-invoice-state';
-import { formatCurrencyForDisplay } from '@/lib/utils';
+import {
+    formatCurrencyForDisplay,
+    formatCurrencyFull,
+} from '@/lib/utils';
 import type { InvoiceItem } from '@/types/invoice';
 import { LogoIcon } from '../../icons/LogoIcon';
 import { PreviewHeader } from './content/PreviewHeader';
@@ -41,6 +44,8 @@ export function InvoicePreviewContent({
 
     const formatAmount = (amount: number) =>
         formatCurrencyForDisplay(amount, currency.symbol);
+    const formatSummaryAmount = (amount: number) =>
+        formatCurrencyFull(amount, currency.symbol);
 
     const subtotal = items.reduce(
         (sum: number, item: InvoiceItem) => sum + item.quantity * item.rate,
@@ -126,7 +131,7 @@ export function InvoicePreviewContent({
                             tax={tax}
                             taxType={taxType}
                             total={total}
-                            formatAmount={formatAmount}
+                            formatAmount={formatSummaryAmount}
                         />
                         <PreviewNotes
                             notes={notes}

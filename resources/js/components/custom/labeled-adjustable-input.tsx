@@ -13,6 +13,8 @@ interface LabeledAdjustableInputProps {
     onValueChange: (value: number) => void;
     onTypeChange: (type: 'percentage' | 'currency') => void;
     currencyIcon: ReactNode;
+    /** When type is currency, cap the value (e.g. subtotal for discount, taxable base for tax). */
+    maxAmount?: number;
     placeholder?: string;
     containerClassName?: string;
     id?: string;
@@ -26,6 +28,7 @@ export function LabeledAdjustableInput({
     onValueChange,
     onTypeChange,
     currencyIcon,
+    maxAmount,
     placeholder = '0',
     containerClassName,
     id,
@@ -42,7 +45,13 @@ export function LabeledAdjustableInput({
 
     const isPercentage = type === 'percentage';
     const min = 0;
-    const max = isPercentage ? 100 : TAX_DISCOUNT_MAX;
+    const max =
+        isPercentage
+            ? 100
+            : Math.min(
+                  TAX_DISCOUNT_MAX,
+                  maxAmount ?? TAX_DISCOUNT_MAX,
+              );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const raw = Number(e.target.value);

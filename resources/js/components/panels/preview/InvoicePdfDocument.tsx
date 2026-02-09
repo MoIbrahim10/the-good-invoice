@@ -11,7 +11,11 @@ import {
 } from '@react-pdf/renderer';
 import { format } from 'date-fns';
 import { currencies } from '@/data/currencies';
-import { formatCurrencyForDisplay, formatNumberForDisplay } from '@/lib/utils';
+import {
+    formatCurrencyForDisplay,
+    formatCurrencyFull,
+    formatNumberForDisplay,
+} from '@/lib/utils';
 import type { Currency } from '@/types/currency';
 
 /* Inter – main PDF font */
@@ -233,7 +237,7 @@ const styles = StyleSheet.create({
         paddingVertical: scale(12),
     },
     colItem: {
-        width: '50.5%',
+        width: '51%',
         paddingLeft: scale(16),
         paddingRight: scale(2),
     },
@@ -341,6 +345,8 @@ export function InvoicePdfDocument({
         currencies.find((c) => c.code === details.currency) || currencies[0];
     const formatAmount = (amount: number) =>
         formatCurrencyForPdf(amount, currency);
+    const formatSummaryAmount = (amount: number) =>
+        formatCurrencyFull(amount, currency.symbol);
     const currencyAmountFont =
         currency.code === 'INR' || currency.code === 'RUB'
             ? { fontFamily: 'PdfCurrency' as const }
@@ -830,7 +836,7 @@ export function InvoicePdfDocument({
                                             },
                                         ]}
                                     >
-                                        {formatAmount(subtotal)}
+                                        {formatSummaryAmount(subtotal)}
                                     </Text>
                                 </View>
                                 <View
@@ -855,7 +861,7 @@ export function InvoicePdfDocument({
                                             },
                                         ]}
                                     >
-                                        {formatAmount(-discountAmount)}
+                                        {formatSummaryAmount(-discountAmount)}
                                     </Text>
                                 </View>
                                 <View
@@ -880,7 +886,7 @@ export function InvoicePdfDocument({
                                             },
                                         ]}
                                     >
-                                        {formatAmount(taxAmount)}
+                                        {formatSummaryAmount(taxAmount)}
                                     </Text>
                                 </View>
                                 <View
@@ -902,7 +908,7 @@ export function InvoicePdfDocument({
                                             currencyAmountFont,
                                         ]}
                                     >
-                                        {formatAmount(total)}
+                                        {formatSummaryAmount(total)}
                                     </Text>
                                 </View>
                             </View>

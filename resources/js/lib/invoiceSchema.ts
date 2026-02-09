@@ -103,26 +103,51 @@ const displaySchema = z.object({
     color: z.enum(['gray', 'cream', 'blue', 'green']),
 });
 
-export const invoiceDataSchema = z.object({
-    issuer: issuerSchema,
-    billTo: billToSchema,
-    details: detailsSchema,
-    items: z
-        .array(invoiceItemSchema)
-        .min(1, 'At least one item is required.')
-        .max(100, 'Too many items.'),
-    tax: z.number().min(0).max(TAX_DISCOUNT_MAX),
-    taxType: z.enum(['percentage', 'currency']),
-    discount: z.number().min(0).max(TAX_DISCOUNT_MAX),
-    discountType: z.enum(['percentage', 'currency']),
-    notes: z
-        .string()
-        .max(
-            NOTES_MAX_LENGTH,
-            `Notes must be at most ${NOTES_MAX_LENGTH} characters.`,
-        ),
-    display: displaySchema,
-});
+export const invoiceDataSchema = z
+    .object({
+        issuer: issuerSchema,
+        billTo: billToSchema,
+        details: detailsSchema,
+        items: z
+            .array(invoiceItemSchema)
+            .min(1, 'At least one item is required.')
+            .max(100, 'Too many items.'),
+        tax: z.number().min(0).max(TAX_DISCOUNT_MAX),
+        taxType: z.enum(['percentage', 'currency']),
+        discount: z.number().min(0).max(TAX_DISCOUNT_MAX),
+        discountType: z.enum(['percentage', 'currency']),
+        notes: z
+            .string()
+            .max(
+                NOTES_MAX_LENGTH,
+                `Notes must be at most ${NOTES_MAX_LENGTH} characters.`,
+            ),
+        display: displaySchema,
+    })
+    .superRefine((data, ctx) => {
+        const subtotal = data.items.reduce(
+            (sum, item) => sum + item.quantity * item.rate,
+            0,
+        );
+
+        if (
+            data.discountType === 'currency' &&
+            data.discount > subtotal
+        ) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'Discount cannot exceed subtotal.',
+                path: ['discount'],
+            });
+        }
+        if (data.taxType === 'currency' && data.tax > subtotal) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'Tax cannot exceed subtotal.',
+                path: ['tax'],
+            });
+        }
+    });
 
 const ITEMS_PATH_PREFIX = 'items.';
 

@@ -35,10 +35,10 @@ export function PreviewItemsTable({
         <div>
             <table className="w-full table-fixed text-left">
                 <colgroup>
-                    <col style={{ width: '50.5%' }} />
-                    <col style={{ width: '14.5%' }} />
-                    <col style={{ width: '17.5%' }} />
-                    <col style={{ width: '17.5%' }} />
+                    <col style={{ width: '51%' }} />
+                    <col style={{ width: '12.5%' }} />
+                    <col style={{ width: '18.5%' }} />
+                    <col style={{ width: '18.5%' }} />
                 </colgroup>
                 <thead>
                     <tr className="border-y border-preview-200 bg-preview-style-bg text-preview-400 transition-colors duration-150 ease-in-out">

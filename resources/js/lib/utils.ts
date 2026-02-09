@@ -10,12 +10,13 @@ export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
 
-const COMPACT_THRESHOLD = 1_000;
+const COMPACT_THRESHOLD = 1_000_000_000;
 const MAX_SAFE_DISPLAY = 1e15;
 
 /**
  * Formats a plain number for display (e.g. quantity). Uses compact notation
- * (e.g. 10K, 1.2M) for large values so the value doesn't overflow.
+ * (e.g. 10M, 1.2B) only for values >= 10M; otherwise shows full number with
+ * locale grouping (e.g. 3,500).
  */
 export function formatNumberForDisplay(value: number): string {
     const abs = Math.abs(value);
@@ -35,8 +36,8 @@ export function formatNumberForDisplay(value: number): string {
 }
 
 /**
- * Formats a number as currency for display. Uses compact notation (e.g. 10K, 1.2M)
- * for large amounts so the value doesn't overflow in tight layouts.
+ * Formats a number as currency for display. Uses compact notation (e.g. 10M, 1.2B)
+ * only for amounts >= 10M; otherwise shows full amount with locale grouping (e.g. 3,500).
  */
 export function formatCurrencyForDisplay(
     amount: number,
@@ -63,6 +64,20 @@ export function formatCurrencyForDisplay(
         return `${sign}${symbol}${formatted}`;
     }
 
+    const formatted = abs.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+    });
+    return `${sign}${symbol}${formatted}`;
+}
+
+/**
+ * Formats a number as currency using full form only (no compact notation).
+ * Use for summary/totals where the full amount (e.g. 1,234,567.89) should always be shown.
+ */
+export function formatCurrencyFull(amount: number, symbol: string): string {
+    const abs = Math.abs(amount);
+    const sign = amount < 0 ? '-' : '';
     const formatted = abs.toLocaleString(undefined, {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,

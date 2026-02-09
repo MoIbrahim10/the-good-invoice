@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { currencies } from '@/data/currencies';
 import {
     ITEM_DESCRIPTION_MAX_LENGTH,
@@ -35,10 +35,28 @@ export function ItemsTab() {
     const items = state.data.items;
     const currencyCode = state.data.details.currency;
     const placeholders = state.placeholders.items;
+    const { tax, taxType, discount, discountType } = state.data;
     const selectedCurrency = useMemo(
         () => currencies.find((c) => c.code === currencyCode) || currencies[0],
         [currencyCode],
     );
+
+    const subtotal = useMemo(
+        () => items.reduce((sum, item) => sum + item.quantity * item.rate, 0),
+        [items],
+    );
+
+    useEffect(() => {
+        if (discountType === 'currency' && discount > subtotal) {
+            updateDiscount({ value: subtotal });
+        }
+    }, [discountType, discount, subtotal, updateDiscount]);
+
+    useEffect(() => {
+        if (taxType === 'currency' && tax > subtotal) {
+            updateTax({ value: subtotal });
+        }
+    }, [taxType, tax, subtotal, updateTax]);
 
     const handleAddItem = () => {
         if (items.length < 5) {
@@ -404,7 +422,19 @@ export function ItemsTab() {
                         name="invoice-tax"
                         value={state.data.tax}
                         type={state.data.taxType}
-                        onValueChange={(value) => updateTax({ value })}
+                        maxAmount={
+                            state.data.taxType === 'currency'
+                                ? subtotal
+                                : undefined
+                        }
+                        onValueChange={(value) =>
+                            updateTax({
+                                value:
+                                    state.data.taxType === 'currency'
+                                        ? Math.min(value, subtotal)
+                                        : value,
+                            })
+                        }
                         onTypeChange={(type) => updateTax({ type })}
                         currencyIcon={selectedCurrency.symbolIcon}
                     />
@@ -415,8 +445,18 @@ export function ItemsTab() {
                         name="invoice-discount"
                         value={state.data.discount}
                         type={state.data.discountType}
+                        maxAmount={
+                            state.data.discountType === 'currency'
+                                ? subtotal
+                                : undefined
+                        }
                         onValueChange={(value) =>
-                            updateDiscount({ value })
+                            updateDiscount({
+                                value:
+                                    state.data.discountType === 'currency'
+                                        ? Math.min(value, subtotal)
+                                        : value,
+                            })
                         }
                         onTypeChange={(type) =>
                             updateDiscount({ type })
