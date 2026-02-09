@@ -1,3 +1,7 @@
+import { AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
+import { summaryLineAnimation } from '@/lib/itemRowAnimation';
+
 type AmountType = 'percentage' | 'currency';
 
 type PreviewSummaryProps = {
@@ -52,37 +56,90 @@ export function PreviewSummary({
                 </span>
             </div>
 
-            {discountAmount !== 0 && (
-                <div className="flex min-w-0 justify-between gap-2">
-                    <span className="shrink-0">
-                        Discount
-                        {discountType === 'percentage' &&
-                            ` (${discount}%)`}
-                    </span>
-                    <span
-                        className={amountClass}
-                        dir="ltr"
-                        title={formatAmount(-discountAmount)}
-                    >
-                        {formatAmount(-discountAmount)}
-                    </span>
-                </div>
-            )}
-
-            {taxAmount !== 0 && (
-                <div className="flex min-w-0 justify-between gap-2">
-                    <span className="shrink-0">
-                        Tax
-                        {taxType === 'percentage' && ` (${tax}%)`}
-                    </span>
-                    <span
-                        className={amountClass}
-                        dir="ltr"
-                        title={formatAmount(taxAmount)}
-                    >
-                        {formatAmount(taxAmount)}
-                    </span>
-                </div>
+            {!forExport ? (
+                <AnimatePresence initial={false} mode="sync">
+                    {discountAmount !== 0 && (
+                        <motion.div
+                            key="discount"
+                            className="flex min-w-0 justify-between gap-2"
+                            layout
+                            initial={summaryLineAnimation.initial}
+                            animate={summaryLineAnimation.animate}
+                            exit={summaryLineAnimation.exit}
+                            transition={summaryLineAnimation.transition}
+                        >
+                            <span className="shrink-0">
+                                Discount
+                                {discountType === 'percentage' &&
+                                    ` (${discount}%)`}
+                            </span>
+                            <span
+                                className={amountClass}
+                                dir="ltr"
+                                title={formatAmount(-discountAmount)}
+                            >
+                                {formatAmount(-discountAmount)}
+                            </span>
+                        </motion.div>
+                    )}
+                    {taxAmount !== 0 && (
+                        <motion.div
+                            key="tax"
+                            className="flex min-w-0 justify-between gap-2"
+                            layout
+                            initial={summaryLineAnimation.initial}
+                            animate={summaryLineAnimation.animate}
+                            exit={summaryLineAnimation.exit}
+                            transition={summaryLineAnimation.transition}
+                        >
+                            <span className="shrink-0">
+                                Tax
+                                {taxType === 'percentage' && ` (${tax}%)`}
+                            </span>
+                            <span
+                                className={amountClass}
+                                dir="ltr"
+                                title={formatAmount(taxAmount)}
+                            >
+                                {formatAmount(taxAmount)}
+                            </span>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            ) : (
+                <>
+                    {discountAmount !== 0 && (
+                        <div className="flex min-w-0 justify-between gap-2">
+                            <span className="shrink-0">
+                                Discount
+                                {discountType === 'percentage' &&
+                                    ` (${discount}%)`}
+                            </span>
+                            <span
+                                className={amountClass}
+                                dir="ltr"
+                                title={formatAmount(-discountAmount)}
+                            >
+                                {formatAmount(-discountAmount)}
+                            </span>
+                        </div>
+                    )}
+                    {taxAmount !== 0 && (
+                        <div className="flex min-w-0 justify-between gap-2">
+                            <span className="shrink-0">
+                                Tax
+                                {taxType === 'percentage' && ` (${tax}%)`}
+                            </span>
+                            <span
+                                className={amountClass}
+                                dir="ltr"
+                                title={formatAmount(taxAmount)}
+                            >
+                                {formatAmount(taxAmount)}
+                            </span>
+                        </div>
+                    )}
+                </>
             )}
 
             <div

@@ -169,8 +169,6 @@ const styles = StyleSheet.create({
     logoBox: {
         width: scale(36),
         height: scale(36),
-        borderWidth: scale(1),
-        borderStyle: 'dashed',
         borderRadius: scale(4),
         alignItems: 'center',
         justifyContent: 'center',
@@ -178,6 +176,8 @@ const styles = StyleSheet.create({
     logo: {
         width: scale(36),
         height: scale(36),
+        objectFit: 'contain',
+        borderRadius: scale(4),
     },
     headerText: {
         flex: 1,
@@ -381,6 +381,18 @@ export function InvoicePdfDocument({
         placeholders.details.invoiceNumber,
     );
 
+    const logoBoxStyle = {
+        ...styles.logoBox,
+        backgroundColor: palette.logoBoxBg,
+        ...(issuer.logo
+            ? {}
+            : {
+                  borderWidth: scale(1),
+                  borderStyle: 'dashed' as const,
+                  borderColor: palette.border,
+              }),
+    };
+
     return (
         <Document>
             <Page
@@ -404,15 +416,7 @@ export function InvoicePdfDocument({
                         ]}
                     >
                         {issuer.includeLogo !== false && (
-                            <View
-                                style={[
-                                    styles.logoBox,
-                                    {
-                                        backgroundColor: palette.logoBoxBg,
-                                        borderColor: palette.border,
-                                    },
-                                ]}
-                            >
+                            <View style={logoBoxStyle}>
                                 {issuer.logo ? (
                                     <Image
                                         src={issuer.logo}
