@@ -43,7 +43,7 @@ export function LogoUpload({
                     onUpload(result);
                 } else {
                     setUploadError(
-                        'Please upload a square image (1:1 aspect ratio).',
+                        '1:1 ratio required',
                     );
                     if (fileInputRef.current) fileInputRef.current.value = '';
                 }

@@ -337,7 +337,7 @@ export function ItemsTab() {
                                                 disabled={items.length >= 5}
                                                 tooltips={{
                                                     disabled: {
-                                                        content: 'Maximum 5 items allowed',
+                                                        content: 'Maximum reached',
                                                     },
                                                 }}
                                                 className="aspect-square h-[32px] w-[32px] p-[7px]"

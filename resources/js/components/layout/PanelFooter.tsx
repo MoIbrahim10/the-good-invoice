@@ -97,7 +97,7 @@ export function PanelFooter() {
                     disabled: {
                         content: exportContext?.isExporting
                             ? 'Preparing PDF…'
-                            : 'Fill in the required fields to export',
+                            : 'Fill in required fields',
                     },
                 }}
             />
