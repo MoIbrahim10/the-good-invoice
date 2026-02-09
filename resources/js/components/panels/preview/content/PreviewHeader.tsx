@@ -43,7 +43,7 @@ export function PreviewHeader({
                                 opacity: 0,
                             }}
                             animate={{
-                                width: 46,
+                                width: 36,
                                 opacity: 1,
                             }}
                             exit={{
