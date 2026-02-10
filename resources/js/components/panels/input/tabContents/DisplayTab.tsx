@@ -64,7 +64,6 @@ export function DisplayTab() {
     return (
         <div className="flex flex-col">
             <div className="flex flex-col gap-2 p-3">
-                <p>Theme</p>
                 <div className="flex flex-wrap gap-2">
                     {displayThemes.map((theme) => (
                         <label
