@@ -92,22 +92,22 @@ export function LogoUpload({
                         <div className="flex w-full items-stretch gap-2.5 pt-3">
                             {/* Logo Placeholder */}
                                 {uploadError ? (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#FFEFEF] dark:bg-[#401B1D]">
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-[#FFEFEF] dark:bg-[#401B1D]">
                                         <ErrorIconWithTooltip
                                             message={uploadError}
                                             id={`${logoUploadId}-error`}
                                         />
                                     </div>
                                 ) : logo ? (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-bg-strong">
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-bg-strong">
                                     <img
                                         src={logo}
                                         alt="Logo"
-                                        className="h-full w-full rounded-sm object-contain"
+                                        className="h-full w-full rounded-[6px] object-contain"
                                     />
                                     </div>
                                 ) : (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-dashed border-stroke-strong bg-bg-strong p-1">
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] border border-dashed border-stroke-strong bg-bg-strong p-1">
                                     <LogoIcon size={18} />
                                     </div>
                                 )}
