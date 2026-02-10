@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { CustomButton } from '@/components/custom/button';
 import { RectangularSwitch } from '@/components/custom/rectangular-switch';
 import { Field, FieldLabel } from '@/components/ui/field';
@@ -23,6 +23,12 @@ export function LogoUpload({
     const logoUploadId = useId();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [uploadError, setUploadError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!includeLogo) {
+            setUploadError(null);
+        }
+    }, [includeLogo]);
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -86,10 +92,12 @@ export function LogoUpload({
                         <div className="flex w-full items-stretch gap-2.5 pt-3">
                             {/* Logo Placeholder */}
                                 {uploadError ? (
-                                    <ErrorIconWithTooltip
-                                        message={uploadError}
-                                        id={`${logoUploadId}-error`}
-                                    />
+                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#FFEFEF] dark:bg-[#401B1D]">
+                                        <ErrorIconWithTooltip
+                                            message={uploadError}
+                                            id={`${logoUploadId}-error`}
+                                        />
+                                    </div>
                                 ) : logo ? (
                                     <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-bg-strong">
                                     <img
