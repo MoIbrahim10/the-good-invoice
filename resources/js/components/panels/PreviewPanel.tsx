@@ -1,5 +1,6 @@
 import { currencies } from '@/data/currencies';
 import { useInvoiceState } from '@/hooks/use-invoice-state';
+import { usePreviewScale } from '@/hooks/use-preview-scale';
 import {
     formatCurrencyForDisplay,
     formatCurrencyFull,
@@ -12,7 +13,12 @@ import { PreviewItemsTable } from './preview/content/PreviewItemsTable';
 import { PreviewNotes } from './preview/content/PreviewNotes';
 import { PreviewSummary } from './preview/content/PreviewSummary';
 
+const PREVIEW_BASE_WIDTH = 436;
+const PREVIEW_BASE_HEIGHT = 618;
+const PREVIEW_FRAME_BUFFER = 16;
+
 export function PreviewPanel() {
+    const scale = usePreviewScale();
     const { state } = useInvoiceState();
     const { data, placeholders } = state;
     const {
@@ -83,47 +89,69 @@ export function PreviewPanel() {
     const previewColor = display?.color ?? 'gray';
     const previewStyle = display?.style ?? 'solid';
 
+    const scaledWidth = PREVIEW_BASE_WIDTH * scale;
+    const scaledHeight = PREVIEW_BASE_HEIGHT * scale;
+    const wrapperWidth = scaledWidth + PREVIEW_FRAME_BUFFER * 2;
+    const wrapperHeight = scaledHeight + PREVIEW_FRAME_BUFFER * 2;
+    const bufferPx = PREVIEW_FRAME_BUFFER / scale;
+
     return (
         <div
-            className="w-full min-w-0 shrink-0 aspect-468/650 max-w-[468px] lg:h-full lg:p-4"
+            className="flex shrink-0 items-start justify-center lg:h-full lg:p-4"
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
-            <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
-                <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
-                    <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
-                        <PreviewHeader
-                            issuer={issuer}
-                            details={details}
-                            placeholders={placeholders}
-                            logoBox={logoBox}
-                        />
-                        <PreviewAddresses
-                            issuer={issuer}
-                            billTo={billTo}
-                            placeholders={placeholders}
-                        />
-                        <PreviewItemsTable
-                            items={items}
-                            placeholders={placeholders}
-                            formatAmount={formatAmount}
-                        />
-                        <PreviewSummary
-                            subtotal={subtotal}
-                            discountAmount={discountAmount}
-                            discount={discount}
-                            discountType={discountType}
-                            taxAmount={taxAmount}
-                            tax={tax}
-                            taxType={taxType}
-                            total={total}
-                            formatAmount={formatSummaryAmount}
-                        />
-                        <PreviewNotes
-                            notes={notes}
-                            placeholder={placeholders.notes}
-                        />
+            <div className="shrink-0 w-fit h-fit overflow-visible">
+                <div
+                    className="overflow-visible"
+                    style={{ width: wrapperWidth, height: wrapperHeight }}
+                >
+                    <div
+                        className="origin-top-left overflow-visible"
+                        style={{
+                            width: PREVIEW_BASE_WIDTH,
+                            height: PREVIEW_BASE_HEIGHT,
+                            transform: `scale(${scale}) translate(${bufferPx}px, ${bufferPx}px)`,
+                        }}
+                    >
+                    <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
+                        <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
+                            <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
+                                <PreviewHeader
+                                    issuer={issuer}
+                                    details={details}
+                                    placeholders={placeholders}
+                                    logoBox={logoBox}
+                                />
+                                <PreviewAddresses
+                                    issuer={issuer}
+                                    billTo={billTo}
+                                    placeholders={placeholders}
+                                />
+                                <PreviewItemsTable
+                                    items={items}
+                                    placeholders={placeholders}
+                                    formatAmount={formatAmount}
+                                />
+                                <PreviewSummary
+                                    subtotal={subtotal}
+                                    discountAmount={discountAmount}
+                                    discount={discount}
+                                    discountType={discountType}
+                                    taxAmount={taxAmount}
+                                    tax={tax}
+                                    taxType={taxType}
+                                    total={total}
+                                    formatAmount={formatSummaryAmount}
+                                />
+                                <PreviewNotes
+                                    notes={notes}
+                                    placeholder={placeholders.notes}
+                                />
+                            </div>
+                        </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

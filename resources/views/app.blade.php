@@ -19,13 +19,6 @@
             })();
         </script>
 
-        {{-- Inline style: use theme token so html and body match (warm-dark, etc.). --}}
-        <style>
-            html, html.dark {
-                background-color: var(--color-background);
-            }
-        </style>
-
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" href="/favicon.ico" sizes="any">

@@ -18,7 +18,7 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     return (
         <div
             className={cn(
-                'flex w-full flex-col gap-4 overflow-hidden px-6 max-lg:py-8 md:px-12 lg:grid lg:max-h-[650px] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-center lg:gap-6 lg:px-16 xl:px-20',
+                'flex w-full flex-col gap-4 overflow-hidden px-6 max-lg:py-8 md:px-12 lg:grid lg:max-h-[min(90svh,1200px)] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-center lg:gap-24 lg:overflow-visible lg:px-16 xl:px-20',
                 'max-lg:min-h-[min(100svh,720px)] max-lg:overflow-y-auto',
             )}
         >
