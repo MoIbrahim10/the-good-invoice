@@ -24,4 +24,8 @@ export default defineConfig({
     esbuild: {
         jsx: 'automatic',
     },
+    // server: {
+    //     host: true,
+    //     hmr: { host: '192.168.1.215' },
+    // },
 });
