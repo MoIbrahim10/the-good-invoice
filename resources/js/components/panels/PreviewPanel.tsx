@@ -155,7 +155,7 @@ export function PreviewPanel() {
     return (
         <div
             ref={containerRef}
-            className="flex min-w-0 w-full shrink-0 items-center justify-center overflow-hidden lg:h-full lg:w-auto lg:justify-start"
+            className="flex min-w-0 w-full shrink-0 items-center justify-center overflow-hidden lg:h-full lg:justify-start"
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
