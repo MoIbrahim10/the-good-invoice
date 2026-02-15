@@ -197,62 +197,31 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Layered borders: strong first (closer to content), weak second (further out)
-*/
+/* Layered borders: strong first (closer to content), weak second (further out) */
 @utility border-b-layered {
-    position: relative;
-    border-bottom: 1px solid var(--stroke-weaker);
-
-    &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background-color: var(--stroke-strong);
-    }
+    border-bottom: 1px solid var(--stroke-strong);
+    --layered-shadow-b: 0 1px 0 0 var(--stroke-weaker);
+    box-shadow:
+        var(--layered-shadow-t, 0 0 0 0 transparent),
+        var(--layered-shadow-b, 0 0 0 0 transparent);
 }
 
 @utility border-t-layered {
-    position: relative;
     border-top: 1px solid var(--stroke-strong);
-
-    &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 1px;
-        background-color: var(--stroke-weaker);
-    }
+    --layered-shadow-t: inset 0 1px 0 0 var(--stroke-weaker);
+    box-shadow:
+        var(--layered-shadow-t, 0 0 0 0 transparent),
+        var(--layered-shadow-b, 0 0 0 0 transparent);
 }
 
 @utility border-y-layered {
-    position: relative;
     border-top: 1px solid var(--stroke-strong);
-    border-bottom: 1px solid var(--stroke-weaker);
-
-    &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 1px;
-        background-color: var(--stroke-weaker);
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background-color: var(--stroke-strong);
-    }
+    border-bottom: 1px solid var(--stroke-strong);
+    --layered-shadow-t: inset 0 1px 0 0 var(--stroke-weaker);
+    --layered-shadow-b: 0 1px 0 0 var(--stroke-weaker);
+    box-shadow:
+        var(--layered-shadow-t, 0 0 0 0 transparent),
+        var(--layered-shadow-b, 0 0 0 0 transparent);
 }
 
 @utility bg-preview-stripes {

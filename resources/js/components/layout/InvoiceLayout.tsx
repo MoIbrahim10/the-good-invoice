@@ -18,13 +18,13 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
     return (
         <div
             className={cn(
-                'flex w-full flex-col gap-4 px-6 max-lg:py-16 lg:grid lg:min-h-[min(90svh,1200px)] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-start lg:gap-32 lg:overflow-visible lg:px-16 xl:px-20',
+                'flex w-full flex-col gap-4 px-5 max-lg:py-16 lg:grid lg:min-h-[min(90svh,1200px)] lg:grid-cols-[446px_1fr] lg:items-center lg:justify-items-start lg:gap-32 lg:overflow-visible lg:px-16 xl:px-20',
                 'max-lg:min-h-[min(100dvh,720px)] max-lg:overflow-visible lg:overflow-hidden',
             )}
         >
             {/* Small screens: stacked form → preview → footer, no Form/Preview tabs */}
             {!isLg && (
-                <div className="flex flex-1 flex-col gap-2 pb-[env(safe-area-inset-bottom)]">
+                <div className="flex flex-1 flex-col gap-5 pb-[env(safe-area-inset-bottom)]">
                     <div className="flex w-full max-w-[446px] flex-none flex-col items-center self-center">
                         {inputPanel}
                     </div>
