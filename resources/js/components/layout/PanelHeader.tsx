@@ -14,7 +14,10 @@ export function PanelHeader() {
             </p>
 
             {/* Third line */}
-            <p className="flex items-center gap-1.5 text-[14px] font-normal text-text-weak">
+            <p className="flex md:hidden items-center gap-1.5 text-[14px] font-normal text-text-weak">
+                Choose a tab to continue
+            </p>
+            <p className="hidden md:flex items-center gap-1.5 text-[14px] font-normal text-text-weak">
                 <span>Choose a tab or use</span>
                 <CommandIcon size={14} />
                 <span>and arrows.</span>
