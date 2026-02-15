@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { currencies } from '@/data/currencies';
 import { useInvoiceState } from '@/hooks/use-invoice-state';
 import { usePreviewScale } from '@/hooks/use-preview-scale';
@@ -16,9 +17,65 @@ import { PreviewSummary } from './preview/content/PreviewSummary';
 const PREVIEW_BASE_WIDTH = 436;
 const PREVIEW_BASE_HEIGHT = 618;
 const PREVIEW_FRAME_BUFFER = 16;
+const MIN_SCALE = 0.5;
+
+function clampScaleToContainer(
+    scale: number,
+    containerWidth: number,
+    containerHeight: number,
+): number {
+    const maxByWidth =
+        containerWidth > PREVIEW_FRAME_BUFFER * 2
+            ? (containerWidth - PREVIEW_FRAME_BUFFER * 2) / PREVIEW_BASE_WIDTH
+            : scale;
+    const maxByHeight =
+        containerHeight > PREVIEW_FRAME_BUFFER * 2
+            ? (containerHeight - PREVIEW_FRAME_BUFFER * 2) / PREVIEW_BASE_HEIGHT
+            : scale;
+    const capped = Math.min(scale, maxByWidth, maxByHeight);
+    return Math.max(MIN_SCALE, capped);
+}
 
 export function PreviewPanel() {
     const scale = usePreviewScale();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [containerSize, setContainerSize] = useState({
+        width: 0,
+        height: 0,
+    });
+
+    const effectiveScale =
+        containerSize.width > 0 && containerSize.height > 0
+            ? clampScaleToContainer(
+                  scale,
+                  containerSize.width,
+                  containerSize.height,
+              )
+            : scale;
+
+    const measureContainer = useCallback(() => {
+        const el = containerRef.current;
+        if (!el) {
+            return;
+        }
+        const { clientWidth, clientHeight } = el;
+        setContainerSize((prev) =>
+            prev.width === clientWidth && prev.height === clientHeight
+                ? prev
+                : { width: clientWidth, height: clientHeight },
+        );
+    }, []);
+
+    useEffect(() => {
+        measureContainer();
+        const el = containerRef.current;
+        if (!el) {
+            return;
+        }
+        const observer = new ResizeObserver(measureContainer);
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [measureContainer]);
     const { state } = useInvoiceState();
     const { data, placeholders } = state;
     const {
@@ -89,19 +146,20 @@ export function PreviewPanel() {
     const previewColor = display?.color ?? 'gray';
     const previewStyle = display?.style ?? 'solid';
 
-    const scaledWidth = PREVIEW_BASE_WIDTH * scale;
-    const scaledHeight = PREVIEW_BASE_HEIGHT * scale;
+    const scaledWidth = PREVIEW_BASE_WIDTH * effectiveScale;
+    const scaledHeight = PREVIEW_BASE_HEIGHT * effectiveScale;
     const wrapperWidth = scaledWidth + PREVIEW_FRAME_BUFFER * 2;
     const wrapperHeight = scaledHeight + PREVIEW_FRAME_BUFFER * 2;
-    const bufferPx = PREVIEW_FRAME_BUFFER / scale;
+    const bufferPx = PREVIEW_FRAME_BUFFER / effectiveScale;
 
     return (
         <div
-            className="flex shrink-0 items-start justify-center lg:h-full lg:p-4"
+            ref={containerRef}
+            className="flex min-w-0 shrink-0 items-start justify-center overflow-hidden lg:h-full lg:p-4"
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
-            <div className="shrink-0 w-fit h-fit overflow-visible">
+            <div className="shrink-0 w-fit max-w-full overflow-visible">
                 <div
                     className="overflow-visible"
                     style={{ width: wrapperWidth, height: wrapperHeight }}
@@ -111,7 +169,7 @@ export function PreviewPanel() {
                         style={{
                             width: PREVIEW_BASE_WIDTH,
                             height: PREVIEW_BASE_HEIGHT,
-                            transform: `scale(${scale}) translate(${bufferPx}px, ${bufferPx}px)`,
+                            transform: `scale(${effectiveScale}) translate(${bufferPx}px, ${bufferPx}px)`,
                         }}
                     >
                     <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
