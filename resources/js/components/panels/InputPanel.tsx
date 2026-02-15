@@ -90,7 +90,7 @@ export function InputPanel() {
             <div className="flex min-h-0 flex-1 flex-col max-lg:min-h-0">
                 <PanelHeader />
                 <TabNavigation />
-                <div className="relative flex-1 overflow-x-hidden overflow-y-auto max-lg:min-h-[40vh]">
+                <div className="relative flex-1 overflow-x-hidden overflow-y-auto max-lg:min-h-[260px]">
                     {tabsContentAnimation ? (
                         <AnimatePresence mode="wait" initial={false}>
                             <TabContentPanelAnimated

@@ -155,13 +155,13 @@ export function PreviewPanel() {
     return (
         <div
             ref={containerRef}
-            className="flex min-w-0 shrink-0 items-center justify-center overflow-hidden lg:h-full lg:p-4"
+            className="flex min-w-0 w-full shrink-0 items-center justify-center overflow-hidden lg:h-full lg:w-auto lg:p-4"
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
             <div className="shrink-0 w-fit max-w-full overflow-visible">
                 <div
-                    className="overflow-visible"
+                    className="min-w-0 overflow-hidden"
                     style={{ width: wrapperWidth, height: wrapperHeight }}
                 >
                     <div

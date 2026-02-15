@@ -24,11 +24,11 @@ export function InvoiceLayout({ children }: InvoiceLayoutProps) {
         >
             {/* Small screens: stacked form → preview → footer, no Form/Preview tabs */}
             {!isLg && (
-                <div className="flex flex-1 flex-col gap-6">
-                    <div className="flex flex-none flex-col items-center">
+                <div className="flex flex-1 flex-col gap-2 pb-[env(safe-area-inset-bottom)]">
+                    <div className="flex w-full max-w-[446px] flex-none flex-col items-center self-center">
                         {inputPanel}
                     </div>
-                    <div className="flex flex-none flex-col items-center">
+                    <div className="flex w-full max-w-[446px] flex-none flex-col items-center self-center">
                         {previewPanel}
                     </div>
                     <div className="flex shrink-0 justify-center">
