@@ -59,7 +59,7 @@ export function PanelSection({ children, className = '' }: PanelSectionProps) {
             )}
         >
             <div
-                className="scrollbar-none flex min-w-0 overflow-x-auto px-3 py-2.5"
+                className="scrollbar-none flex min-w-0 overflow-x-auto px-3 py-2.5 justify-between w-full"
                 ref={scrollRef}
             >
                 {children}
