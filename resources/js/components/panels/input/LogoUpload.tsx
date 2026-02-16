@@ -89,7 +89,7 @@ export function LogoUpload({
                         transition={{ duration: 0.2, ease: 'easeInOut' }}
                         className="overflow-hidden"
                     >
-                        <div className="flex w-full items-stretch gap-2.5 pt-3">
+                        <div className="flex w-full items-stretch gap-2.5 pt-3 pr-[3px] pb-[3px]">
                             {/* Logo Placeholder */}
                                 {uploadError ? (
                                     <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-[#FFEFEF] dark:bg-[#401B1D]">

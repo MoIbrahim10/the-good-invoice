@@ -33,7 +33,7 @@ function RectangularSwitch({
         <SwitchPrimitive.Root
             data-slot="switch"
             className={cn(
-                'peer inline-flex shrink-0 items-center rounded-[4px] border border-stroke-default bg-bg-weak transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+                'peer inline-flex shrink-0 items-center rounded-[4px] border border-stroke-default bg-bg-weak transition-all outline-none focus-visible:ring-1 focus-visible:ring-stroke-strong focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50',
                 sizeClasses[size].root,
                 className,
             )}

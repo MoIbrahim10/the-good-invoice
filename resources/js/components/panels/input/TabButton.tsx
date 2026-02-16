@@ -63,7 +63,7 @@ export function TabButton({
         disabled: !isEnabled && !tab.isActive && !tab.isVisited,
         className: cn(
             baseClasses,
-            'border border-dashed',
+            'border border-dashed outline-none focus-visible:ring-1 focus-visible:ring-stroke-strong focus-visible:ring-offset-0',
             roundedClasses,
             disabledClasses,
             tabsAnimation && 'z-10',

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/noNoninteractiveTabindex: this is a label */
 import { useEffect, useRef } from 'react';
 import { displayColors, displayThemes } from '@/data/display';
 import { useInvoiceActions } from '@/hooks/use-invoice-actions';
@@ -69,7 +70,8 @@ export function DisplayTab() {
                         <label
                             key={theme.value}
                             htmlFor={`display-style-${theme.value}`}
-                            className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
+                            tabIndex={0}
+                            className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 ${
                                 selectedStyle === theme.value
                                     ? 'bg-bg-strong'
                                     : 'bg-transparent hover:bg-bg-strong'
@@ -83,6 +85,7 @@ export function DisplayTab() {
                                 checked={selectedStyle === theme.value}
                                 onChange={() => handleStyleChange(theme.value)}
                                 className="sr-only"
+                                tabIndex={-1}
                             />
                             {theme.icon}
                             <div className="flex flex-1 flex-col items-start justify-center">
@@ -102,7 +105,8 @@ export function DisplayTab() {
                     <label
                         key={color.value}
                         htmlFor={`display-color-${color.value}`}
-                        className={`flex flex-1 cursor-default items-center gap-2 rounded-md p-1.5 transition-colors ${
+                        tabIndex={0}
+                        className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 ${
                             selectedColor === color.value
                                 ? 'bg-bg-strong'
                                 : 'bg-transparent hover:bg-bg-strong'
@@ -116,6 +120,7 @@ export function DisplayTab() {
                             checked={selectedColor === color.value}
                             onChange={() => handleColorChange(color.value)}
                             className="sr-only"
+                            tabIndex={-1}
                         />
                         <div className="flex aspect-square h-[20px] w-[20px] items-center justify-center rounded border border-stroke-default bg-bg-weak p-1">
                             <div

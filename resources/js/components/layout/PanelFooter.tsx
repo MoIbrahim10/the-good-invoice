@@ -40,7 +40,7 @@ export function PanelFooter() {
     return (
         <PanelSection className="justify-between">
             <div className="flex items-center gap-2">
-                <div className="flex items-center rounded-md bg-bg-strong">
+                <div className="flex items-center rounded-[6px] bg-bg-strong">
                     <CustomButton
                         onClick={toggleAppearance}
                         icon={
