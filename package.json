@@ -9,7 +9,7 @@
         "format": "oxfmt",
         "format:check": "oxfmt --check",
         "lint": "oxlint",
-        "types": "tsc --noEmit"
+        "types": "php artisan wayfinder:generate --with-form --no-interaction && tsc --noEmit"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.0",
