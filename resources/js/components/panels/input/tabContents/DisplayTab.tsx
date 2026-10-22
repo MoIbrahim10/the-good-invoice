@@ -71,7 +71,7 @@ export function DisplayTab() {
                             key={theme.value}
                             htmlFor={`display-style-${theme.value}`}
                             tabIndex={0}
-                            className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 ${
+                            className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 ${
                                 selectedStyle === theme.value
                                     ? 'bg-bg-strong'
                                     : 'bg-transparent hover:bg-bg-strong'
@@ -106,7 +106,7 @@ export function DisplayTab() {
                         key={color.value}
                         htmlFor={`display-color-${color.value}`}
                         tabIndex={0}
-                        className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 ${
+                        className={`flex flex-1 cursor-default items-center gap-2 rounded-[6px] p-1.5 transition-colors outline-none focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0 focus:ring-1 focus:ring-stroke-strong focus:ring-offset-0 ${
                             selectedColor === color.value
                                 ? 'bg-bg-strong'
                                 : 'bg-transparent hover:bg-bg-strong'

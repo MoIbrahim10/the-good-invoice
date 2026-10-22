@@ -22,10 +22,20 @@ import type { Currency } from '@/types/currency';
 Font.register({
     family: 'Inter',
     fonts: [
-        { src: 'https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff' },
-        { src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-400-normal.woff' },
-        { src: 'https://fonts.bunny.net/inter/files/inter-latin-500-normal.woff', fontWeight: 500 },
-        { src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-500-normal.woff', fontWeight: 500 },
+        {
+            src: 'https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff',
+        },
+        {
+            src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-400-normal.woff',
+        },
+        {
+            src: 'https://fonts.bunny.net/inter/files/inter-latin-500-normal.woff',
+            fontWeight: 500,
+        },
+        {
+            src: 'https://fonts.bunny.net/inter/files/inter-latin-ext-500-normal.woff',
+            fontWeight: 500,
+        },
     ],
 });
 
@@ -33,8 +43,12 @@ Font.register({
 Font.register({
     family: 'PdfCurrency',
     fonts: [
-        { src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-devanagari-400-normal.woff' },
-        { src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-latin-ext-400-normal.woff' },
+        {
+            src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-devanagari-400-normal.woff',
+        },
+        {
+            src: 'https://fonts.bunny.net/noto-sans/files/noto-sans-latin-ext-400-normal.woff',
+        },
     ],
 });
 
@@ -750,10 +764,7 @@ export function InvoicePdfDocument({
                             })
                         ) : (
                             <View
-                                style={[
-                                    styles.tableRow,
-                                    styles.tableRowEmpty,
-                                ]}
+                                style={[styles.tableRow, styles.tableRowEmpty]}
                             >
                                 <Text
                                     style={[

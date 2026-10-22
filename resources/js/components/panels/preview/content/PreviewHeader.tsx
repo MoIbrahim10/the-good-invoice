@@ -22,7 +22,7 @@ export function PreviewHeader({
     logoBox,
 }: PreviewHeaderProps) {
     return (
-        <div className="flex items-center rounded-t-[6px] border-b border-preview-200 bg-preview-style-bg p-4 transition-colors duration-150 ease-in-out h-[68px]">
+        <div className="flex h-[68px] items-center rounded-t-[6px] border-b border-preview-200 bg-preview-style-bg p-4 transition-colors duration-150 ease-in-out">
             <AnimatePresence initial={false}>
                 {issuer.includeLogo !== false && (
                     <motion.div

@@ -2,10 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { currencies } from '@/data/currencies';
 import { useInvoiceState } from '@/hooks/use-invoice-state';
 import { usePreviewScale } from '@/hooks/use-preview-scale';
-import {
-    formatCurrencyForDisplay,
-    formatCurrencyFull,
-} from '@/lib/utils';
+import { formatCurrencyForDisplay, formatCurrencyFull } from '@/lib/utils';
 import type { InvoiceItem } from '@/types/invoice';
 import { LogoIcon } from '../icons/LogoIcon';
 import { PreviewAddresses } from './preview/content/PreviewAddresses';
@@ -118,7 +115,7 @@ export function PreviewPanel() {
         <div className="shrink-0 overflow-hidden">
             {issuer.logo ? (
                 <div
-                    className="flex aspect-square! size-[36px] items-center justify-center rounded-[4px]  bg-preview-0"
+                    className="flex aspect-square! size-[36px] items-center justify-center rounded-[4px] bg-preview-0"
                     style={{
                         borderColor: 'var(--preview-200)',
                     }}
@@ -126,7 +123,7 @@ export function PreviewPanel() {
                     <img
                         src={issuer.logo}
                         alt="Logo"
-                        className="h-full w-full object-contain rounded-[4px]"
+                        className="h-full w-full rounded-[4px] object-contain"
                         crossOrigin="anonymous"
                     />
                 </div>
@@ -155,11 +152,11 @@ export function PreviewPanel() {
     return (
         <div
             ref={containerRef}
-            className="flex min-w-0 w-full shrink-0 items-center justify-center overflow-hidden lg:h-full lg:justify-start"
+            className="flex w-full min-w-0 shrink-0 items-center justify-center overflow-hidden lg:h-full lg:justify-start"
             data-preview-color={previewColor}
             data-preview-style={previewStyle}
         >
-            <div className="shrink-0 w-fit max-w-full overflow-visible">
+            <div className="w-fit max-w-full shrink-0 overflow-visible">
                 <div
                     className="min-w-0 overflow-hidden"
                     style={{ width: wrapperWidth, height: wrapperHeight }}
@@ -172,44 +169,44 @@ export function PreviewPanel() {
                             transform: `scale(${effectiveScale}) translate(${bufferPx}px, ${bufferPx}px)`,
                         }}
                     >
-                    <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
-                        <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
-                            <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
-                                <PreviewHeader
-                                    issuer={issuer}
-                                    details={details}
-                                    placeholders={placeholders}
-                                    logoBox={logoBox}
-                                />
-                                <PreviewAddresses
-                                    issuer={issuer}
-                                    billTo={billTo}
-                                    placeholders={placeholders}
-                                />
-                                <PreviewItemsTable
-                                    items={items}
-                                    placeholders={placeholders}
-                                    formatAmount={formatAmount}
-                                />
-                                <PreviewSummary
-                                    subtotal={subtotal}
-                                    discountAmount={discountAmount}
-                                    discount={discount}
-                                    discountType={discountType}
-                                    taxAmount={taxAmount}
-                                    tax={tax}
-                                    taxType={taxType}
-                                    total={total}
-                                    formatAmount={formatSummaryAmount}
-                                />
-                                <PreviewNotes
-                                    notes={notes}
-                                    placeholder={placeholders.notes}
-                                />
+                        <div className="bg-preview-stripes relative h-full w-full overflow-visible rounded-[8px] p-[8px] shadow-preview-frame">
+                            <div className="relative z-10 flex h-full min-h-0 w-full flex-col overflow-visible rounded-[6px] border border-preview-100 bg-preview-0 inside-preview-frame">
+                                <div className="flex min-h-0 flex-1 flex-col overflow-auto text-[10px]">
+                                    <PreviewHeader
+                                        issuer={issuer}
+                                        details={details}
+                                        placeholders={placeholders}
+                                        logoBox={logoBox}
+                                    />
+                                    <PreviewAddresses
+                                        issuer={issuer}
+                                        billTo={billTo}
+                                        placeholders={placeholders}
+                                    />
+                                    <PreviewItemsTable
+                                        items={items}
+                                        placeholders={placeholders}
+                                        formatAmount={formatAmount}
+                                    />
+                                    <PreviewSummary
+                                        subtotal={subtotal}
+                                        discountAmount={discountAmount}
+                                        discount={discount}
+                                        discountType={discountType}
+                                        taxAmount={taxAmount}
+                                        tax={tax}
+                                        taxType={taxType}
+                                        total={total}
+                                        formatAmount={formatSummaryAmount}
+                                    />
+                                    <PreviewNotes
+                                        notes={notes}
+                                        placeholder={placeholders.notes}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>

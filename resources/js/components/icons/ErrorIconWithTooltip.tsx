@@ -35,7 +35,7 @@ export function ErrorIconWithTooltip({
                         damping: 28,
                     }}
                     className={cn(
-                        'flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#FFEFEF] dark:bg-[#401B1D] p-[5px]',
+                        'flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#FFEFEF] p-[5px] dark:bg-[#401B1D]',
                         className,
                     )}
                     style={{

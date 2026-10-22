@@ -44,7 +44,9 @@ export function PanelSection({ children, className = '' }: PanelSectionProps) {
         updateScrollIndicators();
         const resizeObserver = new ResizeObserver(updateScrollIndicators);
         resizeObserver.observe(el);
-        el.addEventListener('scroll', updateScrollIndicators, { passive: true });
+        el.addEventListener('scroll', updateScrollIndicators, {
+            passive: true,
+        });
         return () => {
             resizeObserver.disconnect();
             el.removeEventListener('scroll', updateScrollIndicators);
@@ -53,20 +55,17 @@ export function PanelSection({ children, className = '' }: PanelSectionProps) {
 
     return (
         <div
-            className={cn(
-                'relative flex shrink-0 border-y-layered',
-                className,
-            )}
+            className={cn('relative flex shrink-0 border-y-layered', className)}
         >
             <div
-                className="scrollbar-none flex min-w-0 overflow-x-auto px-3 py-2.5 justify-between w-full"
+                className="scrollbar-none flex w-full min-w-0 justify-between overflow-x-auto px-3 py-2.5"
                 ref={scrollRef}
             >
                 {children}
             </div>
             <div
                 className={cn(
-                    'pointer-events-none absolute left-0 top-0 z-20 h-full w-32 shrink-0 transition-opacity duration-500 ease-out',
+                    'pointer-events-none absolute top-0 left-0 z-20 h-full w-32 shrink-0 transition-opacity duration-500 ease-out',
                     scrollState.canScrollLeft ? 'opacity-100' : 'opacity-0',
                 )}
                 style={{
@@ -76,7 +75,7 @@ export function PanelSection({ children, className = '' }: PanelSectionProps) {
             />
             <div
                 className={cn(
-                    'pointer-events-none absolute right-0 top-0 z-20 h-full w-32 shrink-0 transition-opacity duration-500 ease-out',
+                    'pointer-events-none absolute top-0 right-0 z-20 h-full w-32 shrink-0 transition-opacity duration-500 ease-out',
                     scrollState.canScrollRight ? 'opacity-100' : 'opacity-0',
                 )}
                 style={{

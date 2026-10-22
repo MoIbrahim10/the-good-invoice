@@ -69,10 +69,7 @@ function RowCells({
                     ? placeholders.items.quantity
                     : formatNumberForDisplay(item.quantity)}
             </td>
-            <td
-                className={rateCellClass}
-                title={formatAmount(item.rate)}
-            >
+            <td className={rateCellClass} title={formatAmount(item.rate)}>
                 {formatAmount(item.rate)}
             </td>
             <td className={amountCellClass}>
