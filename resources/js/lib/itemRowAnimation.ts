@@ -19,7 +19,7 @@ export const itemRowAnimation = {
         y: -8,
         filter: 'blur(3px)',
         transition: {
-            duration: .2,
+            duration: 0.2,
             ease: [0.4, 0, 0.2, 1] as const,
             opacity: { duration: 0.2, delay: 0.05 },
             filter: { duration: 0.2 },

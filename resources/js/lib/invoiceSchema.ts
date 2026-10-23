@@ -130,10 +130,7 @@ export const invoiceDataSchema = z
             0,
         );
 
-        if (
-            data.discountType === 'currency' &&
-            data.discount > subtotal
-        ) {
+        if (data.discountType === 'currency' && data.discount > subtotal) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 message: 'Discount cannot exceed subtotal.',

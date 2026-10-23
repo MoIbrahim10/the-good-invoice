@@ -43,12 +43,12 @@ export function PreviewItemsTable({
                             Item
                         </th>
                         <th
-                            className={`py-2 px-[2px] ${hasQuantity ? 'opacity-100' : 'opacity-50'}`}
+                            className={`px-[2px] py-2 ${hasQuantity ? 'opacity-100' : 'opacity-50'}`}
                         >
                             QTY
                         </th>
                         <th
-                            className={`py-2 px-[2px] ${hasRate ? 'opacity-100' : 'opacity-50'}`}
+                            className={`px-[2px] py-2 ${hasRate ? 'opacity-100' : 'opacity-50'}`}
                         >
                             Rate
                         </th>

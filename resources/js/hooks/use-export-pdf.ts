@@ -23,7 +23,9 @@ function getExportFilename(invoiceNumber: string | undefined): string {
 export function useExportPdf() {
     const [isExporting, setIsExporting] = useState(false);
     const [exportSuccess, setExportSuccess] = useState(false);
-    const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const successTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+        null,
+    );
     const { state } = useInvoiceState();
 
     const setSuccessFeedback = useCallback(() => {

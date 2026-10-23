@@ -45,13 +45,9 @@ export function LabeledAdjustableInput({
 
     const isPercentage = type === 'percentage';
     const min = 0;
-    const max =
-        isPercentage
-            ? 100
-            : Math.min(
-                  TAX_DISCOUNT_MAX,
-                  maxAmount ?? TAX_DISCOUNT_MAX,
-              );
+    const max = isPercentage
+        ? 100
+        : Math.min(TAX_DISCOUNT_MAX, maxAmount ?? TAX_DISCOUNT_MAX);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const raw = Number(e.target.value);

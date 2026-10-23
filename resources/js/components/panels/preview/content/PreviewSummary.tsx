@@ -27,8 +27,7 @@ export function PreviewSummary({
     total,
     formatAmount,
 }: PreviewSummaryProps) {
-    const amountClass =
-        'min-w-0 overflow-hidden text-right text-preview-500';
+    const amountClass = 'min-w-0 overflow-hidden text-right text-preview-500';
     const totalAmountClass = 'min-w-0 overflow-hidden text-right';
 
     const summaryAllZero =
@@ -64,8 +63,7 @@ export function PreviewSummary({
                     >
                         <span className="shrink-0">
                             Discount
-                            {discountType === 'percentage' &&
-                                ` (${discount}%)`}
+                            {discountType === 'percentage' && ` (${discount}%)`}
                         </span>
                         <span
                             className={amountClass}

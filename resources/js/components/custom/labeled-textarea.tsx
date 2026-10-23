@@ -33,7 +33,7 @@ const LabeledTextarea = React.forwardRef<
         return (
             <div
                 className={cn(
-                    'flex flex-row items-start gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
+                    'flex flex-row items-start gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak py-2 pl-3 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
                     error ? 'pr-[4px]' : 'pr-3',
                     containerClassName,
                 )}
@@ -51,7 +51,7 @@ const LabeledTextarea = React.forwardRef<
                     id={inputId}
                     ref={ref}
                     className={cn(
-                        'field-sizing-content max-h-[68px] min-h-[68px] min-w-0 flex-1 resize-none overflow-y-auto rounded-none border-0 bg-transparent p-0 text-[14px] text-text-strong shadow-none  leading-tight placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent',
+                        'field-sizing-content max-h-[68px] min-h-[68px] min-w-0 flex-1 resize-none overflow-y-auto rounded-none border-0 bg-transparent p-0 text-[14px] leading-tight text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent',
                         className,
                     )}
                     aria-invalid={error ? true : undefined}

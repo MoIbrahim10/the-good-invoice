@@ -42,15 +42,12 @@ export function LogoUpload({
             const img = new Image();
             img.onload = () => {
                 const { naturalWidth: w, naturalHeight: h } = img;
-                const isSquare =
-                    w > 0 && h > 0 && w === h;
+                const isSquare = w > 0 && h > 0 && w === h;
                 if (isSquare) {
                     setUploadError(null);
                     onUpload(result);
                 } else {
-                    setUploadError(
-                        '1:1 ratio required',
-                    );
+                    setUploadError('1:1 ratio required');
                     if (fileInputRef.current) fileInputRef.current.value = '';
                 }
             };
@@ -91,26 +88,26 @@ export function LogoUpload({
                     >
                         <div className="flex w-full items-stretch gap-2.5 pt-3 pr-[3px] pb-[3px]">
                             {/* Logo Placeholder */}
-                                {uploadError ? (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-[#FFEFEF] dark:bg-[#401B1D]">
-                                        <ErrorIconWithTooltip
-                                            message={uploadError}
-                                            id={`${logoUploadId}-error`}
-                                        />
-                                    </div>
-                                ) : logo ? (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-bg-strong">
+                            {uploadError ? (
+                                <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-[#FFEFEF] dark:bg-[#401B1D]">
+                                    <ErrorIconWithTooltip
+                                        message={uploadError}
+                                        id={`${logoUploadId}-error`}
+                                    />
+                                </div>
+                            ) : logo ? (
+                                <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] bg-bg-strong">
                                     <img
                                         src={logo}
                                         alt="Logo"
                                         className="h-full w-full rounded-[6px] object-contain"
                                     />
-                                    </div>
-                                ) : (
-                                    <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] border border-dashed border-stroke-strong bg-bg-strong p-1">
+                                </div>
+                            ) : (
+                                <div className="flex aspect-square size-[38px] shrink-0 items-center justify-center overflow-hidden rounded-[6px] border border-dashed border-stroke-strong bg-bg-strong p-1">
                                     <LogoIcon size={18} />
-                                    </div>
-                                )}
+                                </div>
+                            )}
 
                             {/* Logo Info and Upload */}
                             <div className="flex h-fit w-full items-end justify-between gap-2.5">
@@ -118,7 +115,7 @@ export function LogoUpload({
                                     <h3 className="flex items-center text-[14px] font-normal text-text-default">
                                         Your logo
                                     </h3>
-                                    <p className="flex items-center text-[14px] font-normal text-text-weak dark:text-text-weaker ">
+                                    <p className="flex items-center text-[14px] font-normal text-text-weak dark:text-text-weaker">
                                         Square (1:1) format only.
                                     </p>
                                 </div>

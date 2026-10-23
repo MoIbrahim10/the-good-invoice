@@ -40,7 +40,7 @@ const LabeledDatePicker = React.forwardRef<
         return (
             <div
                 className={cn(
-                    'flex h-[32px] flex-row items-center gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
+                    'flex h-[32px] flex-row items-center gap-[10px] rounded-[6px] border border-stroke-default bg-bg-weak py-2 pl-3 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:outline-none',
                     error ? 'pr-[4px]' : 'pr-3',
                     containerClassName,
                 )}
@@ -59,7 +59,7 @@ const LabeledDatePicker = React.forwardRef<
                     ref={ref}
                     dateFormat={format}
                     className={cn(
-                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 text-[14px] dark:bg-transparent',
+                        'h-auto min-w-0 flex-1 border-0 bg-transparent p-0 text-[14px] text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-transparent',
                         className,
                     )}
                     placeholder={placeholder || defaultPlaceholder}

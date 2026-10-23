@@ -58,9 +58,7 @@ export function TabNavigation() {
                             const segmentKey =
                                 indices.length === 1
                                     ? tabs[indices[0]].id
-                                    : indices
-                                          .map((i) => tabs[i].id)
-                                          .join('-');
+                                    : indices.map((i) => tabs[i].id).join('-');
 
                             const segmentClassName =
                                 indices.length === 1

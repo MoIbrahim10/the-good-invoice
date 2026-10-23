@@ -107,10 +107,16 @@ export function ItemsTab() {
                                 <td className="pe-2 pb-2">
                                     <div
                                         className={cn(
-                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
-                                            isTouched(`items.${item.id}.description`) &&
-                                                isDirty(`items.${item.id}.description`) &&
-                                                fieldErrors[`items.${item.id}.description`]
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak py-2 pl-3 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
+                                            isTouched(
+                                                `items.${item.id}.description`,
+                                            ) &&
+                                                isDirty(
+                                                    `items.${item.id}.description`,
+                                                ) &&
+                                                fieldErrors[
+                                                    `items.${item.id}.description`
+                                                ]
                                                 ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
@@ -167,7 +173,9 @@ export function ItemsTab() {
                                         {isTouched(
                                             `items.${item.id}.description`,
                                         ) &&
-                                        isDirty(`items.${item.id}.description`) &&
+                                        isDirty(
+                                            `items.${item.id}.description`,
+                                        ) &&
                                         fieldErrors[
                                             `items.${item.id}.description`
                                         ] ? (
@@ -186,10 +194,16 @@ export function ItemsTab() {
                                 <td className="pe-2 pb-2">
                                     <div
                                         className={cn(
-                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
-                                            isTouched(`items.${item.id}.quantity`) &&
-                                                isDirty(`items.${item.id}.quantity`) &&
-                                                fieldErrors[`items.${item.id}.quantity`]
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak py-2 pl-3 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong focus-within:ring-offset-0',
+                                            isTouched(
+                                                `items.${item.id}.quantity`,
+                                            ) &&
+                                                isDirty(
+                                                    `items.${item.id}.quantity`,
+                                                ) &&
+                                                fieldErrors[
+                                                    `items.${item.id}.quantity`
+                                                ]
                                                 ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
@@ -260,7 +274,9 @@ export function ItemsTab() {
                                             }
                                             className="min-w-0 flex-1 [appearance:textfield] rounded-none border-0 bg-transparent p-0 text-left text-text-strong shadow-none placeholder:text-text-weaker focus-visible:ring-0 focus-visible:ring-offset-0 md:text-[14px] dark:bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         />
-                                        {isTouched(`items.${item.id}.quantity`) &&
+                                        {isTouched(
+                                            `items.${item.id}.quantity`,
+                                        ) &&
                                         isDirty(`items.${item.id}.quantity`) &&
                                         fieldErrors[
                                             `items.${item.id}.quantity`
@@ -280,10 +296,16 @@ export function ItemsTab() {
                                 <td className="pe-2 pb-2">
                                     <div
                                         className={cn(
-                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak pl-3 py-2 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
-                                            isTouched(`items.${item.id}.rate`) &&
-                                                isDirty(`items.${item.id}.rate`) &&
-                                                fieldErrors[`items.${item.id}.rate`]
+                                            'flex h-[32px] items-center gap-1.5 rounded-[6px] border border-stroke-default bg-bg-weak py-2 pl-3 transition-shadow focus-within:ring-1 focus-within:ring-stroke-strong',
+                                            isTouched(
+                                                `items.${item.id}.rate`,
+                                            ) &&
+                                                isDirty(
+                                                    `items.${item.id}.rate`,
+                                                ) &&
+                                                fieldErrors[
+                                                    `items.${item.id}.rate`
+                                                ]
                                                 ? 'pr-[4px]'
                                                 : 'pr-3',
                                         )}
@@ -384,7 +406,8 @@ export function ItemsTab() {
                                                 disabled={items.length >= 5}
                                                 tooltips={{
                                                     disabled: {
-                                                        content: 'Maximum reached',
+                                                        content:
+                                                            'Maximum reached',
                                                     },
                                                 }}
                                                 className="aspect-square h-[32px] w-[32px] p-[7px]"
@@ -458,9 +481,7 @@ export function ItemsTab() {
                                         : value,
                             })
                         }
-                        onTypeChange={(type) =>
-                            updateDiscount({ type })
-                        }
+                        onTypeChange={(type) => updateDiscount({ type })}
                         currencyIcon={selectedCurrency.symbolIcon}
                     />
                 </div>

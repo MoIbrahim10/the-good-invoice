@@ -5,7 +5,6 @@ import { useInvoiceState } from '../../../../hooks/use-invoice-state';
 import { LabeledTextarea } from '../../../custom/labeled-textarea';
 import { limitToLines } from '@/lib/utils';
 
-
 export function NotesTab() {
     const { state } = useInvoiceState();
     const { updateNotes } = useInvoiceActions();
