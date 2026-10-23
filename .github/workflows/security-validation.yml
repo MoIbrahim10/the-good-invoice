@@ -1,70 +1,70 @@
 name: The Good Invoice security validation
 
 'on':
-  pull_request:
-    branches: [main]
-    paths:
-      - 'composer.json'
-      - 'composer.lock'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/security-validation.yml'
+    pull_request:
+        branches: [main]
+        paths:
+            - 'composer.json'
+            - 'composer.lock'
+            - 'package.json'
+            - 'package-lock.json'
+            - '.github/workflows/security-validation.yml'
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  validate:
-    if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Check out pull request head
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          persist-credentials: false
+    validate:
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-24.04
+        timeout-minutes: 30
+        steps:
+            - name: Check out pull request head
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  persist-credentials: false
 
-      - name: Set up PHP 8.4.27
-        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
-        with:
-          php-version: '8.4.27'
-          extensions: mbstring, sqlite3, pdo_sqlite, xml, curl
+            - name: Set up PHP 8.4.27
+              uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+              with:
+                  php-version: '8.4.27'
+                  extensions: mbstring, sqlite3, pdo_sqlite, xml, curl
 
-      - name: Set up patched Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: '26.12.1'
+            - name: Set up patched Node.js
+              uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+              with:
+                  node-version: '26.12.1'
 
-      - name: Validate Composer files
-        run: composer validate --no-check-publish
+            - name: Validate Composer files
+              run: composer validate --no-check-publish
 
-      - name: Install locked PHP dependencies without scripts
-        run: composer install --no-interaction --prefer-dist --no-progress --no-scripts
+            - name: Install locked PHP dependencies without scripts
+              run: composer install --no-interaction --prefer-dist --no-progress --no-scripts
 
-      - name: Audit locked PHP dependencies
-        run: composer audit --locked
+            - name: Audit locked PHP dependencies
+              run: composer audit --locked
 
-      - name: Run PHP formatting check
-        run: vendor/bin/pint --test
+            - name: Run PHP formatting check
+              run: vendor/bin/pint --test
 
-      - name: Run PHPUnit suite
-        run: vendor/bin/phpunit
+            - name: Run PHPUnit suite
+              run: vendor/bin/phpunit
 
-      - name: Install locked JavaScript dependencies without lifecycle scripts
-        run: npm ci --ignore-scripts --registry=https://registry.npmjs.org
+            - name: Install locked JavaScript dependencies without lifecycle scripts
+              run: npm ci --ignore-scripts --registry=https://registry.npmjs.org
 
-      - name: Audit locked JavaScript dependencies
-        run: npm audit --package-lock-only --ignore-scripts --registry=https://registry.npmjs.org
+            - name: Audit locked JavaScript dependencies
+              run: npm audit --package-lock-only --ignore-scripts --registry=https://registry.npmjs.org
 
-      - name: Lint JavaScript
-        run: npm run lint
+            - name: Lint JavaScript
+              run: npm run lint
 
-      - name: Check formatting
-        run: npm run format:check
+            - name: Check formatting
+              run: npm run format:check
 
-      - name: Generate Wayfinder types and type-check
-        run: npm run types
+            - name: Generate Wayfinder types and type-check
+              run: npm run types
 
-      - name: Build frontend
-        run: npm run build
+            - name: Build frontend
+              run: npm run build
